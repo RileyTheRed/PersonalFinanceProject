@@ -21,12 +21,14 @@ namespace PersonalFinanceProjectFinal
         private bool PasswordsValid = false;
         #endregion
 
+
         #region HasClickedBooleans
         bool hasClickedEmailField = false;
         bool hasClickedFirstNameField = false;
         bool hasClickedLastNameField = false;
         bool hasClickedUsernameField = false;
         #endregion
+
 
         #region StaticMessagesForFields
         private static string StaticFirstNameMessage = "First Name...";
@@ -35,14 +37,6 @@ namespace PersonalFinanceProjectFinal
         private static string StaticUserNameMessage = "Desired Username...";
         #endregion
 
-        public RegistrationWindow()
-        {
-            InitializeComponent();
-            txtFirstName.Text = StaticFirstNameMessage;
-            txtLastName.Text = StaticLastNameMessage;
-            txtEmail.Text = StaticEmailMessage;
-            txtUsername.Text = StaticUserNameMessage;
-        }
 
         #region GotFocusCalls
         private void txtEmail_GotFocus(object sender, RoutedEventArgs e)
@@ -85,6 +79,7 @@ namespace PersonalFinanceProjectFinal
             }
         }
         #endregion
+
 
         #region LostFocusCalls
         private void txtFirstName_LostFocus(object sender, RoutedEventArgs e)
@@ -209,22 +204,13 @@ namespace PersonalFinanceProjectFinal
         }
         #endregion
 
-        public bool AllEntriesValid()
-        {
-            return LastNameValid && FirstNameValid && EmailValid && UserNameValid && Security.SecureStringEqual(txtPassword.SecurePassword,txtConfirmPassword.SecurePassword);
-        }
 
+        #region ButtonClicks
         private void btnReturnLogin_Click(object sender, RoutedEventArgs e)
         {
             Owner.Visibility = Visibility.Visible;
             Owner.IsEnabled = true;
             Close();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Owner.Visibility = Visibility.Visible;
-            Owner.IsEnabled = true;
         }
 
         private void btnRegister_Click(object sender, RoutedEventArgs e)
@@ -243,5 +229,43 @@ namespace PersonalFinanceProjectFinal
                 MessageBox.Show("Please make sure all inputs are valid!", "Missing Valid Entries");
             }
         }
+        #endregion
+
+
+        /// <summary>
+        /// Default constructor for registration window
+        /// </summary>
+        public RegistrationWindow()
+        {
+            InitializeComponent();
+            txtFirstName.Text = StaticFirstNameMessage;
+            txtLastName.Text = StaticLastNameMessage;
+            txtEmail.Text = StaticEmailMessage;
+            txtUsername.Text = StaticUserNameMessage;
+        }
+
+
+        /// <summary>
+        /// Window closed logic
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Owner.Visibility = Visibility.Visible;
+            Owner.IsEnabled = true;
+        }
+
+
+        /// <summary>
+        /// Returns true if all input entries are valid
+        /// </summary>
+        /// <returns></returns>
+        public bool AllEntriesValid()
+        {
+            return LastNameValid && FirstNameValid && EmailValid && UserNameValid && Security.SecureStringEqual(txtPassword.SecurePassword, txtConfirmPassword.SecurePassword);
+        }
+
+
     }
 }

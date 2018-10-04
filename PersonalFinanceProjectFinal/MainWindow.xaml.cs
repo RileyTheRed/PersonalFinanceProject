@@ -10,13 +10,20 @@ namespace PersonalFinanceProjectFinal
     public partial class MainWindow : Window
     {
 
-        Window childWindow;
+        Window childWindow; // for which ever child window the user spawns (dashboard or registration)
+
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
+
+        /// <summary>
+        /// Registration button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRegister_Click(object sender, RoutedEventArgs e)
         {
             Window regWindow = new RegistrationWindow();
@@ -26,6 +33,12 @@ namespace PersonalFinanceProjectFinal
             regWindow.Owner = this;
         }
 
+
+        /// <summary>
+        /// Login button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (Database.ValidateUser(txtUserName.Text, Security.getHashSha256(txtPassword.SecurePassword.ToString())))
