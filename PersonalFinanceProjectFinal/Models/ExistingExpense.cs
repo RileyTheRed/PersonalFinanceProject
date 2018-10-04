@@ -1,24 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonalFinanceProjectFinal.Models
 {
     class ExistingExpense
     {
 
-        //public string OwnerID { get; private set; }
-        public string Hash { get; private set; }
+        #region Properties
+        public string Hash { get; private set; } // unique expense id
         public double Amount { get; set; }
         public DateTime Date { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        #endregion
 
+
+        /// <summary>
+        /// Constructor specifically for an EXISTING expense record
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="amount"></param>
+        /// <param name="date"></param>
+        /// <param name="cat"></param>
+        /// <param name="descript"></param>
         public ExistingExpense(string id, double amount, DateTime date, string cat, string descript)
         {
-            //OwnerID = id;
             Hash = id;
             Amount = amount;
             Date = date;

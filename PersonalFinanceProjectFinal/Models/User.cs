@@ -1,21 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace PersonalFinanceProjectFinal.Models
 {
     class User
     {
 
+        #region Properties
         public string UserID { get; private set; }
         public string FirstName;
-        public List<ExistingExpense> ExistingUserExpenses { get; set; }
-        public List<ExistingIncome> ExistingUserIncome { get; set; }
-        public List<NewExpense> NewUserExpenses { get; set; }
-        public List<NewIncome> NewUserIncome { get; set; }
 
+        public List<ExistingExpense> ExistingUserExpenses { get; set; } // existing records
+        public List<ExistingIncome> ExistingUserIncome { get; set; }    // existing records
+
+        public List<NewExpense> NewUserExpenses { get; set; } // reserved for new records
+        public List<NewIncome> NewUserIncome { get; set; }    // reserved for new records
+        #endregion
+
+
+        /// <summary>
+        /// Constructor for User object
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="expenses"></param>
+        /// <param name="income"></param>
         public User(string id, string name, List<ExistingExpense> expenses, List<ExistingIncome> income)
         {
             UserID = id;

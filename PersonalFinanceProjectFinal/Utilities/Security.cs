@@ -10,6 +10,16 @@ namespace PersonalFinanceProjectFinal.Utilities
     class Security
     {
 
+        /// <summary>
+        /// Returns true if two secure strings are equal
+        /// 
+        /// (( Found this function on StackOverFlow ))
+        /// 
+        /// SwDevMan81 - https://stackoverflow.com/questions/4502676/c-sharp-compare-two-securestrings-for-equality
+        /// </summary>
+        /// <param name="s1"></param>
+        /// <param name="s2"></param>
+        /// <returns></returns>
         public static bool SecureStringEqual(SecureString s1, SecureString s2)
         {
             if (s1 == null)
@@ -65,6 +75,14 @@ namespace PersonalFinanceProjectFinal.Utilities
             }
         }
 
+
+        /// <summary>
+        /// Returns the hash of the parameter
+        /// 
+        /// TODO : Change this to SecureString
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static string getHashSha256(string text)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(text);

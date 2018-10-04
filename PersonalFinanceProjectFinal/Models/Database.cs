@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 namespace PersonalFinanceProjectFinal.Models
-{ 
+{
     partial class Database
     {
 
+        #region ConnectionStuff
         // static variables for the connection string and connection
         private static readonly string connectionString = "Data Source=DESKTOP-UGSKI06;" +
             "Initial Catalog=FinanceDatabase;Integrated Security=True;Pooling=False";
@@ -33,8 +31,10 @@ namespace PersonalFinanceProjectFinal.Models
         {
             con.Close();
         }
+        #endregion
 
 
+        #region ValidationFunctions
         /// <summary>
         /// Returns true if the username is already in use
         /// </summary>
@@ -96,6 +96,35 @@ namespace PersonalFinanceProjectFinal.Models
 
 
         /// <summary>
+        /// Returns true if the password provided matches the password associated with the username, if it exists, in the database
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="passHash"></param>
+        /// <returns></returns>
+        public static bool ValidateUser(string username, string passHash)
+        {
+
+            GetConnection();
+            bool valid = false;
+
+            // query the UserTable to see if anything is returned
+            using(SqlCommand cmd = new SqlCommand($"SELECT * FROM UserTable WHERE userName = '{username}' AND userPassHash = '{passHash}'", con))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                        valid = true;
+                }
+            }
+
+            CloseConneciton();
+            return valid;
+        }
+        #endregion
+
+
+        #region "Pull/Push Stuff"
+        /// <summary>
         /// Inserts the new user information into the database
         /// </summary>
         /// <param name="userID"></param>
@@ -129,26 +158,14 @@ namespace PersonalFinanceProjectFinal.Models
 
         }
 
-
-        public static bool ValidateUser(string username, string passHash)
-        {
-            GetConnection();
-            bool valid = false;
-
-            using(SqlCommand cmd = new SqlCommand($"SELECT * FROM UserTable WHERE userName = '{username}' AND userPassHash = '{passHash}'", con))
-            {
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                        valid = true;
-                }
-            }
-
-            CloseConneciton();
-            return valid;
-        }
-
-
+        /// <summary>
+        /// Returns a User object for the associated username.
+        /// 
+        /// First, set the first name and user id
+        /// Then pull any and all expense and income records associated with the user id
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static User GetUserData(string username)
         {
             List<ExistingExpense> expenses = new List<ExistingExpense>();
@@ -157,6 +174,8 @@ namespace PersonalFinanceProjectFinal.Models
             string tempName = "";
 
             GetConnection();
+
+            // get the user id and first name
             using (SqlCommand cmd = new SqlCommand($"SELECT userID, userFirstName FROM UserTable WHERE userName = '{username}'", con))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -169,6 +188,7 @@ namespace PersonalFinanceProjectFinal.Models
                 }
             }
 
+            // get all existing expense records for this user
             using (SqlCommand cmd = new SqlCommand($"SELECT * FROM ExpenseTable WHERE userID = '{tempID}'", con))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -181,6 +201,7 @@ namespace PersonalFinanceProjectFinal.Models
                 }
             }
 
+            // get all existing income records for this user
             using (SqlCommand cmd = new SqlCommand($"SELECT * FROM IncomeTable WHERE userID = '{tempID}'", con))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -196,7 +217,7 @@ namespace PersonalFinanceProjectFinal.Models
             return new User(tempID, tempName, expenses, income);
 
         }
-        
+        #endregion
 
     }
 }
