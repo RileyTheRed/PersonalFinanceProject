@@ -71,7 +71,8 @@
                 Margin="0,30,100,0"
                 Background="#b5b5b7" Foreground="#252839"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="#f2b632"/>
+                BorderThickness="2" BorderBrush="#f2b632"
+                Click="btnAddRecords_Click"/>
 
         <Button x:Name="btnEditRecords" 
                 Content="Edit Expenses/Income"
@@ -100,7 +101,8 @@
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,30,0"
                 Background="#252839" Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"/>
+                BorderThickness="2" BorderBrush="#f2b632"
+                Click="btnLogout_Click"/>
         <!--END BUTTON DEFINTIONS-->
         
         

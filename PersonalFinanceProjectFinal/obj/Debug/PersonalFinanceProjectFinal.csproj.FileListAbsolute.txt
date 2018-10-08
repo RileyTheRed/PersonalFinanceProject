@@ -50,3 +50,5 @@ C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProjec
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\PersonalFinanceProjectFinal.csproj.CopyComplete
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\PersonalFinanceProjectFinal.exe
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\PersonalFinanceProjectFinal.pdb
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\AddRecordsWindow.g.cs
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\AddRecordsWindow.baml

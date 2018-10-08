@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProjectFinal\obj\Debug\
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\
 PersonalFinanceProjectFinal
 none
 false
 DEBUG;TRACE
-C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProjectFinal\App.xaml
-3-1779129586
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\App.xaml
+4-995072502
 
-182038580023
-151376189967
-MainWindow.xaml;RegistrationWindow.xaml;UserDashboard.xaml;
+191263935281
+151492321475
+AddRecordsWindow.xaml;MainWindow.xaml;RegistrationWindow.xaml;UserDashboard.xaml;
 
 False
 

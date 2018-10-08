@@ -22,12 +22,33 @@ namespace PersonalFinanceProjectFinal
     {
 
         User currentUser;
+        Window childWindow;
 
         public UserDashboard(string uname)
         {
             InitializeComponent();
             currentUser = Database.GetUserData(uname);
             lblGreeting.Content = $"Welcome back, {currentUser.FirstName}";
+        }
+
+        private void btnAddRecords_Click(object sender, RoutedEventArgs e)
+        {
+            childWindow = new AddRecordsWindow();
+            childWindow.Owner = this;
+
+            childWindow.Visibility = Visibility.Visible;
+            childWindow.IsEnabled = true;
+
+            Visibility = Visibility.Hidden;
+            IsEnabled = false;
+        }
+
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            Owner.Visibility = Visibility.Visible;
+            Owner.IsEnabled = true;
+            
+            Close();
         }
     }
 }
