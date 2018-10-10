@@ -68,9 +68,17 @@
     <Compile Include="Models\ExistingExpense.cs" />
     <Compile Include="Models\ExistingIncome.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Pages\NewExpensePage.xaml.cs">
+      <DependentUpon>NewExpensePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\NewIncomePage.xaml.cs">
+      <DependentUpon>NewIncomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserDashboard.xaml.cs">
       <DependentUpon>UserDashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\Categories.cs" />
+    <Compile Include="Utilities\Sanitizer.cs" />
     <Compile Include="Utilities\Security.cs" />
     <Page Include="AddRecordsWindow.xaml">
       <SubType>Designer</SubType>
@@ -88,6 +96,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\NewExpensePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\NewIncomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="RegistrationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

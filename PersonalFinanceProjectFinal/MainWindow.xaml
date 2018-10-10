@@ -35,16 +35,19 @@
         <Rectangle Grid.Column="0" Grid.RowSpan="5" 
                    HorizontalAlignment="Center" VerticalAlignment="Bottom"
                    Height="400" Width="424"
-                   Margin="0,0,0,30" Grid.Row="1">
+                   Margin="0,0,0,30" Grid.Row="1"
+                   Stroke="#b5b5b7" StrokeThickness="3">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#252839"/>
             </Rectangle.Fill>
+            
         </Rectangle>
 
         <Rectangle Grid.Column="1" Grid.RowSpan="6"
                    VerticalAlignment="Bottom" HorizontalAlignment="Center"
                    Width="325" Height="400"
-                   Margin="0,0,0,30">
+                   Margin="0,0,0,30"
+                   Stroke="#b5b5b7" StrokeThickness="3">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#252839"/>
             </Rectangle.Fill>
@@ -52,7 +55,8 @@
 
         <Rectangle Grid.Row="0" Grid.ColumnSpan="2"
                    Width="825" Height="60"
-                   HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                   HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                   Stroke="#b5b5b7" StrokeThickness="3">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#252839"/>
             </Rectangle.Fill>
@@ -73,14 +77,14 @@
                VerticalAlignment="Bottom" HorizontalAlignment="Center"
                FontSize="20"
                Foreground="#f2b632"
-               Background="#677077"/>
+               />
 
         <Label Content="New User Registration"
                Grid.Column="1" Grid.Row="1"
                VerticalAlignment="Bottom" HorizontalAlignment="Center"
                FontSize="20"
                Foreground="#f2b632"
-               Background="#677077"/>
+               />
 
         <Label Content="Username:"
                Grid.Column="0" Grid.Row="2"
@@ -106,7 +110,7 @@
                  Width="270" Height="30"
                  Margin="0,0,60,10"
                  Background="#252839" Foreground="#f2b632"
-                 BorderThickness="3"
+                 BorderThickness="2"
                  BorderBrush="#677077"/>
         <!--END TEXTBOX DEFINTIONS-->
 
@@ -130,7 +134,7 @@
                  Width="270" Height="30"
                  Margin="0,0,60,10"
                  Background="#252839" Foreground="#f2b632"
-                 BorderThickness="3"
+                 BorderThickness="2"
                  BorderBrush="#677077"/>
         <!--END PASSWORDBOX DEFINTIONS-->
 

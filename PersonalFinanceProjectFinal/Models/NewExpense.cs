@@ -3,7 +3,7 @@ using PersonalFinanceProjectFinal.Utilities;
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    class NewExpense
+    public class NewExpense
     {
 
         #region Properties

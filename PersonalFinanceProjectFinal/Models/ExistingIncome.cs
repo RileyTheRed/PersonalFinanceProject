@@ -2,7 +2,7 @@
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    class ExistingIncome
+    public class ExistingIncome
     {
 
         #region Properties

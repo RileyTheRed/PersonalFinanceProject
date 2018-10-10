@@ -2,7 +2,7 @@
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    class User
+    public class User
     {
 
         #region Properties

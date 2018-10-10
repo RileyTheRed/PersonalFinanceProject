@@ -33,7 +33,7 @@ namespace PersonalFinanceProjectFinal
 
         private void btnAddRecords_Click(object sender, RoutedEventArgs e)
         {
-            childWindow = new AddRecordsWindow();
+            childWindow = new AddRecordsWindow(ref currentUser);
             childWindow.Owner = this;
 
             childWindow.Visibility = Visibility.Visible;

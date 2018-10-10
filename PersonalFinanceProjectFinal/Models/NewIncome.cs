@@ -3,7 +3,7 @@ using System;
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    class NewIncome
+    public class NewIncome
     {
 
         #region Properties
