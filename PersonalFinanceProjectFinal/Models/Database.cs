@@ -195,8 +195,8 @@ namespace PersonalFinanceProjectFinal.Models
                 {
                     while (reader.Read())
                     {
-                        expenses.Add(new ExistingExpense(reader.GetValue(1).ToString(), (double)reader.GetValue(2),
-                            reader.GetDateTime(3), reader.GetValue(4).ToString(), reader.GetValue(5).ToString()));
+                        expenses.Add(new ExistingExpense(Convert.ToString(reader[1]), Convert.ToDouble(reader[2]),
+                            Convert.ToDateTime(reader[3]), Convert.ToString(reader[4]), Convert.ToString(reader[5])));
                     }
                 }
             }
@@ -208,8 +208,8 @@ namespace PersonalFinanceProjectFinal.Models
                 {
                     while (reader.Read())
                     {
-                        income.Add(new ExistingIncome(reader.GetValue(1).ToString(), (double)reader.GetValue(2),
-                            reader.GetDateTime(3), reader.GetValue(4).ToString(), reader.GetValue(5).ToString()));
+                        income.Add(new ExistingIncome(Convert.ToString(reader[1]), Convert.ToDouble(reader[2]),
+                            Convert.ToDateTime(reader[3]), Convert.ToString(reader[4]), Convert.ToString(reader[5])));
                     }
                 }
             }
@@ -219,7 +219,40 @@ namespace PersonalFinanceProjectFinal.Models
         }
 
 
-        
+        /// <summary>
+        /// Updates all database tables with the new or edited information that the user has entered
+        /// </summary>
+        /// <param name="user"></param>
+        public static void UpdateDatabase(User user)
+        {
+
+            GetConnection();
+
+            foreach (NewExpense expense in user.NewUserExpenses) // insert new expense records
+            {
+                using (SqlCommand cmd = new SqlCommand($"INSERT INTO ExpenseTable (" +
+                    $"userID,expenseID,amount,date,category,description) values (" +
+                    $"'{expense.OwnerID}','{expense.Hash}','{expense.Amount}','{expense.Date}'" +
+                    $",'{expense.Category}','{expense.Description}')",con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            foreach (NewIncome income in user.NewUserIncome) // insert new income records
+            {
+                using (SqlCommand cmd = new SqlCommand($"INSERT INTO IncomeTable (" +
+                    $"userID,incomeID,amount,date,category,description) values (" +
+                    $"'{income.OwnerID}','{income.Hash}','{income.Amount}','{income.Date}'" +
+                    $",'{income.Category}','{income.Description}')", con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            CloseConneciton();
+
+        }
         #endregion
 
     }

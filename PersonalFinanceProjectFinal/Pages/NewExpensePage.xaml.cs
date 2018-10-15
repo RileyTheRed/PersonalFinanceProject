@@ -15,6 +15,7 @@ namespace PersonalFinanceProjectFinal.Pages
 
         private static string DefaultCatMessage = "Please select a category...";
 
+
         public NewExpensePage(ref User currUser)
         {
             InitializeComponent();
@@ -27,6 +28,7 @@ namespace PersonalFinanceProjectFinal.Pages
             }
             
         }
+
 
         private void btnSubmitExpense_Click(object sender, RoutedEventArgs e)
         {
@@ -44,8 +46,27 @@ namespace PersonalFinanceProjectFinal.Pages
                         currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, double.Parse(txtAmount.Text), dteDate.SelectedDate.Value,
                             cmbCategory.Text, txtDescription.Text));
                     }
+                    MessageBox.Show("Record entered successfully!", "Success");
+                    ClearInput();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid input! Be sure to check all entries.", "Invalid Input");
                 }
             }
+            else
+            {
+                MessageBox.Show("Invalid input! Be sure to check all entries.", "Invalid Input");
+            }
+        }
+
+
+        private void ClearInput()
+        {
+            txtAmount.Text = "";
+            dteDate.SelectedDate = null;
+            cmbCategory.Text = DefaultCatMessage;
+            txtDescription.Text = "";
         }
     }
 }

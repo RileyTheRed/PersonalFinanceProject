@@ -88,14 +88,13 @@ namespace PersonalFinanceProjectFinal
                 else
                 {
                     
-                    frmDashboard.Content = new NewIncomePage();
+                    frmDashboard.Content = new NewIncomePage(ref currentUser);
                 }
             }
             else
             {
-                frmDashboard.Content = new NewIncomePage();
+                frmDashboard.Content = new NewIncomePage(ref currentUser);
             }
-            //frmDashboard.NavigationService.RemoveBackEntry();
         }
     }
 }

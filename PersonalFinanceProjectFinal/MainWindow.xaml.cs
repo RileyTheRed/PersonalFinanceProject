@@ -41,7 +41,7 @@ namespace PersonalFinanceProjectFinal
         /// <param name="e"></param>
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            if (Database.ValidateUser(txtUserName.Text, Security.getHashSha256(txtPassword.SecurePassword.ToString())))
+            if (Database.ValidateUser(txtUserName.Text, Security.getPassHashSha256(txtPassword.SecurePassword)))
             {
                 MessageBox.Show("Valid User!");
                 childWindow = new UserDashboard(txtUserName.Text);

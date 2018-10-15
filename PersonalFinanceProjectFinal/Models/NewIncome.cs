@@ -13,6 +13,7 @@ namespace PersonalFinanceProjectFinal.Models
         public DateTime Date { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        private Random Random = new System.Random();
         #endregion
 
 
@@ -27,7 +28,7 @@ namespace PersonalFinanceProjectFinal.Models
         public NewIncome(string ownerid, double amount, DateTime date, string cat, string descript)
         {
             OwnerID = ownerid;
-            Hash = Security.getHashSha256(ownerid + amount.ToString() + date.ToString());
+            Hash = Security.getHashSha256(ownerid + amount.ToString() + date.ToString() + Random.Next());
             Amount = amount;
             Date = date;
             Category = cat;

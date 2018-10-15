@@ -47,6 +47,8 @@ namespace PersonalFinanceProjectFinal
         {
             Owner.Visibility = Visibility.Visible;
             Owner.IsEnabled = true;
+
+            Database.UpdateDatabase(currentUser);
             
             Close();
         }
