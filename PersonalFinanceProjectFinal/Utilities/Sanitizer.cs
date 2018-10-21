@@ -14,5 +14,10 @@ namespace PersonalFinanceProjectFinal.Utilities
             return true;
         }
 
+        public static bool ValidAmount(string amount)
+        {
+            return amountFormat.IsMatch(amount);
+        }
+
     }
 }

@@ -1,0 +1,198 @@
+﻿<Window x:Class="PersonalFinanceProjectFinal.SearchRecordsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PersonalFinanceProjectFinal"
+        mc:Ignorable="d"
+        ResizeMode="NoResize"
+        Title="Search Records Window" Height="600" Width="900">
+    
+    <Grid Background="#677077">
+        
+        <!--ROW DEFINTIONS-->
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--END ROW DEFINTIONS-->
+        
+        
+        <!--COLUMN DEFINTIONS-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <!--END COLUMN DEFINTIONS-->
+        
+        
+        <!--RECTANGLE DEFINTIONS-->
+        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="4"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Width="410" Height="440"
+                   Margin="0,20,75,0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#f2b632"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle Grid.Column="2" 
+                   Grid.ColumnSpan="3" Grid.RowSpan="4"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Width="410" Height="440"
+                   Margin="75,20,0,0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#f2b632"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="4"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Width="400" Height="430"
+                   Margin="0,20,75,0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#b5b5b7"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <!--END RECTANGLE DEFINTIONS-->
+
+
+        <!--BUTTON DEFINTIONS-->
+        <Button x:Name="btnReturnDashboard"
+                Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="3"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="300" Height="40"
+                Content="Return to Dashboard"
+                FontSize="25" FontWeight="SemiBold"
+                Background="#252839" Foreground="#f2b632"
+                Click="btnReturnDashboard_Click"/>
+
+        <Button x:Name="btnSearch"
+                Grid.ColumnSpan="2" Grid.Row="3"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Width="200" Height="25"
+                Content="Search Records"
+                FontSize="15" FontWeight="SemiBold"
+                Background="#252839" Foreground="#f2b632"
+                Margin="80,0,0,0"
+                Click="btnSearch_Click"/>
+        <!--END BUTTON DEFINTIONS-->
+
+
+        <!--LABEL DEFINTIONS-->
+        <Label Grid.ColumnSpan="3"
+               VerticalAlignment="Center" HorizontalAlignment="Center"
+               FontSize="15" FontWeight="SemiBold" Foreground="#252839"
+               Margin="0,0,80,0">
+            <TextBlock TextDecorations="Underline">
+                Specify what records you wish to search
+            </TextBlock>
+        </Label>
+
+        <Label Content="Type of Record:"
+               Grid.Row="1"
+               HorizontalAlignment="Center" VerticalAlignment="Top"
+               Margin="20,10,0,0"/>
+
+        <Label Content="Category:"
+               Grid.Row="1"
+               HorizontalAlignment="Center" VerticalAlignment="Bottom"
+               Margin="20,0,0,20"/>
+
+        <Label Content="Amount Range:"
+               Grid.Row="2"
+               HorizontalAlignment="Center" VerticalAlignment="Top"
+               Margin="20,10,0,0"/>
+
+        <Label Content="Start Date:"
+               Grid.Row="2" Grid.ColumnSpan="2"
+               HorizontalAlignment="Center" VerticalAlignment="Bottom"
+               Margin="0,0,85,22"/>
+
+        <Label Content="End Date:"
+               Grid.Row="2" Grid.ColumnSpan="2"
+               HorizontalAlignment="Center" VerticalAlignment="Bottom"
+               Margin="240,0,0,22"/>
+        <!--END LABEL DEFINTIONS-->
+        
+        
+        <!--RADIOBUTTON DEFINTIONS-->
+        <RadioButton x:Name="radioExpense" 
+                     Content="Expense"
+                     Grid.Row="1" Grid.Column="1"
+                     VerticalAlignment="Top" HorizontalAlignment="Left"
+                     Margin="0,17,0,0"/>
+
+        <RadioButton x:Name="radioIncome" 
+                     Content="Income"
+                     Grid.Row="1" Grid.Column="1"
+                     VerticalAlignment="Top" HorizontalAlignment="Right"
+                     Margin="0,17,10,0"/>
+        <!--END RADIOBUTTON DEFINTIONS-->
+        
+        
+        <!--COMBOBOX DEFINTIONS-->
+        <ComboBox x:Name="cmbCategory"
+                  IsReadOnly="true" IsEditable="true"
+                  Text="Please select a category..."
+                  Grid.Row="1" Grid.Column="1"
+                  VerticalAlignment="Bottom"
+                  Margin="0,0,0,20"/>
+        <!--END COMBOBOX DEFINTIONS-->
+        
+        
+        <!--TEXTBOX DEFINTIONS-->
+        <TextBox x:Name="txtMin"
+                 Text="MIN" HorizontalContentAlignment="Center"
+                 Grid.Column="1" Grid.Row="2"
+                 VerticalAlignment="Top" HorizontalAlignment="Left"
+                 VerticalContentAlignment="Center"
+                 Width="80" Height="22"
+                 Margin="0,15,0,0"
+                 GotFocus="txtMin_GotFocus"
+                 LostFocus="txtMin_LostFocus"/>
+
+        <TextBox x:Name="txtMax"
+                 Text="MAX" HorizontalContentAlignment="Center"
+                 Grid.Column="1" Grid.Row="2"
+                 VerticalAlignment="Top" HorizontalAlignment="Right"
+                 VerticalContentAlignment="Center"
+                 Width="80" Height="22"
+                 Margin="0,15,0,0"
+                 GotFocus="txtMax_GotFocus"
+                 LostFocus="txtMax_LostFocus"/>
+        <!--END TEXTBOX DEFINTIONS-->
+        
+        
+        <!--DATEPICKER DEFINTIONS-->
+        <DatePicker x:Name="dteStart"
+                    Grid.Column="0" Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    Width="110"
+                    Margin="80,0,0,0"/>
+
+        <DatePicker x:Name="dteEnd"
+                    Grid.Column="1" Grid.Row="2"
+                    VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Width="110"
+                    Margin="0,0,0,0"/>
+        <!--END DATEPICKER DEFINTIONS-->
+        
+        
+        <!--LISTBOX DEFINTIONS-->
+        <ListBox x:Name="lstSearchResults"
+                 Grid.Column="2" Grid.ColumnSpan="3"
+                 Grid.RowSpan="4"
+                 HorizontalAlignment="Center" VerticalAlignment="Center"
+                 Width="400" Height="430"
+                 Margin="75,20,0,0"/>
+
+    </Grid>
+</Window>

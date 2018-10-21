@@ -1,5 +1,6 @@
 ﻿using PersonalFinanceProjectFinal.Models;
 using PersonalFinanceProjectFinal.Utilities;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -20,7 +21,8 @@ namespace PersonalFinanceProjectFinal.Pages
         {
             InitializeComponent();
             currentUser = currUser;
-            
+
+            dteDate.DisplayDateEnd = DateTime.Today;
 
             foreach(string item in Utilities.Categories.GetCategories())
             {

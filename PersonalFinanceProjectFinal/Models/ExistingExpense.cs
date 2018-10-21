@@ -44,5 +44,10 @@ namespace PersonalFinanceProjectFinal.Models
             this.v4 = v4;
             this.v5 = v5;
         }
+
+        public override string ToString()
+        {
+            return $"{Date.ToShortDateString()}, {Amount}, {Category},{Description}";
+        }
     }
 }

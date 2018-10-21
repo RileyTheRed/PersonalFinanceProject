@@ -74,6 +74,9 @@
     <Compile Include="Pages\NewIncomePage.xaml.cs">
       <DependentUpon>NewIncomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchRecordsWindow.xaml.cs">
+      <DependentUpon>SearchRecordsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserDashboard.xaml.cs">
       <DependentUpon>UserDashboard.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RegistrationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SearchRecordsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

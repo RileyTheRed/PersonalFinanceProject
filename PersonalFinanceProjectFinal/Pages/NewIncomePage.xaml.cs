@@ -1,5 +1,6 @@
 ﻿using PersonalFinanceProjectFinal.Models;
 using PersonalFinanceProjectFinal.Utilities;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -19,6 +20,7 @@ namespace PersonalFinanceProjectFinal.Pages
             InitializeComponent();
             currentUser = currUser;
 
+            dteDate.DisplayDateEnd = DateTime.Today;
 
             foreach (string item in Utilities.Categories.GetCategories())
             {
@@ -45,7 +47,6 @@ namespace PersonalFinanceProjectFinal.Pages
                     }
                     MessageBox.Show("Record entered successfully!", "Success");
                     ClearInput();
-                
                 }
                 else
                 {
