@@ -196,11 +196,11 @@ namespace PersonalFinanceProjectFinal.Models
                     while (reader.Read())
                     {
                         expenses.Add(new ExistingExpense(Convert.ToString(reader[1]), Convert.ToDouble(reader[2]),
-                            Convert.ToDateTime(reader[3]), Convert.ToString(reader[4]), Convert.ToString(reader[5])));
+                            Convert.ToDateTime(reader[3]), Convert.ToString(reader[4]).Trim(' '), Convert.ToString(reader[5]).Trim(' ')));
                     }
                 }
             }
-
+            
             // get all existing income records for this user
             using (SqlCommand cmd = new SqlCommand($"SELECT * FROM IncomeTable WHERE userID = '{tempID}'", con))
             {
@@ -209,7 +209,7 @@ namespace PersonalFinanceProjectFinal.Models
                     while (reader.Read())
                     {
                         income.Add(new ExistingIncome(Convert.ToString(reader[1]), Convert.ToDouble(reader[2]),
-                            Convert.ToDateTime(reader[3]), Convert.ToString(reader[4]), Convert.ToString(reader[5])));
+                            Convert.ToDateTime(reader[3]), Convert.ToString(reader[4]).Trim(' '), Convert.ToString(reader[5]).Trim(' ')));
                     }
                 }
             }
@@ -233,7 +233,7 @@ namespace PersonalFinanceProjectFinal.Models
                 using (SqlCommand cmd = new SqlCommand($"INSERT INTO ExpenseTable (" +
                     $"userID,expenseID,amount,date,category,description) values (" +
                     $"'{expense.OwnerID}','{expense.Hash}','{expense.Amount}','{expense.Date}'" +
-                    $",'{expense.Category}','{expense.Description}')",con))
+                    $",'{expense.Category.Trim(' ')}','{expense.Description.Trim(' ')}')",con))
                 {
                     cmd.ExecuteNonQuery();
                 }
@@ -244,7 +244,7 @@ namespace PersonalFinanceProjectFinal.Models
                 using (SqlCommand cmd = new SqlCommand($"INSERT INTO IncomeTable (" +
                     $"userID,incomeID,amount,date,category,description) values (" +
                     $"'{income.OwnerID}','{income.Hash}','{income.Amount}','{income.Date}'" +
-                    $",'{income.Category}','{income.Description}')", con))
+                    $",'{income.Category.Trim(' ')}','{income.Description.Trim(' ')}')", con))
                 {
                     cmd.ExecuteNonQuery();
                 }

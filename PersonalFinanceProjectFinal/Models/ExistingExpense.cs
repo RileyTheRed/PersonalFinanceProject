@@ -47,7 +47,7 @@ namespace PersonalFinanceProjectFinal.Models
 
         public override string ToString()
         {
-            return $"{Date.ToShortDateString()}, {Amount}, {Category},{Description}";
+            return $"{Date.ToShortDateString()},\t{Amount},\t{Category},\t{Description}\t\t{Hash}";
         }
     }
 }

@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PersonalFinanceProjectFinal"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Search Records Window" Height="600" Width="900">
+        Title="Search Records Window" Height="600" Width="900"
+        >
     
     <Grid Background="#677077">
         
@@ -192,7 +193,10 @@
                  Grid.RowSpan="4"
                  HorizontalAlignment="Center" VerticalAlignment="Center"
                  Width="400" Height="430"
-                 Margin="75,20,0,0"/>
+                 Margin="75,20,0,0"
+                 MouseDoubleClick="lstSearchResults_MouseDoubleClick"
+                 ItemsSource="{Binding Results}"
+                 />
 
     </Grid>
 </Window>

@@ -17,7 +17,6 @@ namespace PersonalFinanceProjectFinal.Models
         #endregion
 
 
-
         /// <summary>
         /// Constructor for a new expense record
         /// </summary>
@@ -34,6 +33,12 @@ namespace PersonalFinanceProjectFinal.Models
             Date = date;
             Category = cat;
             Description = descript;
+        }
+
+
+        public override string ToString()
+        {
+            return $"{Date.ToShortDateString()},\t{Amount},\t{Category},\t{Description}\t\t{Hash}";
         }
 
     }

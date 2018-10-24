@@ -2,6 +2,8 @@
 using PersonalFinanceProjectFinal.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +21,28 @@ namespace PersonalFinanceProjectFinal
     /// <summary>
     /// Interaction logic for SearchRecordsWindow.xaml
     /// </summary>
-    public partial class SearchRecordsWindow : Window
+    public partial class SearchRecordsWindow : Window, INotifyPropertyChanged
     {
 
         private static string CategoryDefaultMessage = "Please select a category...";
         private User currentUser;
+        private SearchResultRecord selectedRecord;
+        private ObservableCollection<SearchResultRecord> _results;
+        
+
+        public ObservableCollection<SearchResultRecord> Results
+        {
+            get { return _results; }
+            set
+            {
+                _results = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Results"));
+            }
+        }
+
+
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
 
         /// <summary>
         /// Constructor for the SearchRecordsWindow
@@ -41,6 +60,7 @@ namespace PersonalFinanceProjectFinal
 
             dteStart.DisplayDateEnd = DateTime.Now.Date;
             dteEnd.DisplayDateEnd = DateTime.Now.Date;
+            DataContext = this;
         }
 
 
@@ -84,7 +104,7 @@ namespace PersonalFinanceProjectFinal
                 txtMax.Text = "MAX";
         }
         #endregion
-         
+        
 
         #region HelperFunctions
         private bool ValidChoice()
@@ -128,123 +148,31 @@ namespace PersonalFinanceProjectFinal
         }
         #endregion
 
+
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            bool hasPickedCat = HasPickedCategory();
-            bool hasPickedTwoDates = HasPickedTwoDates();
 
-            DateTime starting;
-            DateTime ending;
-
-            string type;
-
-            if (!ValidChoice())
+            if ((bool)radioExpense.IsChecked)
             {
-                MessageBox.Show("Please select a record type...", "Invalid Selection");
-                return;
+                var results = SearchResults.GetExpenseSearchResults(currentUser.ExistingUserExpenses,
+                    currentUser.NewUserExpenses, cmbCategory, txtMin, txtMax, dteStart, dteEnd);
+                Results = SearchResultRecord.GetExpenseResults(results.Item1, results.Item2);
+                //lstSearchResults.ItemsSource = SearchResultRecord.GetExpenseResults(results.Item1,results.Item2);
             }
 
-            type = radioExpense.IsChecked.HasValue ? "Expense" : "Income";
-            
-            if (hasPickedCat) // user has selected a category
-            {
-                // user has entered two amounts
-                if (HasEnteredTwoAmounts())
-                {
-                    if (!Sanitizer.ValidAmount(txtMin.Text) || !Sanitizer.ValidAmount(txtMax.Text)) // make sure the inputs are valid
-                    {
-                        MessageBox.Show("Invalid entries for MIN and/or MAX amount.", "Invalid Entry");
-                        return;
-                    }
-                    if (Double.Parse(txtMin.Text) > Double.Parse(txtMax.Text))
-                    {
-                        MessageBox.Show("Minimum amount value cant be greater than Maximum value");
-                        return;
-                    }
-                    if (hasPickedTwoDates) // user has chosen a start and end date range
-                    {
+        }
 
-                    }
-                    else if (HasPickedStartingDate()) // user has chose only a start date
-                    {
 
-                    }
-                    else if (HasPickedEndingDate()) // user has chosen only an end date
-                    {
+        private void lstSearchResults_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            selectedRecord = lstSearchResults.SelectedItem as SearchResultRecord;
+            RecordViewWindow editWindow = new RecordViewWindow(ref selectedRecord);
 
-                    }
-                }
-                // user has enetered minimum amount only
-                else if (HasEnteredMinAmount())
-                {
+            editWindow.Owner = this;
+            IsEnabled = false;
 
-                }
-                // user has entered maximum amount only
-                else if (HasEnteredMaxAmount())
-                {
-
-                }
-                else // user has not entered an amount range
-                {
-
-                    if (hasPickedTwoDates) // user has chosen a start and end date range
-                    {
-
-                    }
-                    else if (HasPickedStartingDate()) // user has chose only a start date
-                    {
-
-                    }
-                    else if (HasPickedEndingDate()) // user has chosen only an end date
-                    {
-
-                    }
-
-                }
-            }
-            else // user has not selected a category
-            {
-                // user has entered two amounts
-                if (HasEnteredTwoAmounts())
-                {
-
-                }
-                // user has enetered minimum amount only
-                else if (HasEnteredMinAmount())
-                {
-
-                }
-                // user has entered maximum amount only
-                else if (HasEnteredMaxAmount())
-                {
-
-                }
-                else // user has not entered an amount range
-                {
-
-                    if (hasPickedTwoDates) // user has chosen a start and end date range
-                    {
-
-                    }
-                    else if (HasPickedStartingDate()) // user has chose only a start date
-                    {
-
-                    }
-                    else if (HasPickedEndingDate()) // user has chosen only an end date
-                    {
-
-                    }
-                    else
-                    {
-                        foreach (ExistingExpense item in currentUser.ExistingUserExpenses)
-                        {
-                            lstSearchResults.Items.Add(item.ToString());
-                        }
-                    }
-                }
-            }
-            
-
+            editWindow.IsEnabled = true;
+            editWindow.Visibility = Visibility.Visible;
         }
     }
 }
