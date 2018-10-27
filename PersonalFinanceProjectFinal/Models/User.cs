@@ -14,6 +14,9 @@ namespace PersonalFinanceProjectFinal.Models
 
         public List<NewExpense> NewUserExpenses { get; set; } // reserved for new records
         public List<NewIncome> NewUserIncome { get; set; }    // reserved for new records
+
+        public List<SearchResultRecord> ModifiedExpenseRecords { get; set; }
+        public List<SearchResultRecord> ModifiedIncomeRecords { get; set; }
         #endregion
 
 
@@ -33,6 +36,9 @@ namespace PersonalFinanceProjectFinal.Models
 
             NewUserExpenses = new List<NewExpense>();
             NewUserIncome = new List<NewIncome>();
+
+            ModifiedExpenseRecords = new List<SearchResultRecord>();
+            ModifiedIncomeRecords = new List<SearchResultRecord>();
         }
 
     }

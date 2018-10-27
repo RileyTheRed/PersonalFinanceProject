@@ -2,21 +2,23 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonalFinanceProjectFinal.Models
 {
     public class SearchResultRecord
     {
 
-        public int Delete { get; set; }
-        public int New { get; set; }
+        #region Properties
+        public int Modified { get; set; }
+        public string Status { get; set; }
+        public string PreviousStatus { get; set; }
+        public int IsNewRecord { get; set; }
         public string Hash { get; set; }
         public double Amount { get; set; }
         public DateTime Date { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        #endregion
 
 
         /// <summary>
@@ -31,13 +33,14 @@ namespace PersonalFinanceProjectFinal.Models
         /// <param name="date"></param>
         /// <param name="cat"></param>
         /// <param name="desc"></param>
-        public SearchResultRecord(int del, int isnew, string hash, double dbl, DateTime date, string cat, string desc)
+        public SearchResultRecord(int modified, int isnew, string hash, double dbl, DateTime date, string cat, string desc)
         {
-            Delete = del;
-            New = isnew;
+            Status = "";
+            PreviousStatus = "";
+            IsNewRecord = isnew;
             Hash = hash;
             Amount = dbl;
-            Date = date;
+            Date = date.Date;
             Category = cat;
             Description = desc;
         }
@@ -49,37 +52,110 @@ namespace PersonalFinanceProjectFinal.Models
         /// <param name="existing"></param>
         /// <param name="newer"></param>
         /// <returns></returns>
-        public static ObservableCollection<SearchResultRecord> GetExpenseResults(List<ExistingExpense> existing, List<NewExpense> newer)
+        public static ObservableCollection<SearchResultRecord> GetExpenseResults(List<ExistingExpense> existing, List<NewExpense> newer,
+            List<SearchResultRecord> modified)
         {
             ObservableCollection<SearchResultRecord> tempRecords = new ObservableCollection<SearchResultRecord>();
-            foreach (ExistingExpense item in existing)
+
+            if (modified.Count > 0)
             {
-                tempRecords.Add(new SearchResultRecord(0, 0, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                foreach (ExistingExpense item in existing)
+                {
+                    if (modified.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                    {
+                        tempRecords.Add(new SearchResultRecord(0, 0, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                    }
+                }
+                foreach (NewExpense item in newer)
+                {
+                    if (modified.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                    {
+                        tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                    }
+                }
+                foreach (SearchResultRecord item in modified)
+                {
+                    tempRecords.Add(item);
+                }
             }
-            foreach (NewExpense item in newer)
+            else
             {
-                tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                foreach (ExistingExpense item in existing)
+                {
+                    tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                }
+                foreach (NewExpense item in newer)
+                {
+                    tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                }
             }
+
+
+
             tempRecords.OrderBy(e => e.Date);
             return tempRecords;
         }
 
 
-        public override string ToString()
+        /// <summary>
+        /// GetIncomeResults takes in the users existing and new expense records
+        /// </summary>
+        /// <param name="existing"></param>
+        /// <param name="newer"></param>
+        /// <returns></returns>
+        public static ObservableCollection<SearchResultRecord> GetIncomeResults(List<ExistingIncome> existing, List<NewIncome> newer,
+            List<SearchResultRecord> modified)
         {
-            if (Delete == 1)
+            ObservableCollection<SearchResultRecord> tempRecords = new ObservableCollection<SearchResultRecord>();
+
+            if (modified.Count > 0)
             {
-                return $"-- {Date},\t{Amount},\t{Category}";
-            }
-            else if (New == 1)
-            {
-                return $"++ {Date},\t{Amount},\t{Category}";
+                foreach (ExistingIncome item in existing)
+                {
+                    if (modified.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                    {
+                        tempRecords.Add(new SearchResultRecord(0, 0, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                    }
+                }
+                foreach (NewIncome item in newer)
+                {
+                    if (modified.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                    {
+                        tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                    }
+                }
+                foreach (SearchResultRecord item in modified)
+                {
+                    tempRecords.Add(item);
+                }
             }
             else
             {
-                return $"{Date},\t{Amount},\t{Category}";
+                foreach (ExistingIncome item in existing)
+                {
+                    tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                }
+                foreach (NewIncome item in newer)
+                {
+                    tempRecords.Add(new SearchResultRecord(0, 1, item.Hash, item.Amount, item.Date, item.Category, item.Description));
+                }
             }
-            
+
+            tempRecords.OrderBy(e => e.Date);
+            return tempRecords;
+        }
+
+
+        public override bool Equals(object obj)
+        {
+            var temp = obj as SearchResultRecord;
+            if (temp != null)
+            {
+                if (!Hash.Equals(temp.Hash))
+                    return false;
+                return Modified == temp.Modified && Amount == temp.Amount && Date.Equals(temp.Date) && Category.Equals(temp.Category) && Description.Equals(temp.Description);
+            }
+            return false;
         }
 
     }

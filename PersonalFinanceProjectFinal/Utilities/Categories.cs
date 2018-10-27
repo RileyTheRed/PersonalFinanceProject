@@ -7,6 +7,7 @@ namespace PersonalFinanceProjectFinal.Utilities
 
         private static List<string> defaultCategories = new List<string>()
         {
+            "Paycheck",
             "Utilities",
             "Transportation",
             "Groceries",

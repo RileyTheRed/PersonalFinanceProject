@@ -7,7 +7,8 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="UserDashboard" Height="600" Width="900">
+        Title="UserDashboard" Height="600" Width="900"
+        IsEnabledChanged="Window_IsEnabledChanged">
     <Grid Background="#b5b5b7">
 
         <!--GRID ROW DEFINTIONS-->
@@ -50,6 +51,16 @@
                 <SolidColorBrush Color="#252839"/>
             </Rectangle.Fill>
         </Rectangle>
+
+        <Rectangle HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   Width="500" Height="50"
+                   Margin="0,0,0,30"
+                   Grid.RowSpan="5" Grid.ColumnSpan="4">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#b5b5b7"/>
+            </Rectangle.Fill>
+        </Rectangle>
         <!--END RECTANGLE DEFINITIONS-->
         
         
@@ -60,6 +71,14 @@
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
                FontSize="35"
                Foreground="#f2b632"/>
+
+        <Label x:Name="lblInfo"
+               Grid.Column="1" Grid.ColumnSpan="2"
+               Grid.Row="4"
+               HorizontalAlignment="Center"
+               FontSize="15" FontWeight="SemiBold"
+               Content="Current months expense/income ratios are above."
+               Margin="0,20,0,0"/>
         <!--END LABEL DEFINTIONS-->
         
         

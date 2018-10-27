@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    partial class Database
+    public class Database
     {
 
         #region ConnectionStuff
@@ -228,27 +229,172 @@ namespace PersonalFinanceProjectFinal.Models
 
             GetConnection();
 
-            foreach (NewExpense expense in user.NewUserExpenses) // insert new expense records
+            #region HashIDLists
+            List<string> existingExpenseToUpdate;
+            List<string> existingExpenseToDelete;
+
+            List<string> existingIncomeToUpdate;
+            List<string> existingIncomeToDelete;
+            #endregion
+
+
+            #region PopulateHashListsWithAppropriateValues
+            existingExpenseToUpdate = user.ModifiedExpenseRecords.Where(x => x.Status.Equals("++")).Select(x => x.Hash).ToList();
+            existingExpenseToDelete = user.ModifiedExpenseRecords.Where(x => x.Status.Equals("--")).Select(x => x.Hash).ToList();
+
+            existingIncomeToUpdate = user.ModifiedIncomeRecords.Where(x => x.Status.Equals("++")).Select(x => x.Hash).ToList();
+            existingIncomeToDelete = user.ModifiedIncomeRecords.Where(x => x.Status.Equals("--")).Select(x => x.Hash).ToList();
+            #endregion
+
+
+            #region InsertingAndUpdatingAndDeleting
+            /// for each of the existing expense records, determine which hash ids are in the list of
+            /// hashes for expense records to update. if they are, then update them with the new values stored
+            /// in the corresponding user list of modified expense records
+            foreach (ExistingExpense item in user.ExistingUserExpenses)
             {
-                using (SqlCommand cmd = new SqlCommand($"INSERT INTO ExpenseTable (" +
-                    $"userID,expenseID,amount,date,category,description) values (" +
-                    $"'{expense.OwnerID}','{expense.Hash}','{expense.Amount}','{expense.Date}'" +
-                    $",'{expense.Category.Trim(' ')}','{expense.Description.Trim(' ')}')",con))
+                if (existingExpenseToUpdate.Contains(item.Hash))
                 {
+                    var temp = user.ModifiedExpenseRecords.First(x => x.Hash.Equals(item.Hash)); // always exists
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "UPDATE ExpenseTable SET amount = @amt, date = @dte, category = @cat, description = @desc " +
+                            "WHERE expenseID = @id";
+                        cmd.Parameters.AddWithValue("@amt", temp.Amount);
+                        cmd.Parameters.AddWithValue("@dte", temp.Date);
+                        cmd.Parameters.AddWithValue("@cat", temp.Category);
+                        cmd.Parameters.AddWithValue("@desc", temp.Description);
+                        cmd.Parameters.AddWithValue("@id", temp.Hash);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+
+            /// for each of the existing income records, determine which hash ids are in the list of hashes
+            /// for the income records to update. if they are, then update them with the new values stored
+            /// in the corresponding user list of modified income records
+            foreach (ExistingIncome item in user.ExistingUserIncome)
+            {
+                if (existingIncomeToUpdate.Contains(item.Hash))
+                {
+                    var temp = user.ModifiedIncomeRecords.First(x => x.Hash.Equals(item.Hash));
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "UPDATE IncomeTable SET amount = @amt, date = @dte, category = @cat, description = @desc " +
+                            "WHERE incomeID = @id";
+                        cmd.Parameters.AddWithValue("@amt", temp.Amount);
+                        cmd.Parameters.AddWithValue("@dte", temp.Date);
+                        cmd.Parameters.AddWithValue("@cat", temp.Category);
+                        cmd.Parameters.AddWithValue("@desc", temp.Description);
+                        cmd.Parameters.AddWithValue("@id", temp.Hash);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+
+            /// check to see if each of the new expense records had been updated at some point
+            /// by the user. if the hash id exists in the list of new expense records to update,
+            /// then insert the record informtion stored in the users list of modified income records.
+            /// otherwise, insert the record from the NewUserExpense list
+            foreach (NewExpense expense in user.NewUserExpenses)
+            {
+                if (existingExpenseToUpdate.Contains(expense.Hash)) // user modified it at some point
+                {
+                    var temp = user.ModifiedExpenseRecords.First(x => x.Hash.Equals(expense.Hash));
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "INSERT INTO ExpenseTable (userID, expenseID, amount, date, category, description) " +
+                            "VALUES (@userid, @id, @amt, @dte, @cat, @desc)";
+                        cmd.Parameters.AddWithValue("@amt", temp.Amount);
+                        cmd.Parameters.AddWithValue("@dte", temp.Date);
+                        cmd.Parameters.AddWithValue("@cat", temp.Category.Trim(' '));
+                        cmd.Parameters.AddWithValue("@desc", temp.Description.Trim(' '));
+                        cmd.Parameters.AddWithValue("@id", temp.Hash);
+                        cmd.Parameters.AddWithValue("@userid", user.UserID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                else // user didnt modify it after creation
+                {
+                    using (SqlCommand cmd = new SqlCommand($"INSERT INTO ExpenseTable (" +
+                        $"userID,expenseID,amount,date,category,description) values (" +
+                        $"'{expense.OwnerID}','{expense.Hash}','{expense.Amount}','{expense.Date}'" +
+                        $",'{expense.Category.Trim(' ')}','{expense.Description.Trim(' ')}')", con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+
+            /// check to see the exact same as the foreach block above, but instead this is for income records
+            /// (see the above comment for the description)
+            foreach (NewIncome income in user.NewUserIncome)
+            {
+                if (existingIncomeToUpdate.Contains(income.Hash))
+                {
+                    var temp = user.ModifiedIncomeRecords.First(x => x.Hash.Equals(income.Hash));
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "INSERT INTO IncomeTable (userID, incomeID, amount, date, category, description) " +
+                            "VALUES (@userid, @id, @amt, @dte, @cat, @desc)";
+                        cmd.Parameters.AddWithValue("@amt", temp.Amount);
+                        cmd.Parameters.AddWithValue("@dte", temp.Date);
+                        cmd.Parameters.AddWithValue("@cat", temp.Category.Trim(' '));
+                        cmd.Parameters.AddWithValue("@desc", temp.Description.Trim(' '));
+                        cmd.Parameters.AddWithValue("@id", temp.Hash);
+                        cmd.Parameters.AddWithValue("@userid", user.UserID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    using (SqlCommand cmd = new SqlCommand($"INSERT INTO IncomeTable (" +
+                        $"userID,incomeID,amount,date,category,description) values (" +
+                        $"'{income.OwnerID}','{income.Hash}','{income.Amount}','{income.Date}'" +
+                        $",'{income.Category.Trim(' ')}','{income.Description.Trim(' ')}')", con))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+
+            /// for each of the hash ids for the records the user marked for deletion, do just that
+            foreach (string item in existingExpenseToDelete)
+            {
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = con;
+                    cmd.CommandText = "DELETE FROM ExpenseTable WHERE expenseID = @id";
+                    cmd.Parameters.AddWithValue("@id", item);
                     cmd.ExecuteNonQuery();
                 }
             }
 
-            foreach (NewIncome income in user.NewUserIncome) // insert new income records
+
+            /// for each of the hash ids for the records the user marked for deletion, do just that
+            foreach (string item in existingIncomeToDelete)
             {
-                using (SqlCommand cmd = new SqlCommand($"INSERT INTO IncomeTable (" +
-                    $"userID,incomeID,amount,date,category,description) values (" +
-                    $"'{income.OwnerID}','{income.Hash}','{income.Amount}','{income.Date}'" +
-                    $",'{income.Category.Trim(' ')}','{income.Description.Trim(' ')}')", con))
+                using (SqlCommand cmd = new SqlCommand())
                 {
+                    cmd.Connection = con;
+                    cmd.CommandText = "DELETE FROM IncomeTable WHERE incomeID = @id";
+                    cmd.Parameters.AddWithValue("@id", item);
                     cmd.ExecuteNonQuery();
                 }
             }
+            #endregion
 
             CloseConneciton();
 

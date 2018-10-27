@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="Search Records Window" Height="600" Width="900"
+        IsEnabledChanged="Window_IsEnabledChanged"
         >
     
     <Grid Background="#677077">
@@ -177,26 +178,43 @@
                     Grid.ColumnSpan="2"
                     VerticalAlignment="Bottom" HorizontalAlignment="Left"
                     Width="110"
-                    Margin="80,0,0,0"/>
+                    Margin="80,0,0,0"
+                    LostFocus="dteStart_LostFocus"/>
 
         <DatePicker x:Name="dteEnd"
                     Grid.Column="1" Grid.Row="2"
                     VerticalAlignment="Bottom" HorizontalAlignment="Right"
                     Width="110"
-                    Margin="0,0,0,0"/>
+                    Margin="0,0,0,0"
+                    LostFocus="dteEnd_LostFocus"/>
         <!--END DATEPICKER DEFINTIONS-->
         
         
         <!--LISTBOX DEFINTIONS-->
-        <ListBox x:Name="lstSearchResults"
+        <ListView x:Name="lstSearchResults"
                  Grid.Column="2" Grid.ColumnSpan="3"
                  Grid.RowSpan="4"
                  HorizontalAlignment="Center" VerticalAlignment="Center"
                  Width="400" Height="430"
                  Margin="75,20,0,0"
-                 MouseDoubleClick="lstSearchResults_MouseDoubleClick"
-                 ItemsSource="{Binding Results}"
-                 />
+                 MouseDoubleClick="lstSearchResults_MouseDoubleClick">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Status"
+                                    Width="50"
+                                    DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="Date"
+                                    Width="80"
+                                    DisplayMemberBinding="{Binding Date, StringFormat=d}"/>
+                    <GridViewColumn Header="Amount"
+                                    Width="90"
+                                    DisplayMemberBinding="{Binding Amount}"/>
+                    <GridViewColumn Header="Category"
+                                    Width="140"
+                                    DisplayMemberBinding="{Binding Category}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
 </Window>

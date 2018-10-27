@@ -97,6 +97,14 @@
         <!--END DATEPICKER DEFINTIONS-->
         
         
+        <!--CHECKBOX DEFINTIONS-->
+        <CheckBox x:Name="chkHasBeenDeleted"
+                     Grid.Column="2"
+                     HorizontalAlignment="Center" VerticalAlignment="Center"
+                     Content="Deleted" Visibility="Hidden" IsEnabled="False"/>
+        <!--END CHECKBOX DEFINTIONS-->
+
+
         <!--BUTTON DEFINTIONS-->
         <Button x:Name="btnCancel" Content="Cancel"
                 FontSize="20" FontWeight="SemiBold"

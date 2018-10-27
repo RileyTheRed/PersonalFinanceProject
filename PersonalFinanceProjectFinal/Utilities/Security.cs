@@ -76,6 +76,11 @@ namespace PersonalFinanceProjectFinal.Utilities
         }
 
 
+        /// <summary>
+        /// Returns a hash of a passed secure password. (not sure secure, pretty janky)
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public static string getPassHashSha256(SecureString password)
         {
 

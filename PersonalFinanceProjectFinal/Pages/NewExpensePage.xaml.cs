@@ -14,6 +14,7 @@ namespace PersonalFinanceProjectFinal.Pages
 
         User currentUser;
 
+
         private static string DefaultCatMessage = "Please select a category...";
 
 
@@ -36,17 +37,17 @@ namespace PersonalFinanceProjectFinal.Pages
         {
             if (dteDate.SelectedDate.HasValue)
             {
-                if (Sanitizer.ValidNewExpense(txtAmount.Text, dteDate.SelectedDate.Value))
+                if (!Sanitizer.InvalidNewExpense(txtAmount.Text, dteDate.SelectedDate.Value) && !cmbCategory.Text.Equals(DefaultCatMessage))
                 {
                     if (txtDescription.Text.Length > 100)
                     {
-                        currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, double.Parse(txtAmount.Text), dteDate.SelectedDate.Value,
-                            cmbCategory.Text, txtDescription.Text.Substring(0, 100)));
+                        currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, double.Parse(txtAmount.Text.Substring(0,txtAmount.Text.IndexOf('.')+3)),
+                            dteDate.SelectedDate.Value, cmbCategory.Text, txtDescription.Text.Substring(0, 100)));
                     }
                     else
                     {
-                        currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, double.Parse(txtAmount.Text), dteDate.SelectedDate.Value,
-                            cmbCategory.Text, txtDescription.Text));
+                        currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, double.Parse(txtAmount.Text.Substring(0, txtAmount.Text.IndexOf('.') + 3)),
+                            dteDate.SelectedDate.Value, cmbCategory.Text, txtDescription.Text));
                     }
                     MessageBox.Show("Record entered successfully!", "Success");
                     ClearInput();

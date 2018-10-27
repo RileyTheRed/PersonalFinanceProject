@@ -31,6 +31,7 @@ namespace PersonalFinanceProjectFinal
             InitializeComponent();
             currentUser = Database.GetUserData(uname);
             lblGreeting.Content = $"Welcome back, {currentUser.FirstName}";
+            
             pieChart.DataContext = this;
             UpdateChart();
         }
@@ -67,7 +68,8 @@ namespace PersonalFinanceProjectFinal
 
             foreach (ExistingExpense item in currentUser.ExistingUserExpenses)
             {
-                if(item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year)
+                if(item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedExpenseRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
                 {
                     tempExpense += item.Amount;
                 }
@@ -75,7 +77,42 @@ namespace PersonalFinanceProjectFinal
 
             foreach (ExistingIncome item in currentUser.ExistingUserIncome)
             {
-                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year)
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedIncomeRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempIncome += item.Amount;
+                }
+            }
+
+            foreach (NewIncome item in currentUser.NewUserIncome)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedIncomeRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempIncome += item.Amount;
+                }
+            }
+
+            foreach (NewExpense item in currentUser.NewUserExpenses)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedExpenseRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempExpense += item.Amount;
+                }
+            }
+
+            foreach (SearchResultRecord item in currentUser.ModifiedExpenseRecords)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year && !item.Status.Equals("--"))
+                {
+                    tempExpense += item.Amount;
+                }
+            }
+
+            foreach (SearchResultRecord item in currentUser.ModifiedIncomeRecords)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year && !item.Status.Equals("--"))
                 {
                     tempIncome += item.Amount;
                 }
@@ -84,8 +121,15 @@ namespace PersonalFinanceProjectFinal
             monthlyExpenseSoFar.Add(tempExpense);
             monthlyIncomeSoFar.Add(tempIncome);
 
-            pieExpense.Values = new ChartValues<double>(monthlyExpenseSoFar);
-            pieIncome.Values = new ChartValues<double>(monthlyIncomeSoFar);
+            if (monthlyExpenseSoFar[0] == 0.0 && monthlyIncomeSoFar[0] == 0.0)
+            {
+                pieChart.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                pieExpense.Values = new ChartValues<double>(monthlyExpenseSoFar);
+                pieIncome.Values = new ChartValues<double>(monthlyIncomeSoFar);
+            }
 
         }
 
@@ -99,6 +143,11 @@ namespace PersonalFinanceProjectFinal
 
             Visibility = Visibility.Hidden;
             IsEnabled = false;
+        }
+
+        private void Window_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            UpdateChart();
         }
     }
 }

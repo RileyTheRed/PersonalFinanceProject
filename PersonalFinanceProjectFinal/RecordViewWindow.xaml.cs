@@ -1,18 +1,6 @@
 ﻿using PersonalFinanceProjectFinal.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PersonalFinanceProjectFinal.Utilities;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PersonalFinanceProjectFinal
 {
@@ -23,8 +11,6 @@ namespace PersonalFinanceProjectFinal
     {
 
         SearchResultRecord selectedRecord;
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        private bool hasBeenEdited = false;
 
 
         /// <summary>
@@ -39,6 +25,21 @@ namespace PersonalFinanceProjectFinal
             txtDescription.Text = selectedRecord.Description.ToString();
             cmbCategory.Text = selectedRecord.Category;
             dteDate.SelectedDate = selectedRecord.Date;
+
+            foreach (string item in Categories.GetCategories())
+            {
+                cmbCategory.Items.Add(item);
+            }
+
+            if (selected.Status.Equals("--"))
+            {
+                btnDelete.Visibility = Visibility.Hidden;
+                btnDelete.IsEnabled = false;
+
+                chkHasBeenDeleted.Visibility = Visibility.Visible;
+                chkHasBeenDeleted.IsEnabled = true;
+                chkHasBeenDeleted.IsChecked = true;
+            }
         }
 
 
@@ -64,11 +65,11 @@ namespace PersonalFinanceProjectFinal
             MessageBoxResult result =  MessageBox.Show("Are you sure you want to delete this record?", "Confirmation", MessageBoxButton.YesNoCancel);
             if(result == MessageBoxResult.Yes)
             {
-                selectedRecord.Delete = 1;
+                selectedRecord.PreviousStatus = selectedRecord.Status;
+                selectedRecord.Status = "--";
+                selectedRecord.Modified = 1;
                 Owner.IsEnabled = true;
                 Owner.Activate();
-                
-                //PropertyChanged(this, new PropertyChangedEventArgs("Results"));
                 Close();
             }
             else if (result == MessageBoxResult.No)
@@ -88,7 +89,119 @@ namespace PersonalFinanceProjectFinal
         /// <param name="e"></param>
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            if (HasAmountChanged() || HasCategoryChanged() || HasDateChanged() || HasDescriptionChanged())
+            {
+                if (chkHasBeenDeleted.IsChecked == true)
+                {
+                    MessageBoxResult result = MessageBox.Show("The record is marked for deletion.\n" +
+                        "Did you intent to reinstate the record and save the changes?", "Confimation", MessageBoxButton.YesNoCancel);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        selectedRecord.Status = "++";
+                        selectedRecord.Modified = 1;
+                        UpdateSelectedRecord();
+                        Owner.IsEnabled = true;
+                        Owner.Activate();
+                        Close();
+                    }
+                    else if (result == MessageBoxResult.No)
+                    {
+                        Owner.IsEnabled = true;
+                        Owner.Activate();
+                        Close();
+                    }
+                }
+                else
+                {
+                    UpdateSelectedRecord();
+                    selectedRecord.Status = "++";
+                    selectedRecord.Modified = 1;
+                    MessageBox.Show("Record Updated.", "Confirmation");
+                    Owner.IsEnabled = true;
+                    Owner.Activate();
+                    Close();
+                }
+            }
+            else
+            {
+                if (chkHasBeenDeleted.IsChecked == false && selectedRecord.Status.Equals("--"))
+                {
+                    MessageBoxResult result = MessageBox.Show("Do you wish to reinstate the record?", "Confirmation", MessageBoxButton.YesNoCancel);
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        if (selectedRecord.PreviousStatus.Equals("++"))
+                        {
+                            selectedRecord.Status = selectedRecord.PreviousStatus;
+                            selectedRecord.Modified = 1;
+                            Owner.IsEnabled = true;
+                            Owner.Activate();
+                            Close();
+                        }
+                        else
+                        {
+                            selectedRecord.Status = "";
+                            Owner.IsEnabled = true;
+                            Owner.Activate();
+                            Close();
+                        }
+                    }
+                    else if (result == MessageBoxResult.No)
+                    {
+                        Owner.IsEnabled = true;
+                        Owner.Activate();
+                        Close();
+                    }
+                }
+                else
+                {
 
+                    MessageBox.Show("No changes made.", "Confirmation");
+                    Owner.IsEnabled = true;
+                    Owner.Activate();
+                    Close();
+                }
+            }
         }
+
+
+        private void UpdateSelectedRecord()
+        {
+            selectedRecord.Amount = double.Parse(txtAmount.Text);
+            selectedRecord.Category = cmbCategory.Text;
+            selectedRecord.Date = dteDate.SelectedDate.Value;
+            if (!txtDescription.Text.Equals(""))
+            {
+                if (txtDescription.Text.Length < 100)
+                    selectedRecord.Description = txtDescription.Text;
+                else
+                    selectedRecord.Description = txtDescription.Text.Substring(0, 100);
+            }
+        }
+
+
+        #region HelperFunctions
+        private bool HasAmountChanged()
+        {
+            return !txtAmount.Text.Equals(selectedRecord.Amount.ToString());
+        }
+
+
+        private bool HasCategoryChanged()
+        {
+            return cmbCategory.Text != selectedRecord.Category;
+        }
+
+
+        private bool HasDescriptionChanged()
+        {
+            return !txtDescription.Text.Equals(selectedRecord.Description);
+        }
+
+
+        private bool HasDateChanged()
+        {
+            return !dteDate.SelectedDate.Equals(selectedRecord.Date);
+        }
+        #endregion
     }
 }

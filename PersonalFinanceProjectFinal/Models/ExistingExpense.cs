@@ -4,11 +4,6 @@ namespace PersonalFinanceProjectFinal.Models
 {
     public class ExistingExpense
     {
-        private string v1;
-        private double v2;
-        private object v3;
-        private string v4;
-        private string v5;
 
         #region Properties
         public string Hash { get; private set; } // unique expense id
@@ -36,15 +31,11 @@ namespace PersonalFinanceProjectFinal.Models
             Description = descript;
         }
 
-        public ExistingExpense(string v1, double v2, object v3, string v4, string v5)
-        {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.v3 = v3;
-            this.v4 = v4;
-            this.v5 = v5;
-        }
 
+        /// <summary>
+        /// Overridden toString method
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return $"{Date.ToShortDateString()},\t{Amount},\t{Category},\t{Description}\t\t{Hash}";
