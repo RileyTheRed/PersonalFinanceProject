@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PersonalFinanceProjectFinal"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="AddRecordsWindow" Height="600" Width="900">
+        Title="AddRecordsWindow" Height="600" Width="900"
+        Closed="Window_Closed">
     <Grid Background="#252839">
         
         <!--ROW DEFINTIONS-->

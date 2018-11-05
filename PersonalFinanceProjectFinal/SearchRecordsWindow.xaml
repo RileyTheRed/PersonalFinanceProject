@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         Title="Search Records Window" Height="600" Width="900"
         IsEnabledChanged="Window_IsEnabledChanged"
-        >
+        Closed="Window_Closed">
     
     <Grid Background="#677077">
         

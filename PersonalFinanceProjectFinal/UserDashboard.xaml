@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PersonalFinanceProjectFinal"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:uc="clr-namespace:PersonalFinanceProjectFinal.CustomUserControls"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="UserDashboard" Height="600" Width="900"
-        IsEnabledChanged="Window_IsEnabledChanged">
+        IsEnabledChanged="Window_IsEnabledChanged"
+        Closed="Window_Closed"
+        WindowStartupLocation="CenterScreen">
     <Grid Background="#b5b5b7">
 
         <!--GRID ROW DEFINTIONS-->
@@ -37,7 +40,8 @@
         <Rectangle HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Width="870" Height="545"
-                   Grid.RowSpan="6" Grid.ColumnSpan="4">
+                   Grid.RowSpan="6" Grid.ColumnSpan="4"
+                   x:Name="rectYellow">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#f2b632"/>
             </Rectangle.Fill>
@@ -46,24 +50,36 @@
         <Rectangle HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Width="850" Height="525"
-                   Grid.RowSpan="6" Grid.ColumnSpan="4">
+                   Grid.RowSpan="6" Grid.ColumnSpan="4"
+                   x:Name="rectBlue">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#252839"/>
             </Rectangle.Fill>
         </Rectangle>
 
-        <Rectangle HorizontalAlignment="Center"
-                   VerticalAlignment="Bottom"
-                   Width="500" Height="50"
-                   Margin="0,0,0,30"
-                   Grid.RowSpan="5" Grid.ColumnSpan="4">
+        <Rectangle VerticalAlignment="Center" Height="352"
+                   Grid.Row="1"
+                   Grid.RowSpan="4" Grid.ColumnSpan="2"
+                   x:Name="rectFrontGray" Margin="60,0,0,29">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#b5b5b7"/>
             </Rectangle.Fill>
         </Rectangle>
+
+        <Rectangle VerticalAlignment="Center" Height="332"
+                   Grid.Row="1"
+                   Grid.RowSpan="4" Grid.ColumnSpan="2"
+                   x:Name="rectFrontBlue" Margin="74,10,13,39">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#677077"/>
+            </Rectangle.Fill>
+            
+            
+            
+        </Rectangle>
         <!--END RECTANGLE DEFINITIONS-->
-        
-        
+
+
         <!--LABEL DEFINTIONS-->
         <Label x:Name="lblGreeting"
                Content=""
@@ -71,17 +87,9 @@
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
                FontSize="35"
                Foreground="#f2b632"/>
-
-        <Label x:Name="lblInfo"
-               Grid.Column="1" Grid.ColumnSpan="2"
-               Grid.Row="4"
-               HorizontalAlignment="Center"
-               FontSize="15" FontWeight="SemiBold"
-               Content="Current months expense/income ratios are above."
-               Margin="0,20,0,0"/>
         <!--END LABEL DEFINTIONS-->
-        
-        
+
+
         <!--BUTTON DEFINTIONS-->
         <Button x:Name="btnAddRecords"
                 Content="Add Expenses/Income"
@@ -124,16 +132,27 @@
                 Background="#252839" Foreground="#f2b632"
                 BorderThickness="2" BorderBrush="#f2b632"
                 Click="btnLogout_Click"/>
+
+        <Button x:Name="btnHelp"
+                Content="Help"
+                Height="30" Width="50"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Margin="30,0,0,0"
+                Background="#252839" Foreground="#f2b632"
+                BorderThickness="2" BorderBrush="#f2b632"
+                Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
-        
-        
+
+
         <!---->
         <lvc:PieChart x:Name="pieChart"
                       Hoverable="False"
-                      Grid.Column="1" Grid.ColumnSpan="2"
-                      Grid.Row="1" Grid.RowSpan="3"
+                      Grid.Column="2" Grid.ColumnSpan="2"
+                      Grid.Row="1" Grid.RowSpan="4"
                       BorderBrush="#b5b5b7"
-                      >
+                      LegendLocation="Bottom"
+                      Foreground="#f2b632"
+                      Margin="0,0,50,29">
             <lvc:PieChart.Series>
                 <lvc:PieSeries x:Name="pieExpense"
                                Title="Monthly Expense"
@@ -144,7 +163,16 @@
                                DataLabels="True"
                                Fill="DarkGreen"/>
             </lvc:PieChart.Series>
+            
         </lvc:PieChart>
+
+        <uc:DashboardUserData x:Name="ucDashData"
+                              Grid.ColumnSpan="2" Grid.Row="1"
+                              Grid.RowSpan="4"
+                              Width="360" Height="332" Margin="74,10,13,39">
+            
+        </uc:DashboardUserData>
+        
 
     </Grid>
     

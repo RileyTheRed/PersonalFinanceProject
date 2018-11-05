@@ -339,6 +339,17 @@ namespace PersonalFinanceProjectFinal
             }
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            if (typeOfRecordSearched.Equals("e"))
+                UpdateModifiedExpenseList();
+            else if (typeOfRecordSearched.Equals("i"))
+                UpdateModifiedIncomeList();
 
+            Owner.Visibility = Visibility.Visible;
+            Owner.IsEnabled = true;
+
+            Close();
+        }
     }
 }

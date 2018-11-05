@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="PersonalFinanceProjectFinal.CustomUserControls.DashboardUserData"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="360" d:DesignWidth="332"
+             Background="#677077">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        
+        <!--CURRENt MONTH EXPENSE SECTION-->
+        <TextBlock TextWrapping="WrapWithOverflow"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   FontWeight="SemiBold" Foreground="#f2b632">
+            <TextBlock.Text>
+                This month's top three expense categories:
+            </TextBlock.Text>
+        </TextBlock>
+
+        <Label Content="1:"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="0,10,0,0"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label Content="2:"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label Content="3:"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Bottom"
+               Margin="0,0,0,10"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label x:Name="lblCurrentFirstExpense"
+               Content="Testing"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="15,10,0,0"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label x:Name="lblCurrentSecondExpense"
+               Content="Testing"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Margin="15,0,0,0"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label x:Name="lblCurrentThirdExpense"
+               Content="Testing"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Bottom"
+               Margin="15,0,0,10"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+        <!--END CURRENT MONTH EXPENSE SECTION-->
+        
+        
+        <!--LAST MONTH EXPENSE SECTION-->
+        <TextBlock TextWrapping="WrapWithOverflow"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   FontWeight="SemiBold" Foreground="#f2b632"
+                   Grid.Row="1">
+            <TextBlock.Text>
+                Last month's top three expense categories:
+            </TextBlock.Text>
+        </TextBlock>
+        
+        <Label Content="1:"
+               Grid.Column="1" Grid.Row="1"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="0,10,0,0"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label Content="2:"
+               Grid.Column="1" Grid.Row="1"
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label Content="3:"
+               Grid.Column="1" Grid.Row="1"
+               HorizontalAlignment="Left" VerticalAlignment="Bottom"
+               Margin="0,0,0,10"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label x:Name="lblLastFirstIncome"
+               Content="Testing"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Margin="15,10,0,0"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label x:Name="lblLastSecondExpense"
+               Content="Testing"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Center"
+               Margin="15,0,0,0"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+
+        <Label x:Name="lblLastThirdExpense"
+               Content="Testing"
+               Grid.Column="1" Grid.Row="0"
+               HorizontalAlignment="Left" VerticalAlignment="Bottom"
+               Margin="15,0,0,10"
+               Foreground="#252839"
+               FontWeight="SemiBold"/>
+        <!--END LAST MONTH EXPENSE SECTION-->
+        
+        
+        <!--CURRENT MONTH INCOME TO LAST MONTH SECTION-->
+        <TextBlock TextWrapping="WrapWithOverflow"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   FontWeight="SemiBold" Foreground="#f2b632"
+                   Grid.Row="2">
+            <TextBlock.Text>
+                Current month's income to last month's income:
+            </TextBlock.Text>
+        </TextBlock>
+        
+        
+        <!--END CURRENT MONTH INCOME TO LAST MONTH SECTION-->
+        
+        
+        <!--CURRENT MONTH EXPENSE TO LAST MONTH SECTION-->
+        <TextBlock TextWrapping="WrapWithOverflow"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   TextAlignment="Center"
+                   FontWeight="SemiBold" Foreground="#f2b632"
+                   Grid.Row="3">
+            <TextBlock.Text>
+                Current month's expense to last month's expense:
+            </TextBlock.Text>
+        </TextBlock>
+        <!--END CURRENT MONTH EXPENSE TO LAST MONTH SECTION-->
+
+    </Grid>
+</UserControl>

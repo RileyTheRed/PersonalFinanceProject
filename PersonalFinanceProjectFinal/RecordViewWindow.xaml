@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:PersonalFinanceProjectFinal"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="RecordViewWindow" Height="450" Width="500">
+        Title="RecordViewWindow" Height="450" Width="500"
+        Closed="Window_Closed">
     <Grid Background="#252839">
 
         

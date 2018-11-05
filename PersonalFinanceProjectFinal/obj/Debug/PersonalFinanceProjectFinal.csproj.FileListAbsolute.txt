@@ -60,3 +60,8 @@ C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProjec
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\SearchRecordsWindow.baml
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\RecordViewWindow.g.cs
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\RecordViewWindow.baml
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\bin\Debug\WPFCustomMessageBox.dll
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\bin\Debug\WPFCustomMessageBox.xml
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\CustomUserControls\DashboardUserData.baml
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\CustomUserControls\DashboardUserData.g.cs
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\GeneratedInternalTypeHelper.g.cs

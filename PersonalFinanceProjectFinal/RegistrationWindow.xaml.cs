@@ -254,6 +254,7 @@ namespace PersonalFinanceProjectFinal
         {
             Owner.Visibility = Visibility.Visible;
             Owner.IsEnabled = true;
+            Close();
         }
 
 

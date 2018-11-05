@@ -96,5 +96,13 @@ namespace PersonalFinanceProjectFinal
                 frmDashboard.Content = new NewIncomePage(ref currentUser);
             }
         }
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            Owner.Visibility = Visibility.Visible;
+            Owner.IsEnabled = true;
+
+            Close();
+        }
     }
 }

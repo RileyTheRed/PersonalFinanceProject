@@ -203,5 +203,11 @@ namespace PersonalFinanceProjectFinal
             return !dteDate.SelectedDate.Equals(selectedRecord.Date);
         }
         #endregion
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            Close();
+            Owner.IsEnabled = true;
+        }
     }
 }

@@ -46,14 +46,15 @@ namespace PersonalFinanceProjectFinal
                 MessageBox.Show("Valid User!");
                 childWindow = new UserDashboard(txtUserName.Text);
                 childWindow.Owner = this;
-                childWindow.Visibility = Visibility.Visible;
-                childWindow.IsEnabled = true;
 
                 Visibility = Visibility.Hidden;
                 IsEnabled = false;
+
+                childWindow.Visibility = Visibility.Visible;
+                childWindow.IsEnabled = true;
+
                 txtPassword.Clear();
                 txtUserName.Clear();
-
             }
             else
             {

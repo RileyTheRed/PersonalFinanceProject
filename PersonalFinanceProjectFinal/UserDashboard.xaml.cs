@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
+using System.Windows.Media.Effects;
 
 namespace PersonalFinanceProjectFinal
 {
@@ -34,6 +35,8 @@ namespace PersonalFinanceProjectFinal
             
             pieChart.DataContext = this;
             UpdateChart();
+
+            //RunIntroductionSequence();
         }
 
         private void btnAddRecords_Click(object sender, RoutedEventArgs e)
@@ -127,6 +130,10 @@ namespace PersonalFinanceProjectFinal
             }
             else
             {
+                if (pieChart.Visibility == Visibility.Hidden)
+                {
+                    pieChart.Visibility = Visibility.Visible;
+                }
                 pieExpense.Values = new ChartValues<double>(monthlyExpenseSoFar);
                 pieIncome.Values = new ChartValues<double>(monthlyIncomeSoFar);
             }
@@ -148,6 +155,133 @@ namespace PersonalFinanceProjectFinal
         private void Window_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             UpdateChart();
+            //RunIntroductionSequence();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Owner.Visibility = Visibility.Visible;
+            Owner.IsEnabled = true;
+
+            Database.UpdateDatabase(currentUser);
+
+            Close();
+        }
+
+        #region IntroductionBlurFunctions
+        private void ClearAllBlur()
+        {
+            rectBlue.Effect = null;
+            rectYellow.Effect = null;
+            btnAddRecords.Effect = null;
+            btnEditRecords.Effect = null;
+            btnReport.Effect = null;
+            btnLogout.Effect = null;
+            btnHelp.Effect = null;
+            lblGreeting.Effect = null;
+            pieChart.Effect = null;
+            ucDashData.Effect = null;
+        }
+
+
+        private void BlurAllButAddRecords()
+        {
+            btnLogout.Effect = new BlurEffect();
+            btnReport.Effect = new BlurEffect();
+            btnEditRecords.Effect = new BlurEffect();
+            btnHelp.Effect = new BlurEffect();
+            lblGreeting.Effect = new BlurEffect();
+            pieChart.Effect = new BlurEffect();
+            rectYellow.Effect = new BlurEffect();
+            rectBlue.Effect = new BlurEffect();
+            ucDashData.Effect = new BlurEffect();
+        }
+
+
+        private void BlurAllButEditRecords()
+        {
+            btnLogout.Effect = new BlurEffect();
+            btnAddRecords.Effect = new BlurEffect();
+            btnReport.Effect = new BlurEffect();
+            btnHelp.Effect = new BlurEffect();
+            rectYellow.Effect = new BlurEffect();
+            rectBlue.Effect = new BlurEffect();
+            pieChart.Effect = new BlurEffect();
+            lblGreeting.Effect = new BlurEffect();
+            ucDashData.Effect = new BlurEffect();
+        }
+
+
+        private void BlurAllButReport()
+        {
+            btnLogout.Effect = new BlurEffect();
+            btnAddRecords.Effect = new BlurEffect();
+            btnEditRecords.Effect = new BlurEffect();
+            btnHelp.Effect = new BlurEffect();
+            rectYellow.Effect = new BlurEffect();
+            rectBlue.Effect = new BlurEffect();
+            pieChart.Effect = new BlurEffect();
+            lblGreeting.Effect = new BlurEffect();
+            ucDashData.Effect = new BlurEffect();
+        }
+
+
+        private void BlurAllButChart()
+        {
+            btnLogout.Effect = new BlurEffect();
+            btnAddRecords.Effect = new BlurEffect();
+            btnReport.Effect = new BlurEffect();
+            btnHelp.Effect = new BlurEffect();
+            rectYellow.Effect = new BlurEffect();
+            rectBlue.Effect = new BlurEffect();
+            btnEditRecords.Effect = new BlurEffect();
+            lblGreeting.Effect = new BlurEffect();
+        }
+        #endregion
+
+        public void RunIntroductionSequence()
+        {
+            
+            MessageBoxResult introResult = MessageBox.Show("Welcome to your dashboard! Your dashboard is the" +
+                "your own personal portal that allows you to access and navigate all that Personal Finance " +
+                "has to offer!", "Tutorial", MessageBoxButton.OK);
+            if (introResult == MessageBoxResult.OK)
+            {
+                BlurAllButAddRecords();
+                introResult = MessageBox.Show("You can insert expense or income records by clicking on the Add " +
+                    "Expense/Income button!", "Tutorial", MessageBoxButton.OK);
+                
+                if (introResult == MessageBoxResult.OK)
+                {
+                    ClearAllBlur();
+                    BlurAllButEditRecords();
+                    introResult = MessageBox.Show("Using the Edit Expense/Income button, you can search all the records" +
+                        " you have on file and view or change them.", "Tutorial", MessageBoxButton.OK);
+
+                    if (introResult == MessageBoxResult.OK)
+                    {
+                        ClearAllBlur();
+                        BlurAllButReport();
+                        introResult = MessageBox.Show("You can compose and view a detailed report of your finances by clicking on the" +
+                            " Finance Report button.", "Tutorial", MessageBoxButton.OK);
+
+                        if (introResult == MessageBoxResult.OK)
+                        {
+                            ClearAllBlur();
+                            BlurAllButChart();
+                            introResult = MessageBox.Show("If you have records for the current month on file, they will be displayed in" +
+                                " a pie chart here.", "Tutorial", MessageBoxButton.OK);
+                        }
+                    }
+                }
+            }
+
+            ClearAllBlur();
+        }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            RunIntroductionSequence();
         }
     }
 }
