@@ -57,26 +57,7 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <Rectangle VerticalAlignment="Center" Height="352"
-                   Grid.Row="1"
-                   Grid.RowSpan="4" Grid.ColumnSpan="2"
-                   x:Name="rectFrontGray" Margin="60,0,0,29">
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#b5b5b7"/>
-            </Rectangle.Fill>
-        </Rectangle>
 
-        <Rectangle VerticalAlignment="Center" Height="332"
-                   Grid.Row="1"
-                   Grid.RowSpan="4" Grid.ColumnSpan="2"
-                   x:Name="rectFrontBlue" Margin="74,10,13,39">
-            <Rectangle.Fill>
-                <SolidColorBrush Color="#677077"/>
-            </Rectangle.Fill>
-            
-            
-            
-        </Rectangle>
         <!--END RECTANGLE DEFINITIONS-->
 
 
@@ -86,7 +67,8 @@
                Grid.ColumnSpan="4"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
                FontSize="35"
-               Foreground="#f2b632"/>
+               Foreground="#f2b632"
+               Margin="0,0,0,10"/>
         <!--END LABEL DEFINTIONS-->
 
 
@@ -168,10 +150,9 @@
 
         <uc:DashboardUserData x:Name="ucDashData"
                               Grid.ColumnSpan="2" Grid.Row="1"
-                              Grid.RowSpan="4"
-                              Width="360" Height="332" Margin="74,10,13,39">
-            
-        </uc:DashboardUserData>
+                              Grid.RowSpan="4" Margin="74,0,25,39"
+                              BorderThickness="5"
+                              BorderBrush="#b5b5b7"/>
         
 
     </Grid>

@@ -2,18 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using LiveCharts;
-using LiveCharts.Wpf;
 using System.Windows.Media.Effects;
 
 namespace PersonalFinanceProjectFinal
@@ -36,6 +26,9 @@ namespace PersonalFinanceProjectFinal
             pieChart.DataContext = this;
             UpdateChart();
 
+            ucDashData.AttachCurrentUser(ref currentUser);
+            ucDashData.UpdateDashboardUserData();
+
             //RunIntroductionSequence();
         }
 
@@ -55,8 +48,6 @@ namespace PersonalFinanceProjectFinal
         {
             Owner.Visibility = Visibility.Visible;
             Owner.IsEnabled = true;
-
-            Database.UpdateDatabase(currentUser);
             
             Close();
         }
@@ -155,6 +146,7 @@ namespace PersonalFinanceProjectFinal
         private void Window_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             UpdateChart();
+            ucDashData.UpdateDashboardUserData();
             //RunIntroductionSequence();
         }
 
@@ -173,6 +165,7 @@ namespace PersonalFinanceProjectFinal
         {
             rectBlue.Effect = null;
             rectYellow.Effect = null;
+            //rectFrontGray.Effect = null;
             btnAddRecords.Effect = null;
             btnEditRecords.Effect = null;
             btnReport.Effect = null;
@@ -182,7 +175,6 @@ namespace PersonalFinanceProjectFinal
             pieChart.Effect = null;
             ucDashData.Effect = null;
         }
-
 
         private void BlurAllButAddRecords()
         {
@@ -194,9 +186,9 @@ namespace PersonalFinanceProjectFinal
             pieChart.Effect = new BlurEffect();
             rectYellow.Effect = new BlurEffect();
             rectBlue.Effect = new BlurEffect();
+            //rectFrontGray.Effect = new BlurEffect();
             ucDashData.Effect = new BlurEffect();
         }
-
 
         private void BlurAllButEditRecords()
         {
@@ -206,11 +198,11 @@ namespace PersonalFinanceProjectFinal
             btnHelp.Effect = new BlurEffect();
             rectYellow.Effect = new BlurEffect();
             rectBlue.Effect = new BlurEffect();
+            //rectFrontGray.Effect = new BlurEffect();
             pieChart.Effect = new BlurEffect();
             lblGreeting.Effect = new BlurEffect();
             ucDashData.Effect = new BlurEffect();
         }
-
 
         private void BlurAllButReport()
         {
@@ -220,11 +212,11 @@ namespace PersonalFinanceProjectFinal
             btnHelp.Effect = new BlurEffect();
             rectYellow.Effect = new BlurEffect();
             rectBlue.Effect = new BlurEffect();
+            //rectFrontGray.Effect = new BlurEffect();
             pieChart.Effect = new BlurEffect();
             lblGreeting.Effect = new BlurEffect();
             ucDashData.Effect = new BlurEffect();
         }
-
 
         private void BlurAllButChart()
         {

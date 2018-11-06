@@ -93,6 +93,7 @@
       <DependentUpon>UserDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\Categories.cs" />
+    <Compile Include="Utilities\ExtractUserDashboardData.cs" />
     <Compile Include="Utilities\Sanitizer.cs" />
     <Compile Include="Utilities\SearchResults.cs" />
     <Compile Include="Utilities\Security.cs" />
