@@ -5,23 +5,39 @@ namespace PersonalFinanceProjectFinal.Utilities
     class Categories
     {
 
-        private static List<string> defaultCategories = new List<string>()
+        private static List<string> defaultExpenseCategories = new List<string>()
         {
-            "Paycheck",
             "Utilities",
             "Transportation",
             "Groceries",
             "Rent",
-            "Restaurant",
-            "Vice",
+            "Restaurants",
+            "Vices",
             "Insurance",
             "Education",
             "Misc"
         };
 
-        public static List<string> GetCategories()
+        private static List<string> defaultIncomeCategories = new List<string>()
         {
-            return defaultCategories;
+            "Wages and Salaries",
+            "Interest Received",
+            "Dividends",
+            "Business Income",
+            "Capital Gains",
+            "Rental Income",
+            "Unemployment Compensation",
+            "Gambling Income"
+        };
+
+        public static List<string> GetExpenseCategories()
+        {
+            return defaultExpenseCategories;
+        }
+
+        public static List<string> GetIncomeCategories()
+        {
+            return defaultIncomeCategories;
         }
 
     }

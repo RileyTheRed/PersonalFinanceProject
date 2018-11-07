@@ -27,7 +27,7 @@ namespace PersonalFinanceProjectFinal.Pages
 
             dteDate.DisplayDateEnd = DateTime.Today;
 
-            foreach (string item in Utilities.Categories.GetCategories())
+            foreach (string item in Utilities.Categories.GetIncomeCategories())
             {
                 cmbCategory.Items.Add(item);
             }
@@ -46,15 +46,16 @@ namespace PersonalFinanceProjectFinal.Pages
                 // check and make sure the inputs are valid
                 if (!Sanitizer.InvalidNewExpense(txtAmount.Text, dteDate.SelectedDate.Value) && !cmbCategory.Text.Equals(DefaultCatMessage))
                 {
-                    if (txtDescription.Text.Length > 100) // description over 100, enter the substring
+                    string sanitizedDescription = Sanitizer.GetSanitizedDescription(txtDescription.Text);
+                    if (sanitizedDescription.Length > 100) // description over 100, enter the substring
                     {
-                        currentUser.NewUserIncome.Add(new NewIncome(currentUser.UserID, double.Parse(txtAmount.Text.Substring(0, txtAmount.Text.IndexOf('.') + 3)),
-                            dteDate.SelectedDate.Value, cmbCategory.Text, txtDescription.Text.Substring(0, 100)));
+                        currentUser.NewUserIncome.Add(new NewIncome(currentUser.UserID, Double.Parse(string.Format("{0:N2}", Double.Parse(txtAmount.Text))),
+                            dteDate.SelectedDate.Value, cmbCategory.Text, sanitizedDescription.Substring(0, 100)));
                     }
                     else
                     {
-                        currentUser.NewUserIncome.Add(new NewIncome(currentUser.UserID, double.Parse(txtAmount.Text.Substring(0, txtAmount.Text.IndexOf('.') + 3)),
-                            dteDate.SelectedDate.Value, cmbCategory.Text, txtDescription.Text));
+                        currentUser.NewUserIncome.Add(new NewIncome(currentUser.UserID, Double.Parse(string.Format("{0:N2}", Double.Parse(txtAmount.Text))),
+                            dteDate.SelectedDate.Value, cmbCategory.Text, sanitizedDescription));
                     }
                     MessageBox.Show("Record entered successfully!", "Success");
                     ClearInput();
@@ -80,6 +81,11 @@ namespace PersonalFinanceProjectFinal.Pages
             dteDate.SelectedDate = null;
             cmbCategory.Text = DefaultCatMessage;
             txtDescription.Text = "";
+        }
+
+        private void txtAmount_LostFocus(object sender, RoutedEventArgs e)
+        {
+            txtAmount.Text = txtAmount.Text.Replace("-", "");
         }
     }
 }

@@ -17,7 +17,7 @@ namespace PersonalFinanceProjectFinal
         /// Constructor for the RecordViewWindow
         /// </summary>
         /// <param name="selected"></param>
-        public RecordViewWindow(ref SearchResultRecord selected)
+        public RecordViewWindow(ref SearchResultRecord selected, string typeLastSearched)
         {
             InitializeComponent();
             selectedRecord = selected;
@@ -26,9 +26,19 @@ namespace PersonalFinanceProjectFinal
             cmbCategory.Text = selectedRecord.Category;
             dteDate.SelectedDate = selectedRecord.Date;
 
-            foreach (string item in Categories.GetCategories())
+            if (typeLastSearched.Equals("e"))
             {
-                cmbCategory.Items.Add(item);
+                foreach (string item in Categories.GetExpenseCategories())
+                {
+                    cmbCategory.Items.Add(item);
+                }
+            }
+            else
+            {
+                foreach (string item in Categories.GetIncomeCategories())
+                {
+                    cmbCategory.Items.Add(item);
+                }
             }
 
             if (selected.Status.Equals("--"))
@@ -171,10 +181,11 @@ namespace PersonalFinanceProjectFinal
             selectedRecord.Date = dteDate.SelectedDate.Value;
             if (!txtDescription.Text.Equals(""))
             {
-                if (txtDescription.Text.Length < 100)
-                    selectedRecord.Description = txtDescription.Text;
+                string sanitizedDescription = Sanitizer.GetSanitizedDescription(txtDescription.Text);
+                if (sanitizedDescription.Length < 100)
+                    selectedRecord.Description = sanitizedDescription;
                 else
-                    selectedRecord.Description = txtDescription.Text.Substring(0, 100);
+                    selectedRecord.Description = sanitizedDescription.Substring(0, 100);
             }
         }
 
@@ -204,6 +215,7 @@ namespace PersonalFinanceProjectFinal
         }
         #endregion
 
+        
         private void Window_Closed(object sender, System.EventArgs e)
         {
             Close();

@@ -27,7 +27,7 @@ namespace PersonalFinanceProjectFinal.Utilities
             {
 
                 List<string> modifiedHashes = modified.Select(x => x.Hash).ToList(); // get all the hashes of records that have been modified
-                foreach (string cat in Categories.GetCategories())
+                foreach (string cat in Categories.GetExpenseCategories())
                 {
 
                     categoriesAndCost.Add(cat, 0.0);
@@ -101,7 +101,7 @@ namespace PersonalFinanceProjectFinal.Utilities
             {
 
                 List<string> modifiedHashes = modified.Select(x => x.Hash).ToList(); // get all the hashes of records that have been modified
-                foreach (string cat in Categories.GetCategories())
+                foreach (string cat in Categories.GetExpenseCategories())
                 {
 
                     categoriesAndCost.Add(cat, 0.0);

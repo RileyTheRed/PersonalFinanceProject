@@ -8,8 +8,7 @@
       d:DesignHeight="428" d:DesignWidth="900"
       Title="NewIncomePage">
 
-    <Grid Background="#b5b5b7"
-          Margin="30,0,30,0">
+    <Grid>
 
         <!--ROW DEFINTIONS-->
         <Grid.RowDefinitions>
@@ -32,7 +31,16 @@
 
 
         <!--RECTANGLE DEFINTION-->
-        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="5"
+        <Rectangle x:Name="rectBackground"
+                   Grid.RowSpan="5" Grid.ColumnSpan="3"
+                   Margin="45,0,45,0">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#b5b5b7"/>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Rectangle x:Name="rectForeground"
+                   Grid.ColumnSpan="3" Grid.RowSpan="5"
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    Height="390" Width="700">
             <Rectangle.Fill>
@@ -53,7 +61,8 @@
                  Width="300" Height="30"
                  VerticalContentAlignment="Center"
                  Background="#252839" Foreground="#f2b632"
-                 Margin="100,0,0,0"/>
+                 Margin="100,0,0,0"
+                 LostFocus="txtAmount_LostFocus"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Width="500"

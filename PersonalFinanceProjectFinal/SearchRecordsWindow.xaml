@@ -9,9 +9,9 @@
         Title="Search Records Window" Height="600" Width="900"
         IsEnabledChanged="Window_IsEnabledChanged"
         Closed="Window_Closed">
-    
+
     <Grid Background="#677077">
-        
+
         <!--ROW DEFINTIONS-->
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -21,8 +21,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!--END ROW DEFINTIONS-->
-        
-        
+
+
         <!--COLUMN DEFINTIONS-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -32,13 +32,23 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!--END COLUMN DEFINTIONS-->
-        
-        
+
+
         <!--RECTANGLE DEFINTIONS-->
+        <Rectangle Grid.ColumnSpan="5" Grid.RowSpan="5"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Width="900" Height="580"
+                   x:Name="rectBackground">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#677077"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        
         <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="4"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    Width="410" Height="440"
-                   Margin="0,20,75,0">
+                   Margin="0,20,75,0"
+                   x:Name="rectLeftYellow">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#f2b632"/>
             </Rectangle.Fill>
@@ -48,7 +58,8 @@
                    Grid.ColumnSpan="3" Grid.RowSpan="4"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    Width="410" Height="440"
-                   Margin="75,20,0,0">
+                   Margin="75,20,0,0"
+                   x:Name="rectRightYellow">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#f2b632"/>
             </Rectangle.Fill>
@@ -57,7 +68,8 @@
         <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="4"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
                    Width="400" Height="430"
-                   Margin="0,20,75,0">
+                   Margin="0,20,75,0"
+                   x:Name="rectLeftGray">
             <Rectangle.Fill>
                 <SolidColorBrush Color="#b5b5b7"/>
             </Rectangle.Fill>
@@ -84,6 +96,17 @@
                 Background="#252839" Foreground="#f2b632"
                 Margin="80,0,0,0"
                 Click="btnSearch_Click"/>
+
+        <Button x:Name="btnHelp"
+                Grid.Column="0" Grid.Row="4"
+                VerticalAlignment="Center"
+                Height="40" Width="100"
+                Content="Help" 
+                FontSize="18" FontWeight="SemiBold"
+                Background="#f2b632" Foreground="#252839"
+                BorderThickness="2" BorderBrush="#252839"
+                Margin="26,37,53,37.5"
+                Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
 
 
@@ -91,7 +114,8 @@
         <Label Grid.ColumnSpan="3"
                VerticalAlignment="Center" HorizontalAlignment="Center"
                FontSize="15" FontWeight="SemiBold" Foreground="#252839"
-               Margin="0,0,80,0">
+               Margin="0,0,80,0"
+               x:Name="lblDescription">
             <TextBlock TextDecorations="Underline">
                 Specify what records you wish to search
             </TextBlock>
@@ -100,45 +124,52 @@
         <Label Content="Type of Record:"
                Grid.Row="1"
                HorizontalAlignment="Center" VerticalAlignment="Top"
-               Margin="20,10,0,0"/>
+               Margin="20,10,0,0"
+               x:Name="lblRecordType"/>
 
         <Label Content="Category:"
                Grid.Row="1"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
-               Margin="20,0,0,20"/>
+               Margin="20,0,0,20"
+               x:Name="lblCategory"/>
 
         <Label Content="Amount Range:"
                Grid.Row="2"
                HorizontalAlignment="Center" VerticalAlignment="Top"
-               Margin="20,10,0,0"/>
+               Margin="20,10,0,0"
+               x:Name="lblAmountRange"/>
 
         <Label Content="Start Date:"
                Grid.Row="2" Grid.ColumnSpan="2"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
-               Margin="0,0,85,22"/>
+               Margin="0,0,85,22"
+               x:Name="lblStartDate"/>
 
         <Label Content="End Date:"
                Grid.Row="2" Grid.ColumnSpan="2"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
-               Margin="240,0,0,22"/>
+               Margin="240,0,0,22"
+               x:Name="lblEndDate"/>
         <!--END LABEL DEFINTIONS-->
-        
-        
+
+
         <!--RADIOBUTTON DEFINTIONS-->
         <RadioButton x:Name="radioExpense" 
                      Content="Expense"
                      Grid.Row="1" Grid.Column="1"
                      VerticalAlignment="Top" HorizontalAlignment="Left"
-                     Margin="0,17,0,0"/>
+                     Margin="0,17,0,0"
+                     Click="radioExpense_Click"/>
 
         <RadioButton x:Name="radioIncome" 
                      Content="Income"
                      Grid.Row="1" Grid.Column="1"
                      VerticalAlignment="Top" HorizontalAlignment="Right"
-                     Margin="0,17,10,0"/>
+                     Margin="0,17,10,0"
+                     Click="radioIncome_Click"/>
         <!--END RADIOBUTTON DEFINTIONS-->
-        
-        
+
+
         <!--COMBOBOX DEFINTIONS-->
         <ComboBox x:Name="cmbCategory"
                   IsReadOnly="true" IsEditable="true"
@@ -147,8 +178,8 @@
                   VerticalAlignment="Bottom"
                   Margin="0,0,0,20"/>
         <!--END COMBOBOX DEFINTIONS-->
-        
-        
+
+
         <!--TEXTBOX DEFINTIONS-->
         <TextBox x:Name="txtMin"
                  Text="MIN" HorizontalContentAlignment="Center"
@@ -170,8 +201,8 @@
                  GotFocus="txtMax_GotFocus"
                  LostFocus="txtMax_LostFocus"/>
         <!--END TEXTBOX DEFINTIONS-->
-        
-        
+
+
         <!--DATEPICKER DEFINTIONS-->
         <DatePicker x:Name="dteStart"
                     Grid.Column="0" Grid.Row="2"
@@ -188,8 +219,8 @@
                     Margin="0,0,0,0"
                     LostFocus="dteEnd_LostFocus"/>
         <!--END DATEPICKER DEFINTIONS-->
-        
-        
+
+
         <!--LISTBOX DEFINTIONS-->
         <ListView x:Name="lstSearchResults"
                  Grid.Column="2" Grid.ColumnSpan="3"
@@ -208,7 +239,7 @@
                                     DisplayMemberBinding="{Binding Date, StringFormat=d}"/>
                     <GridViewColumn Header="Amount"
                                     Width="90"
-                                    DisplayMemberBinding="{Binding Amount}"/>
+                                    DisplayMemberBinding="{Binding Amount, StringFormat={}{0:C}}"/>
                     <GridViewColumn Header="Category"
                                     Width="140"
                                     DisplayMemberBinding="{Binding Category}"/>

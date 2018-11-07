@@ -6,7 +6,7 @@ namespace PersonalFinanceProjectFinal.Utilities
     class Sanitizer
     {
 
-        private static Regex amountFormat = new Regex("([0-9]{1})([0-9]*)(.)([0-9][0-9])"); // not the greatest regex
+        //private static Regex amountFormat = new Regex("([0-9]{1})([0-9]*)(.)([0-9][0-9])"); // not the greatest regex
 
 
         /// <summary>
@@ -30,15 +30,21 @@ namespace PersonalFinanceProjectFinal.Utilities
         /// <returns></returns>
         public static bool ValidAmount(string amount)
         {
-            if (amountFormat.IsMatch(amount))
+            try
             {
-                if (amount.Substring(0, amount.IndexOf('.')).Length > 10 ||
-                    amount.Substring(amount.IndexOf('.')).Length < 3)
-                    return false;
+                var temp = Double.Parse(amount);
                 return true;
             }
-            return false;
-            
+            catch (FormatException e)
+            {
+                return false;
+            }
+        }
+
+
+        public static string GetSanitizedDescription(string dirty)
+        {
+            return Regex.Replace(dirty, "[^A-Za-z0-9 ]", "");
         }
 
     }

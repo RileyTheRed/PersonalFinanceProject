@@ -33,6 +33,16 @@
         <!--END COLUMN DEFINTIONS-->
         
         
+        <!--RECTANGLE DEFINTIONS-->
+        <Rectangle x:Name="rectBackground"
+                   Grid.ColumnSpan="4" Grid.RowSpan="7">
+            <Rectangle.Fill>
+                <SolidColorBrush Color="#252839"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <!--END RECTANGLE DEFINTIONS-->
+        
+        
         <!--BUTTON DEFINTIONS-->
         <Button x:Name="btnAddExpense"
                 Content="New Expense"
@@ -67,6 +77,16 @@
                 Background="#f2b632"
                 Foreground="#252839"
                 Click="btnReturnDashboard_Click"/>
+
+        <Button x:Name="btnHelp"
+                Grid.Row="7"
+                HorizontalAlignment="Center" VerticalAlignment="Center"
+                Height="40" Width="130"
+                Content="Help"
+                FontSize="20" FontWeight="SemiBold"
+                Background="#252839" Foreground="#f2b632"
+                BorderBrush="#f2b632" BorderThickness="2"
+                Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
         
         

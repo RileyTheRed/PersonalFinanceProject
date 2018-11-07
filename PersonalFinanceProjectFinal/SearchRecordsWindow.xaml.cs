@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Media.Effects;
 
 namespace PersonalFinanceProjectFinal
 {
@@ -49,15 +50,11 @@ namespace PersonalFinanceProjectFinal
             currentUser = user;
 
             cmbCategory.Items.Add(CategoryDefaultMessage);
-            foreach (string item in Categories.GetCategories())
-            {
-                cmbCategory.Items.Add(item);
-            }
 
             dteStart.DisplayDateEnd = DateTime.Now.Date;
             dteEnd.DisplayDateEnd = DateTime.Now.Date;
 
-            
+            //gridMain.Effect = new BlurEffect();
         }
 
 
@@ -89,16 +86,25 @@ namespace PersonalFinanceProjectFinal
 
         private void txtMin_LostFocus(object sender, RoutedEventArgs e)
         {
+            txtMin.Text = txtMin.Text.Replace("-","");
+
             if (txtMin.Text.Equals(""))
                 txtMin.Text = "MIN";
             else
             {
-                if (!txtMax.Text.Equals(""))
+                if (Sanitizer.ValidAmount(txtMin.Text))
                 {
-                    if (Double.Parse(txtMin.Text) > Double.Parse(txtMax.Text))
-                        validAmountRanges = false;
-                    else
-                        validAmountRanges = true;
+                    if (!txtMax.Text.Equals("MAX"))
+                    {
+                        if (Double.Parse(txtMin.Text) > Double.Parse(txtMax.Text))
+                            validAmountRanges = false;
+                        else
+                            validAmountRanges = true;
+                    }
+                }
+                else
+                {
+                    txtMin.Text = "MIN";
                 }
             }
         }
@@ -111,16 +117,24 @@ namespace PersonalFinanceProjectFinal
 
         private void txtMax_LostFocus(object sender, RoutedEventArgs e)
         {
+            txtMax.Text = txtMax.Text.Replace("-", "");
             if (txtMax.Text.Equals(""))
                 txtMax.Text = "MAX";
             else
             {
-                if (!txtMin.Text.Equals(""))
+                if (Sanitizer.ValidAmount(txtMax.Text))
                 {
-                    if (Double.Parse(txtMax.Text) < Double.Parse(txtMax.Text))
-                        validAmountRanges = false;
-                    else
-                        validAmountRanges = true;
+                    if (!txtMin.Text.Equals(""))
+                    {
+                        if (Double.Parse(txtMax.Text) < Double.Parse(txtMax.Text))
+                            validAmountRanges = false;
+                        else
+                            validAmountRanges = true;
+                    }
+                }
+                else
+                {
+                    txtMax.Text = "MAX";
                 }
             }
         }
@@ -220,7 +234,12 @@ namespace PersonalFinanceProjectFinal
                         new ObservableCollection<SearchResultRecord>(
                             SearchResultRecord.GetExpenseResults(
                                 results.Item1, results.Item2, results.Item3).OrderByDescending(x => x.Date).ToList());
+
                     lstSearchResults.ItemsSource = Results;
+                    if (Results.Count == 0)
+                    {
+                        MessageBox.Show("No results found!", "No Results", MessageBoxButton.OK);
+                    }
                     typeOfRecordSearched = "e";
                 }
                 else if ((bool)radioIncome.IsChecked)
@@ -231,7 +250,12 @@ namespace PersonalFinanceProjectFinal
                         new ObservableCollection<SearchResultRecord>(
                             SearchResultRecord.GetIncomeResults(
                                 results.Item1, results.Item2, results.Item3).OrderByDescending(x => x.Date).ToList());
+
                     lstSearchResults.ItemsSource = Results;
+                    if (Results.Count == 0)
+                    {
+                        MessageBox.Show("No results found!", "No Results", MessageBoxButton.OK);
+                    }
                     typeOfRecordSearched = "i";
                 }
                 else
@@ -256,7 +280,7 @@ namespace PersonalFinanceProjectFinal
             if (lstSearchResults.SelectedItem != null)
             {
                 selectedRecord = lstSearchResults.SelectedItem as SearchResultRecord;
-                RecordViewWindow editWindow = new RecordViewWindow(ref selectedRecord);
+                RecordViewWindow editWindow = new RecordViewWindow(ref selectedRecord, typeOfRecordSearched);
 
                 editWindow.Owner = this;
                 IsEnabled = false;
@@ -350,6 +374,161 @@ namespace PersonalFinanceProjectFinal
             Owner.IsEnabled = true;
 
             Close();
+        }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            RunTutorial();
+        }
+
+        private void RunTutorial()
+        {
+            ClearAllBlur();
+            MessageBox.Show("This is the Search Records Page. You can search different types of records, and specify a number of different types" +
+                " of parameters.", "Tutorial", MessageBoxButton.OK);
+            BlurAllButSearchStuff();
+            MessageBox.Show("The search box lets you specify whether you want to search income or expense records. If you have a specific" +
+                " category in mind, an amount range or a specific range of dates you wish to search, you can specifiy all those things here." +
+                " At a minimum, you must specifiy a record type.", "Tutorial", MessageBoxButton.OK);
+            ClearAllBlur();
+            BlurAllButSearchResults();
+            MessageBox.Show("The results of your record search, if any, are displayed here in this box. By default the results are listed in" +
+                " decending order by date. You can double click on a search result and you will be prompted with a new window where you can modify the record," +
+                " mark it for deletion, or just view it in more detail. Records that have been modified will have a '++' next to it in the result view," +
+                " and records that have been marked for deletion will have a '--' next to them. All modified or deleted records are immediately reflected" +
+                " on your Dashboard.", "Tutorial", MessageBoxButton.OK);
+            ClearAllBlur();
+            BlurAllButReturnToDashButton();
+            MessageBox.Show("If at any time you wish to return to your Dashboard, all you have to do is click the Return Dashboard button!", "Tutorial", MessageBoxButton.OK);
+            ClearAllBlur();
+            BlurAllButHelpButton();
+            MessageBox.Show("And if at any time you need a reminder of all that you can do, don't hesitate to click the Help button!", "Tutorial", MessageBoxButton.OK);
+            ClearAllBlur();
+        }
+
+        #region BlurEffectFunctions
+        private void ClearAllBlur()
+        {
+            rectBackground.Effect = null;
+            rectLeftGray.Effect = null;
+            rectLeftYellow.Effect = null;
+            rectRightYellow.Effect = null;
+            lstSearchResults.Effect = null;
+            btnHelp.Effect = null;
+            btnReturnDashboard.Effect = null;
+            btnSearch.Effect = null;
+            lblAmountRange.Effect = null;
+            lblDescription.Effect = null;
+            lblEndDate.Effect = null;
+            lblCategory.Effect = null;
+            lblRecordType.Effect = null;
+            lblStartDate.Effect = null;
+            radioExpense.Effect = null;
+            radioIncome.Effect = null;
+            cmbCategory.Effect = null;
+            txtMax.Effect = null;
+            txtMin.Effect = null;
+            dteEnd.Effect = null;
+            dteStart.Effect = null;
+        }
+
+        private void BlurAllButSearchStuff()
+        {
+            btnHelp.Effect = new BlurEffect();
+            btnReturnDashboard.Effect = new BlurEffect();
+            rectBackground.Effect = new BlurEffect();
+            rectRightYellow.Effect = new BlurEffect();
+            lstSearchResults.Effect = new BlurEffect();
+        }
+
+        private void BlurAllButSearchResults()
+        {
+            btnHelp.Effect = new BlurEffect();
+            btnReturnDashboard.Effect = new BlurEffect();
+            btnSearch.Effect = new BlurEffect();
+            rectLeftGray.Effect = new BlurEffect();
+            rectLeftYellow.Effect = new BlurEffect();
+            rectBackground.Effect = new BlurEffect();
+            lblAmountRange.Effect = new BlurEffect();
+            lblCategory.Effect = new BlurEffect();
+            lblDescription.Effect = new BlurEffect();
+            lblEndDate.Effect = new BlurEffect();
+            lblRecordType.Effect = new BlurEffect();
+            lblStartDate.Effect = new BlurEffect();
+            radioExpense.Effect = new BlurEffect();
+            radioIncome.Effect = new BlurEffect();
+            cmbCategory.Effect = new BlurEffect();
+            txtMax.Effect = new BlurEffect();
+            txtMin.Effect = new BlurEffect();
+            dteEnd.Effect = new BlurEffect();
+            dteStart.Effect = new BlurEffect();
+        }
+
+        private void BlurAllButReturnToDashButton()
+        {
+            rectBackground.Effect = new BlurEffect();
+            rectLeftGray.Effect = new BlurEffect();
+            rectLeftYellow.Effect = new BlurEffect();
+            rectRightYellow.Effect = new BlurEffect();
+            lstSearchResults.Effect = new BlurEffect();
+            btnHelp.Effect = new BlurEffect();
+            btnSearch.Effect = new BlurEffect();
+            lblAmountRange.Effect = new BlurEffect();
+            lblDescription.Effect = new BlurEffect();
+            lblEndDate.Effect = new BlurEffect();
+            lblCategory.Effect = new BlurEffect();
+            lblRecordType.Effect = new BlurEffect();
+            lblStartDate.Effect = new BlurEffect();
+            radioExpense.Effect = new BlurEffect();
+            radioIncome.Effect = new BlurEffect();
+            cmbCategory.Effect = new BlurEffect();
+            txtMax.Effect = new BlurEffect();
+            txtMin.Effect = new BlurEffect();
+            dteEnd.Effect = new BlurEffect();
+            dteStart.Effect = new BlurEffect();
+        }
+
+        private void BlurAllButHelpButton()
+        {
+            rectBackground.Effect = new BlurEffect();
+            rectLeftGray.Effect = new BlurEffect();
+            rectLeftYellow.Effect = new BlurEffect();
+            rectRightYellow.Effect = new BlurEffect();
+            lstSearchResults.Effect = new BlurEffect();
+            btnReturnDashboard.Effect = new BlurEffect();
+            btnSearch.Effect = new BlurEffect();
+            lblAmountRange.Effect = new BlurEffect();
+            lblDescription.Effect = new BlurEffect();
+            lblEndDate.Effect = new BlurEffect();
+            lblCategory.Effect = new BlurEffect();
+            lblRecordType.Effect = new BlurEffect();
+            lblStartDate.Effect = new BlurEffect();
+            radioExpense.Effect = new BlurEffect();
+            radioIncome.Effect = new BlurEffect();
+            cmbCategory.Effect = new BlurEffect();
+            txtMax.Effect = new BlurEffect();
+            txtMin.Effect = new BlurEffect();
+            dteEnd.Effect = new BlurEffect();
+            dteStart.Effect = new BlurEffect();
+        }
+        #endregion
+
+        private void radioExpense_Click(object sender, RoutedEventArgs e)
+        {
+            cmbCategory.Items.Clear();
+            cmbCategory.Items.Add(CategoryDefaultMessage);
+            cmbCategory.Text = CategoryDefaultMessage;
+            foreach (string item in Categories.GetExpenseCategories())
+                cmbCategory.Items.Add(item);
+        }
+
+        private void radioIncome_Click(object sender, RoutedEventArgs e)
+        {
+            cmbCategory.Items.Clear();
+            cmbCategory.Items.Add(CategoryDefaultMessage);
+            cmbCategory.Text = CategoryDefaultMessage;
+            foreach (string item in Categories.GetIncomeCategories())
+                cmbCategory.Items.Add(item);
         }
     }
 }
