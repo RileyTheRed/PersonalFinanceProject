@@ -75,6 +75,7 @@
     </Compile>
     <Compile Include="Models\ExistingExpense.cs" />
     <Compile Include="Models\ExistingIncome.cs" />
+    <Compile Include="Models\Record.cs" />
     <Compile Include="Models\SearchResultRecord.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\AddRecordsPlaceHolder.xaml.cs">

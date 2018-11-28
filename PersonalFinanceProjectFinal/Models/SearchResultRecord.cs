@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    public class SearchResultRecord
+    public class SearchResultRecord : Record
     {
 
         #region Properties
@@ -13,11 +13,6 @@ namespace PersonalFinanceProjectFinal.Models
         public string Status { get; set; }
         public string PreviousStatus { get; set; }
         public int IsNewRecord { get; set; }
-        public string Hash { get; set; }
-        public double Amount { get; set; }
-        public DateTime Date { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
         #endregion
 
 
@@ -158,5 +153,14 @@ namespace PersonalFinanceProjectFinal.Models
             return false;
         }
 
+
+        /// <summary>
+        /// Overridden toString method
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"{Date.ToShortDateString()},\t{Amount},\t{Category},\t{Description}\t\t{Hash}";
+        }
     }
 }

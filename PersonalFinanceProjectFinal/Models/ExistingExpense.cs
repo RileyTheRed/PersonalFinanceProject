@@ -2,17 +2,8 @@
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    public class ExistingExpense
-    {
-
-        #region Properties
-        public string Hash { get; private set; } // unique expense id
-        public double Amount { get; set; }
-        public DateTime Date { get; set; }
-        public string Category { get; set; }
-        public string Description { get; set; }
-        #endregion
-
+    public class ExistingExpense : Record
+    { 
 
         /// <summary>
         /// Constructor specifically for an EXISTING expense record
