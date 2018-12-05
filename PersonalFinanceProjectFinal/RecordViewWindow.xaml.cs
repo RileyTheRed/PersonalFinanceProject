@@ -11,15 +11,20 @@ namespace PersonalFinanceProjectFinal
     {
 
         SearchResultRecord selectedRecord;
+        User currentUser;
+        //string[] colorscheme;
 
 
         /// <summary>
         /// Constructor for the RecordViewWindow
         /// </summary>
         /// <param name="selected"></param>
-        public RecordViewWindow(ref SearchResultRecord selected, string typeLastSearched)
+        public RecordViewWindow(ref SearchResultRecord selected, string typeLastSearched, User current)
         {
             InitializeComponent();
+            //colorscheme = colors;
+            currentUser = current;
+            DataContext = currentUser;
             selectedRecord = selected;
             txtAmount.Text = selectedRecord.Amount.ToString();
             txtDescription.Text = selectedRecord.Description.ToString();

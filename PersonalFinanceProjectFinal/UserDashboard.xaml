@@ -12,7 +12,7 @@
         IsEnabledChanged="Window_IsEnabledChanged"
         Closed="Window_Closed"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="#b5b5b7">
+    <Grid Background="{Binding currentUser.Color3}">
 
         <!--GRID ROW DEFINTIONS-->
         <Grid.RowDefinitions>
@@ -43,7 +43,7 @@
                    Grid.RowSpan="6" Grid.ColumnSpan="4"
                    x:Name="rectYellow">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#f2b632"/>
+                <SolidColorBrush Color="{Binding currentUser.Color4}"/>
             </Rectangle.Fill>
         </Rectangle>
 
@@ -53,7 +53,7 @@
                    Grid.RowSpan="6" Grid.ColumnSpan="4"
                    x:Name="rectBlue">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#252839"/>
+                <SolidColorBrush Color="{Binding currentUser.Color1}"/>
             </Rectangle.Fill>
         </Rectangle>
 
@@ -67,7 +67,7 @@
                Grid.ColumnSpan="4"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
                FontSize="35"
-               Foreground="#f2b632"
+               Foreground="{Binding currentUser.Color4}"
                Margin="0,0,0,10"/>
         <!--END LABEL DEFINTIONS-->
 
@@ -79,10 +79,10 @@
                 Grid.Row="4" Grid.RowSpan="2"
                 Height="50" Width="200"
                 Margin="0,30,100,0"
-                Background="#b5b5b7" Foreground="#252839"
+                Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="#f2b632"
-                Click="btnAddRecords_Click"/>
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                Command="{Binding AddRecordsCommand}"/>
 
         <Button x:Name="btnEditRecords" 
                 Content="Edit Expenses/Income"
@@ -90,9 +90,9 @@
                 Grid.Row="4" Grid.RowSpan="2"
                 Height="50" Width="200"
                 Margin="0,30,0,0"
-                Background="#b5b5b7" Foreground="#252839"
+                Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="#f2b632"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
                 Click="btnEditRecords_Click"/>
 
         <Button x:Name="btnReport" 
@@ -101,9 +101,9 @@
                 Grid.Row="4" Grid.RowSpan="2"
                 Height="50" Width="200"
                 Margin="100,30,0,0"
-                Background="#b5b5b7" Foreground="#252839"
+                Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="#f2b632"/>
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"/>
 
         <Button x:Name="btnLogout" 
                 Content="Logout"
@@ -111,17 +111,27 @@
                 Height="30" Width="50"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,30,0"
-                Background="#252839" Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"
-                Click="btnLogout_Click"/>
+                Background="{Binding currentUser.Color1}" Foreground="{Binding currentUser.Color4}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                Command="{Binding LogoutCommand}"/>
+
+        <Button x:Name="btnSetting" 
+                Content="Settings"
+                Grid.Column="3" Grid.RowSpan="2"
+                Height="30" Width="50"
+                VerticalAlignment="Center" HorizontalAlignment="Right"
+                Margin="0,0,30,0"
+                Background="{Binding currentUser.Color1}" Foreground="{Binding currentUser.Color4}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                Click="btnSetting_Click"/>
 
         <Button x:Name="btnHelp"
                 Content="Help"
                 Height="30" Width="50"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 Margin="30,0,0,0"
-                Background="#252839" Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"
+                Background="{Binding currentUser.Color1}" Foreground="{Binding currentUser.Color4}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
                 Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
 
@@ -131,9 +141,9 @@
                       Hoverable="False"
                       Grid.Column="2" Grid.ColumnSpan="2"
                       Grid.Row="1" Grid.RowSpan="4"
-                      BorderBrush="#b5b5b7"
+                      BorderBrush="{Binding currentUser.Color3}"
                       LegendLocation="Bottom"
-                      Foreground="#f2b632"
+                      Foreground="{Binding currentUser.Color4}"
                       Margin="0,0,50,29">
             <lvc:PieChart.Series>
                 <lvc:PieSeries x:Name="pieExpense"
@@ -152,8 +162,7 @@
                               Grid.ColumnSpan="2" Grid.Row="1"
                               Grid.RowSpan="4" Margin="74,0,25,39"
                               BorderThickness="5"
-                              BorderBrush="#b5b5b7"/>
-        
+                              BorderBrush="{Binding currentUser.Color3}"/>
 
     </Grid>
     

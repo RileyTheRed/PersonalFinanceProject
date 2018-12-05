@@ -17,6 +17,13 @@ namespace PersonalFinanceProjectFinal.Models
 
         public List<SearchResultRecord> ModifiedExpenseRecords { get; set; }
         public List<SearchResultRecord> ModifiedIncomeRecords { get; set; }
+
+        public string Color1 { get; set; }
+        public string Color2 { get; set; }
+        public string Color3 { get; set; }
+        public string Color4 { get; set; }
+
+        public string CurrencyType { get; set; }
         #endregion
 
 
@@ -27,7 +34,7 @@ namespace PersonalFinanceProjectFinal.Models
         /// <param name="name"></param>
         /// <param name="expenses"></param>
         /// <param name="income"></param>
-        public User(string id, string name, List<ExistingExpense> expenses, List<ExistingIncome> income)
+        public User(string id, string name, List<ExistingExpense> expenses, List<ExistingIncome> income, string[] colors)
         {
             UserID = id;
             FirstName = name;
@@ -39,6 +46,11 @@ namespace PersonalFinanceProjectFinal.Models
 
             ModifiedExpenseRecords = new List<SearchResultRecord>();
             ModifiedIncomeRecords = new List<SearchResultRecord>();
+
+            Color1 = colors[0];
+            Color2 = colors[1];
+            Color3 = colors[2];
+            Color4 = colors[3];
         }
 
     }

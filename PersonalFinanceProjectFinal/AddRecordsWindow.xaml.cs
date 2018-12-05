@@ -20,9 +20,12 @@ namespace PersonalFinanceProjectFinal
         /// </summary>
         public AddRecordsWindow(ref User referencedUser)
         {
+
             InitializeComponent();
             currentUser = referencedUser;
             frmDashboard.Content = new AddRecordsPlaceHolder();
+            DataContext = currentUser;
+
         }
 
 

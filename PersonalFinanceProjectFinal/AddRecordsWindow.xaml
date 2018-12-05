@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         Title="AddRecordsWindow" Height="600" Width="900"
         Closed="Window_Closed">
-    <Grid Background="#252839">
+    <Grid Background="{Binding user.Color1}">
         
         <!--ROW DEFINTIONS-->
         <Grid.RowDefinitions>
@@ -37,7 +37,7 @@
         <Rectangle x:Name="rectBackground"
                    Grid.ColumnSpan="4" Grid.RowSpan="7">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#252839"/>
+                <SolidColorBrush Color="{Binding user.Color1}"/>
             </Rectangle.Fill>
         </Rectangle>
         <!--END RECTANGLE DEFINTIONS-->
@@ -51,9 +51,9 @@
                 Height="40" Width="250"
                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                 Margin="0,0,20,10"
-                Background="#f2b632"
-                Foreground="#252839"
-                Click="btnAddExpense_Click"/>
+                Background="{Binding user.Color4}"
+                Foreground="{Binding user.Color3}"
+                Command="{Binding NewExpenseCommand}"/>
 
         <Button x:Name="btnAddIncome"
                 Content="New Income"
@@ -62,8 +62,8 @@
                 Height="40" Width="250"
                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
                 Margin="20,0,0,10"
-                Background="#f2b632"
-                Foreground="#252839"
+                Background="{Binding user.Color4}"
+                Foreground="{Binding user.Color3}"
                 Click="btnAddIncome_Click"/>
 
         <Button x:Name="btnReturnDashboard"
@@ -74,8 +74,8 @@
                 Height="40" Width="250"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Margin="0,0,0,0"
-                Background="#f2b632"
-                Foreground="#252839"
+                Background="{Binding user.Color4}"
+                Foreground="{Binding user.Color3}"
                 Click="btnReturnDashboard_Click"/>
 
         <Button x:Name="btnHelp"
@@ -84,8 +84,8 @@
                 Height="40" Width="130"
                 Content="Help"
                 FontSize="20" FontWeight="SemiBold"
-                Background="#252839" Foreground="#f2b632"
-                BorderBrush="#f2b632" BorderThickness="2"
+                Background="{Binding user.Color2}" Foreground="{Binding user.Color4}"
+                BorderBrush="{Binding user.Color4}" BorderThickness="2"
                 Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
         
@@ -94,7 +94,8 @@
         <Frame x:Name="frmDashboard"
                Grid.Row="1" Grid.RowSpan="5"
                Grid.ColumnSpan="4"
-               NavigationUIVisibility="Hidden"/>    
+               NavigationUIVisibility="Hidden"
+               Content="{Binding DisplayedPage, UpdateSourceTrigger=PropertyChanged}"/>    
 
     </Grid>
 </Window>

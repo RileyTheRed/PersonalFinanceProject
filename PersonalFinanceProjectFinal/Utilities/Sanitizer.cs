@@ -32,6 +32,8 @@ namespace PersonalFinanceProjectFinal.Utilities
         {
             try
             {
+                if (amount == null)
+                    return false;
                 var temp = Double.Parse(amount);
                 return true;
             }
@@ -44,6 +46,8 @@ namespace PersonalFinanceProjectFinal.Utilities
 
         public static string GetSanitizedDescription(string dirty)
         {
+            if (dirty == null)
+                return "";
             return Regex.Replace(dirty, "[^A-Za-z0-9 ]", "");
         }
 

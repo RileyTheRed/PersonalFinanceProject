@@ -173,11 +173,12 @@ namespace PersonalFinanceProjectFinal.Models
             List<ExistingIncome> income = new List<ExistingIncome>();
             string tempID = "";
             string tempName = "";
+            string[] colors = new string[4];
 
             GetConnection();
 
             // get the user id and first name
-            using (SqlCommand cmd = new SqlCommand($"SELECT userID, userFirstName FROM UserTable WHERE userName = '{username}'", con))
+            using (SqlCommand cmd = new SqlCommand($"SELECT userID, userFirstName, userColor1, userColor2, userColor3, userColor4 FROM UserTable WHERE userName = '{username}'", con))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -185,6 +186,10 @@ namespace PersonalFinanceProjectFinal.Models
                     {
                         tempID = reader.GetValue(0).ToString();
                         tempName = reader.GetValue(1).ToString();
+                        colors[0] = reader.GetValue(2).ToString();
+                        colors[1] = reader.GetValue(3).ToString();
+                        colors[2] = reader.GetValue(4).ToString();
+                        colors[3] = reader.GetValue(5).ToString();
                     }
                 }
             }
@@ -215,7 +220,7 @@ namespace PersonalFinanceProjectFinal.Models
                 }
             }
 
-            return new User(tempID, tempName, expenses, income);
+            return new User(tempID, tempName, expenses, income, colors);
 
         }
 

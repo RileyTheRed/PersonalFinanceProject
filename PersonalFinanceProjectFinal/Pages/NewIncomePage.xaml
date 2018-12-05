@@ -9,7 +9,7 @@
       Title="NewIncomePage">
 
     <Grid>
-
+        
         <!--ROW DEFINTIONS-->
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -19,8 +19,8 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <!--END ROW DEFINTIONS-->
-
-
+        
+        
         <!--COLUMN DEFINTIONS-->
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -28,14 +28,14 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!--END COLUMN DEFINTIONS-->
-
-
+        
+        
         <!--RECTANGLE DEFINTION-->
         <Rectangle x:Name="rectBackground"
                    Grid.RowSpan="5" Grid.ColumnSpan="3"
                    Margin="45,0,45,0">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#b5b5b7"/>
+                <SolidColorBrush Color="{Binding currentUser.Color4}"/>
             </Rectangle.Fill>
         </Rectangle>
 
@@ -44,72 +44,77 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    Height="390" Width="700">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#677077"/>
+                <SolidColorBrush Color="{Binding currentUser.Color3}"/>
             </Rectangle.Fill>
         </Rectangle>
         <!--END RECTANGLE DEFINTION-->
-
-
+        
+        
         <!--STACK PANEL DEFINITIONS-->
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Width="500">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Width="500"
+                    x:Name="stkpanAmount">
             <Label Content="Amount:"
                FontSize="20" FontWeight="SemiBold"
                VerticalAlignment="Center"
-                   Foreground="#f2b632"/>
+               Foreground="{Binding currentUser.Color2}"/>
 
             <TextBox x:Name="txtAmount"
                  Width="300" Height="30"
                  VerticalContentAlignment="Center"
-                 Background="#252839" Foreground="#f2b632"
+                 Text="{Binding Amount, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
+                 Background="{Binding currentUser.Color1}"
                  Margin="100,0,0,0"
                  LostFocus="txtAmount_LostFocus"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Width="500"
-                    Grid.Row="1">
+                    Grid.Row="1" x:Name="stkpanDate">
             <Label Content="Date:"
                FontSize="20" FontWeight="SemiBold"
                VerticalAlignment="Center"
-               Foreground="#f2b632"/>
-
+               Foreground="{Binding currentUser.Color2}"/>
+            
             <DatePicker x:Name="dteDate"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Width="300" Margin="130,0,0,0"/>
+                    Width="300" Margin="130,0,0,0"
+                    SelectedDate="{Binding Date, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Width="500"
-                    Grid.Row="2">
+                    Grid.Row="2" x:Name="stkpanCategory">
             <Label Content="Category:"
                FontSize="20" FontWeight="SemiBold"
                VerticalAlignment="Center" HorizontalAlignment="Center"
-               Foreground="#f2b632"/>
+               Foreground="{Binding currentUser.Color2}"/>
 
             <ComboBox x:Name="cmbCategory"
                   IsReadOnly="true" IsEditable="true"
-                  Text="Please select a category..."
+                  ItemsSource="{Binding CatList}"
                   Width="300" Height="30"
                   VerticalContentAlignment="Center"
+                  Text="{Binding Category, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
                   VerticalAlignment="Center" Margin="90,0,0,0"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" Width="500"
-                    Grid.Row="3">
+                    Grid.Row="3" x:Name="stkpanDescription">
             <Label Content="Description:"
                FontSize="20" FontWeight="SemiBold"
                VerticalAlignment="Center"
-               Foreground="#f2b632"/>
+               Foreground="{Binding currentUser.Color2}"/>
 
             <TextBox x:Name="txtDescription"
                  Width="300" Height="30"
+                 Text="{Binding Description, UpdateSourceTrigger=LostFocus, Mode=TwoWay}"
                  VerticalAlignment="Center"
                  VerticalContentAlignment="Center"
-                 Background="#252839" Foreground="#f2b632"
+                 Background="{Binding currentUser.Color1}"
                  Margin="70,0,0,0"/>
         </StackPanel>
         <!--END STACK PANEL DEFINTIONS-->
-
-
+        
+        
         <!--BUTTON DEFINTIONS-->
         <Button x:Name="btnSubmitIncome"
                 Content="Submit Income"
@@ -118,9 +123,9 @@
                 Height="40"
                 VerticalAlignment="Top"
                 Margin="0,15,0,0"
-                Background="#252839" Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"
-                Click="btnSubmitIncome_Click"/>
+                Background="{Binding currentUser.Color2}" Foreground="{Binding currentUser.Color4}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                Command="{Binding SubmitCommand}"/>
 
     </Grid>
 </Page>

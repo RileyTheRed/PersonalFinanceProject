@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows;
 using LiveCharts;
 using System.Windows.Media.Effects;
+using PersonalFinanceProjectFinal.View_Models;
 
 namespace PersonalFinanceProjectFinal
 {
@@ -19,9 +20,14 @@ namespace PersonalFinanceProjectFinal
 
         public UserDashboard(string uname)
         {
+
             InitializeComponent();
+
+            UserDashboardVM vm = new UserDashboardVM(this, Database.GetUserData(uname));
             currentUser = Database.GetUserData(uname);
             lblGreeting.Content = $"Welcome back, {currentUser.FirstName}";
+
+            DataContext = vm;
             
             pieChart.DataContext = this;
             UpdateChart();
@@ -274,6 +280,17 @@ namespace PersonalFinanceProjectFinal
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             RunIntroductionSequence();
+        }
+
+        private void btnSetting_Click(object sender, RoutedEventArgs e)
+        {
+            UserAccountSettingsWindow userSettings = new UserAccountSettingsWindow();
+            userSettings.Owner = this;
+            userSettings.Visibility = Visibility.Visible;
+            userSettings.IsEnabled = true;
+
+            this.Visibility = Visibility.Hidden;
+            IsEnabled = false;
         }
     }
 }

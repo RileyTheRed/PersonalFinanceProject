@@ -67,3 +67,5 @@ C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProjec
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\Pages\AddRecordsPlaceHolder.g.cs
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\Pages\AddRecordsPlaceHolder.baml
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\UserAccountSettingsWindow.g.cs
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\UserAccountSettingsWindow.baml
