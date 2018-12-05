@@ -1,0 +1,72 @@
+﻿<Window x:Class="PersonalFinanceProjectFinal.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PersonalFinanceProjectFinal"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        mc:Ignorable="d"
+        Title="Window1" Height="450" Width="800">
+    
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <lvc:PieChart Name="Chart" Grid.Row="0" Series="{Binding SeriesCollection}" 
+                      InnerRadius="60" Grid.Column="0"
+                      Width="100">
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend BulletSize="10"></lvc:DefaultLegend>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip BulletSize="10"></lvc:DefaultTooltip>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+
+        <lvc:PieChart Grid.Row="0" Series="{Binding SeriesCollection}" 
+                      InnerRadius="60" Grid.Column="1"
+                      Width="100">
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend BulletSize="10"></lvc:DefaultLegend>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip BulletSize="10"></lvc:DefaultTooltip>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+
+        <lvc:PieChart Grid.Row="1" Series="{Binding SeriesCollection}" 
+                      InnerRadius="60" Grid.Column="0"
+                      Width="100">
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend BulletSize="10"></lvc:DefaultLegend>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip BulletSize="10"></lvc:DefaultTooltip>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+
+        <lvc:PieChart Grid.Row="1" Series="{Binding SeriesCollection}" 
+                      InnerRadius="60" Grid.Column="1"
+                      Width="100">
+            <lvc:PieChart.ChartLegend>
+                <lvc:DefaultLegend BulletSize="10"></lvc:DefaultLegend>
+            </lvc:PieChart.ChartLegend>
+            <lvc:PieChart.DataTooltip>
+                <lvc:DefaultTooltip BulletSize="10"></lvc:DefaultTooltip>
+            </lvc:PieChart.DataTooltip>
+        </lvc:PieChart>
+
+    </Grid>
+    
+</Window>

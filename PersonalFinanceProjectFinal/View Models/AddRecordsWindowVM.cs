@@ -83,5 +83,26 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        public ICommand ReturnToDashboardCommand
+        {
+            get
+            {
+                if (_returnToDashboardCommand == null)
+                {
+                    _returnToDashboardCommand = new DelegateCommand(ReturnToDashboardClicked);
+                }
+                return _returnToDashboardCommand;
+            }
+        }
+        DelegateCommand _returnToDashboardCommand;
+        private void ReturnToDashboardClicked(object obj)
+        {
+            window.Owner.Visibility = System.Windows.Visibility.Visible;
+            window.Owner.IsEnabled = true;
+
+            window.Close();
+        }
+
+
     }
 }

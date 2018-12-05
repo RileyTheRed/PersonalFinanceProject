@@ -11,8 +11,15 @@ namespace PersonalFinanceProjectFinal.Utilities
     class ExtractUserDashboardData
     {
 
-        public static Tuple<Tuple<string,double>,Tuple<string,double>,Tuple<string,double>> GetTopThreeExpenseCategories
-            (List<ExistingExpense> existing, List<NewExpense> newer, List<SearchResultRecord> modified, bool currentMonth)
+        public static Tuple
+            <Tuple<string, double>, 
+            Tuple<string, double>, 
+            Tuple<string, double>> 
+            GetTopThreeExpenseCategories
+            (List<ExistingExpense> existing, 
+            List<NewExpense> newer, 
+            List<SearchResultRecord> modified,
+            bool currentMonth)
         {
 
             string first = "N/A";
@@ -210,10 +217,10 @@ namespace PersonalFinanceProjectFinal.Utilities
                 }
             }
 
-            Tuple<string,double> firstValues;
+            Tuple<string, double> firstValues;
             Tuple<string, double> secondValues;
             Tuple<string, double> thirdValues;
-        
+
 
             // compile the number 1 category and its ratio to overall cost for the specified month
             if (!first.Equals("N/A"))
@@ -234,14 +241,19 @@ namespace PersonalFinanceProjectFinal.Utilities
                 thirdValues = new Tuple<string, double>(third, 0.0);
 
 
-            return new Tuple<Tuple<string, double>, Tuple<string, double>, Tuple<string, double>>(firstValues,secondValues,thirdValues);
+            return new Tuple<Tuple<string, double>, Tuple<string, double>, Tuple<string, double>>(firstValues, secondValues, thirdValues);
         }
+
 
 
         public static Tuple<double, double> GetCurrentAndLastMonthRatios
             (
-                List<ExistingExpense> existingExpenses, List<NewExpense> newExpenses, List<SearchResultRecord> modifiedExpenses,
-                List<ExistingIncome> existingIncomes, List<NewIncome> newIncomes, List<SearchResultRecord> modifiedIncomes
+                List<ExistingExpense> existingExpenses, 
+                List<NewExpense> newExpenses, 
+                List<SearchResultRecord> modifiedExpenses,
+                List<ExistingIncome> existingIncomes, 
+                List<NewIncome> newIncomes, 
+                List<SearchResultRecord> modifiedIncomes
             )
         {
 
@@ -286,7 +298,7 @@ namespace PersonalFinanceProjectFinal.Utilities
 
 
             #region IncomeCalculations
-            List<string> modifiedIncomeHashes = modifiedExpenses.Select(x => x.Hash).ToList();
+            List<string> modifiedIncomeHashes = modifiedIncomes.Select(x => x.Hash).ToList();
             double totalCurrentMonthIncomes = 0.0;
             double totalLastMonthIncomes = 0.0;
 
@@ -326,6 +338,221 @@ namespace PersonalFinanceProjectFinal.Utilities
 
 
             return new Tuple<double, double>(totalCurrentMonthExpenses / totalLastMonthExpenses, totalCurrentMonthIncomes / totalLastMonthIncomes);
+        }
+
+
+
+        public static Tuple
+            <Tuple<string, List<Tuple<string, double>>>,
+            Tuple<string, List<Tuple<string, double>>>,
+            Tuple<string, List<Tuple<string, double>>>, 
+            Tuple<string, List<Tuple<string, double>>>, 
+            List<Tuple<string, double>>>
+            GetExpenseReport(User user)
+        {
+
+
+            // reusable variables to be used for calculating the different monthss reports
+            List<ExistingExpense> tempExistingExpense;
+            List<NewExpense> tempNewExpense;
+            List<SearchResultRecord> tempModifiedExpense;
+            List<string> tempModifiedHashes;
+
+
+            // calculate the current months expense report
+            tempModifiedExpense =
+                user.ModifiedExpenseRecords
+                .Where(e => e.Date.Month.Equals(DateTime.Now.Month) && e.Date.Year.Equals(DateTime.Now.Year) && !e.Status.Equals("--"))
+                .ToList();
+
+            tempModifiedHashes =
+                tempModifiedExpense
+                .Select(e => e.Hash)
+                .ToList();
+
+            tempExistingExpense =
+                user.ExistingUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.Month) && e.Date.Year.Equals(DateTime.Now.Year))
+                .ToList();
+
+            tempNewExpense =
+                user.NewUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.Month) && e.Date.Year.Equals(DateTime.Now.Year))
+                .ToList();
+
+            List<Tuple<string, double>> current = new List<Tuple<string, double>>();
+            foreach (string category in Categories.GetExpenseCategories())
+            {
+                double total = 0;
+                total += tempModifiedExpense.Where(e => e.Category.Equals(category)).Select(e => e.Amount).Sum();
+                total += tempExistingExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+                total += tempNewExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+
+                current.Add(new Tuple<string, double>(category, total));
+            }
+
+
+
+            // calculate the previous months expense report
+            tempModifiedExpense =
+                user.ModifiedExpenseRecords
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-1).Month) && 
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)) && !e.Status.Equals("--"))
+                .ToList();
+
+            tempModifiedHashes =
+                tempModifiedExpense
+                .Select(e => e.Hash)
+                .ToList();
+
+            tempExistingExpense =
+                user.ExistingUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-1).Month) &&
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)))
+                .ToList();
+
+            tempNewExpense =
+                user.NewUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-1).Month) &&
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)))
+                .ToList();
+
+            List<Tuple<string, double>> previous_1 = new List<Tuple<string, double>>();
+            foreach (string category in Categories.GetExpenseCategories())
+            {
+                double total = 0;
+                total += tempModifiedExpense.Where(e => e.Category.Equals(category)).Select(e => e.Amount).Sum();
+                total += tempExistingExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+                total += tempNewExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+
+                previous_1.Add(new Tuple<string, double>(category, total));
+            }
+
+
+
+            // calculate the previous-1 months expense report
+            tempModifiedExpense =
+                user.ModifiedExpenseRecords
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-2).Month) && 
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)) && !e.Status.Equals("--"))
+                .ToList();
+
+            tempModifiedHashes =
+                tempModifiedExpense
+                .Select(e => e.Hash)
+                .ToList();
+
+            tempExistingExpense =
+                user.ExistingUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-2).Month) && 
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)))
+                .ToList();
+
+            tempNewExpense =
+                user.NewUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-2).Month) &&
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)))
+                .ToList();
+
+            List<Tuple<string, double>> previous_2 = new List<Tuple<string, double>>();
+            foreach (string category in Categories.GetExpenseCategories())
+            {
+                double total = 0;
+                total += tempModifiedExpense.Where(e => e.Category.Equals(category)).Select(e => e.Amount).Sum();
+                total += tempExistingExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+                total += tempNewExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+
+                previous_2.Add(new Tuple<string, double>(category, total));
+            }
+
+
+
+            // calculate the previous-2 months expense report
+            tempModifiedExpense =
+                user.ModifiedExpenseRecords
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-3).Month) &&
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)) && !e.Status.Equals("--"))
+                .ToList();
+
+            tempModifiedHashes =
+                tempModifiedExpense
+                .Select(e => e.Hash)
+                .ToList();
+
+            tempExistingExpense =
+                user.ExistingUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-3).Month) &&
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)))
+                .ToList();
+
+            tempNewExpense =
+                user.NewUserExpenses
+                .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-3).Month) &&
+                    (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)))
+                .ToList();
+
+            List<Tuple<string, double>> previous_3 = new List<Tuple<string, double>>();
+            foreach (string category in Categories.GetExpenseCategories())
+            {
+                double total = 0;
+                total += tempModifiedExpense.Where(e => e.Category.Equals(category)).Select(e => e.Amount).Sum();
+                total += tempExistingExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+                total += tempNewExpense.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => r.Equals(e.Hash))).Select(e => e.Amount).Sum();
+
+                previous_3.Add(new Tuple<string, double>(category, total));
+            }
+
+
+
+            // find the first month and year that records began
+            DateTime first = DateTime.Now;
+            foreach (ExistingExpense item in user.ExistingUserExpenses)
+            {
+                if (item.Date < first)
+                    first = item.Date;
+            }
+            foreach (NewExpense item in user.NewUserExpenses)
+            {
+                if (item.Date < first)
+                    first = item.Date;
+            }
+            foreach (SearchResultRecord item in user.ModifiedExpenseRecords)
+            {
+                if (item.Date < first && !item.Status.Equals("--"))
+                    first = item.Date;
+            }
+
+            // how many months has there been since record keeping began?
+            int months = ((DateTime.Now.Year - first.Year) * 12) + (DateTime.Now.Month - first.Month);
+
+
+            //compute the average of each expense category since record keeping began
+            List<Tuple<string, double>> average = new List<Tuple<string, double>>();
+
+            tempModifiedHashes =
+                user.ModifiedExpenseRecords.Where(e => !e.Status.Equals("--")).Select(e => e.Hash).ToList();
+
+            foreach (string category in Categories.GetExpenseCategories())
+            {
+                double total = 0;
+                total += user.ExistingUserExpenses.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum();
+                total += user.NewUserExpenses.Where(e => e.Category.Equals(category) && !tempModifiedHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum();
+                total += user.ModifiedExpenseRecords.Where(e => e.Category.Equals(category) && tempModifiedHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum();
+                average.Add(new Tuple<string, double>(category, (total / months)));
+            }
+
+
+            return new Tuple
+                <Tuple<string, List<Tuple<string, double>>>,
+                Tuple<string, List<Tuple<string, double>>>,
+                Tuple<string, List<Tuple<string, double>>>,
+                Tuple<string, List<Tuple<string, double>>>,
+                List<Tuple<string, double>>>
+                (new Tuple<string, List<Tuple<string, double>>>("Current", current),
+                new Tuple<string, List<Tuple<string, double>>>(DateTime.Now.AddMonths(-1).Month.ToString(), previous_1),
+                new Tuple<string, List<Tuple<string, double>>>(DateTime.Now.AddMonths(-2).Month.ToString(), previous_2),
+                new Tuple<string, List<Tuple<string, double>>>(DateTime.Now.AddMonths(-3).Month.ToString(), previous_3),
+                average);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using PersonalFinanceProjectFinal.Models;
+﻿using LiveCharts;
+using PersonalFinanceProjectFinal.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,6 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
-
         public ICommand LogoutCommand
         {
             get
@@ -51,6 +51,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             dashboard.Owner.IsEnabled = true;
             dashboard.Close();
         }
+
 
         public ICommand AddRecordsCommand
         {
@@ -75,6 +76,132 @@ namespace PersonalFinanceProjectFinal.View_Models
 
             dashboard.Visibility = Visibility.Hidden;
             dashboard.IsEnabled = false;
+        }
+
+
+        public ICommand EditRecordsCommand
+        {
+            get
+            {
+                if (_editRecordsCommand == null)
+                {
+                    _editRecordsCommand = new DelegateCommand(EditRecordsClicked);
+                }
+                return _editRecordsCommand;
+            }
+        }
+        DelegateCommand _editRecordsCommand;
+        private void EditRecordsClicked(object obj)
+        {
+            var temp = currentUser;
+            child = new SearchRecordsWindow(ref temp);
+            child.Owner = dashboard;
+
+            child.Show();
+            dashboard.Visibility = Visibility.Hidden;
+            dashboard.IsEnabled = false;
+        }
+
+
+        public ICommand UpdateDashboardDataCommand
+        {
+            get
+            {
+                if (_updateDashboardDataCommand == null)
+                {
+                    _updateDashboardDataCommand = new DelegateCommand(UpdateDashboardData);
+                }
+                return _updateDashboardDataCommand;
+            }
+        }
+        DelegateCommand _updateDashboardDataCommand;
+        private void UpdateDashboardData(object obj)
+        {
+            dashboard.ucDashData.UpdateDashboardUserData();
+            UpdateChart();
+        }
+
+
+
+
+
+
+        private void UpdateChart()
+        {
+            List<double> monthlyExpenseSoFar = new List<double>();
+            List<double> monthlyIncomeSoFar = new List<double>();
+
+            var tempExpense = 0.0;
+            var tempIncome = 0.0;
+
+            foreach (ExistingExpense item in currentUser.ExistingUserExpenses)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedExpenseRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempExpense += item.Amount;
+                }
+            }
+
+            foreach (ExistingIncome item in currentUser.ExistingUserIncome)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedIncomeRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempIncome += item.Amount;
+                }
+            }
+
+            foreach (NewIncome item in currentUser.NewUserIncome)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedIncomeRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempIncome += item.Amount;
+                }
+            }
+
+            foreach (NewExpense item in currentUser.NewUserExpenses)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
+                    && currentUser.ModifiedExpenseRecords.Count(x => x.Hash.Equals(item.Hash)) == 0)
+                {
+                    tempExpense += item.Amount;
+                }
+            }
+
+            foreach (SearchResultRecord item in currentUser.ModifiedExpenseRecords)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year && !item.Status.Equals("--"))
+                {
+                    tempExpense += item.Amount;
+                }
+            }
+
+            foreach (SearchResultRecord item in currentUser.ModifiedIncomeRecords)
+            {
+                if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year && !item.Status.Equals("--"))
+                {
+                    tempIncome += item.Amount;
+                }
+            }
+
+            monthlyExpenseSoFar.Add(tempExpense);
+            monthlyIncomeSoFar.Add(tempIncome);
+
+            if (monthlyExpenseSoFar[0] == 0.0 && monthlyIncomeSoFar[0] == 0.0)
+            {
+                dashboard.pieChart.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                if (dashboard.pieChart.Visibility == Visibility.Hidden)
+                {
+                    dashboard.pieChart.Visibility = Visibility.Visible;
+                }
+                dashboard.pieExpense.Values = new ChartValues<double>(monthlyExpenseSoFar);
+                dashboard.pieIncome.Values = new ChartValues<double>(monthlyIncomeSoFar);
+            }
         }
     }
 }

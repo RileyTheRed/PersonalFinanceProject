@@ -93,7 +93,7 @@
                 Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
                 FontSize="18"
                 BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
-                Click="btnEditRecords_Click"/>
+                Command="{Binding EditRecordsCommand}"/>
 
         <Button x:Name="btnReport" 
                 Content="Finance Report"
