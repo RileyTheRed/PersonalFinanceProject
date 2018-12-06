@@ -347,7 +347,8 @@ namespace PersonalFinanceProjectFinal.Utilities
             Tuple<string, List<Tuple<string, double>>>,
             Tuple<string, List<Tuple<string, double>>>, 
             Tuple<string, List<Tuple<string, double>>>, 
-            List<Tuple<string, double>>>
+            List<Tuple<string, double>>,
+            double, double>
             GetExpenseReport(User user)
         {
 
@@ -357,17 +358,24 @@ namespace PersonalFinanceProjectFinal.Utilities
             List<NewExpense> tempNewExpense;
             List<SearchResultRecord> tempModifiedExpense;
             List<string> tempModifiedHashes;
+            List<string> tempModifiedIncomeHashes;
+
+
+            tempModifiedHashes =
+                user.ModifiedExpenseRecords
+                .Select(e => e.Hash)
+                .ToList();
+
+            tempModifiedIncomeHashes =
+                user.ModifiedIncomeRecords
+                .Select(e => e.Hash)
+                .ToList();
 
 
             // calculate the current months expense report
             tempModifiedExpense =
                 user.ModifiedExpenseRecords
                 .Where(e => e.Date.Month.Equals(DateTime.Now.Month) && e.Date.Year.Equals(DateTime.Now.Year) && !e.Status.Equals("--"))
-                .ToList();
-
-            tempModifiedHashes =
-                tempModifiedExpense
-                .Select(e => e.Hash)
                 .ToList();
 
             tempExistingExpense =
@@ -398,11 +406,6 @@ namespace PersonalFinanceProjectFinal.Utilities
                 user.ModifiedExpenseRecords
                 .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-1).Month) && 
                     (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)) && !e.Status.Equals("--"))
-                .ToList();
-
-            tempModifiedHashes =
-                tempModifiedExpense
-                .Select(e => e.Hash)
                 .ToList();
 
             tempExistingExpense =
@@ -437,11 +440,6 @@ namespace PersonalFinanceProjectFinal.Utilities
                     (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)) && !e.Status.Equals("--"))
                 .ToList();
 
-            tempModifiedHashes =
-                tempModifiedExpense
-                .Select(e => e.Hash)
-                .ToList();
-
             tempExistingExpense =
                 user.ExistingUserExpenses
                 .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-2).Month) && 
@@ -472,11 +470,6 @@ namespace PersonalFinanceProjectFinal.Utilities
                 user.ModifiedExpenseRecords
                 .Where(e => e.Date.Month.Equals(DateTime.Now.AddMonths(-3).Month) &&
                     (e.Date.Year.Equals(DateTime.Now.AddYears(-1).Year) || e.Date.Year.Equals(DateTime.Now.Year)) && !e.Status.Equals("--"))
-                .ToList();
-
-            tempModifiedHashes =
-                tempModifiedExpense
-                .Select(e => e.Hash)
                 .ToList();
 
             tempExistingExpense =
@@ -541,18 +534,41 @@ namespace PersonalFinanceProjectFinal.Utilities
                 average.Add(new Tuple<string, double>(category, (total / months)));
             }
 
+            var totalMonths = months + 1;
+
+            double totalAverageMonthlyExpense =
+                (
+                    user.ExistingUserExpenses.Where(e => !tempModifiedHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum()
+                        +
+                    user.NewUserExpenses.Where(e => !tempModifiedHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum()
+                        +
+                    user.ModifiedExpenseRecords.Where(e => !e.Status.Equals("--")).Select(e => e.Amount).Sum()
+                ) 
+                / totalMonths;
+
+            double totalAverageMonthlyIncome =
+                (
+                    user.ExistingUserIncome.Where(e => !tempModifiedIncomeHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum()
+                        +
+                    user.NewUserIncome.Where(e => !tempModifiedIncomeHashes.Exists(r => e.Hash.Equals(r))).Select(e => e.Amount).Sum()
+                        +
+                    user.ModifiedIncomeRecords.Where(e => !e.Status.Equals("--")).Select(e => e.Amount).Sum()
+                )
+                / totalMonths;
+
 
             return new Tuple
                 <Tuple<string, List<Tuple<string, double>>>,
                 Tuple<string, List<Tuple<string, double>>>,
                 Tuple<string, List<Tuple<string, double>>>,
                 Tuple<string, List<Tuple<string, double>>>,
-                List<Tuple<string, double>>>
+                List<Tuple<string, double>>,
+                double, double>
                 (new Tuple<string, List<Tuple<string, double>>>("Current", current),
                 new Tuple<string, List<Tuple<string, double>>>(DateTime.Now.AddMonths(-1).Month.ToString(), previous_1),
                 new Tuple<string, List<Tuple<string, double>>>(DateTime.Now.AddMonths(-2).Month.ToString(), previous_2),
                 new Tuple<string, List<Tuple<string, double>>>(DateTime.Now.AddMonths(-3).Month.ToString(), previous_3),
-                average);
+                average, totalAverageMonthlyExpense, totalAverageMonthlyIncome);
         }
 
     }

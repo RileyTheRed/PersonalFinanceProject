@@ -106,6 +106,7 @@
     <Compile Include="Utilities\Security.cs" />
     <Compile Include="View Models\AddRecordsWindowVM.cs" />
     <Compile Include="View Models\DelegateCommand.cs" />
+    <Compile Include="View Models\FinanceReportWindowVM.cs" />
     <Compile Include="View Models\NewIncomePageVM.cs" />
     <Compile Include="View Models\NewExpensePageVM.cs" />
     <Compile Include="View Models\UserAccountSettingsWindowVM.cs" />

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersonalFinanceProjectFinal.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using PersonalFinanceProjectFinal.View_Models;
 
 namespace PersonalFinanceProjectFinal
 {
@@ -19,9 +21,10 @@ namespace PersonalFinanceProjectFinal
     /// </summary>
     public partial class UserAccountSettingsWindow : Window
     {
-        public UserAccountSettingsWindow()
+        public UserAccountSettingsWindow(User current)
         {
             InitializeComponent();
+            DataContext = new UserAccountSettingsWindowVM(current, this);
         }
     }
 }

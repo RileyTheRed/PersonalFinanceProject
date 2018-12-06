@@ -70,3 +70,4 @@ C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProjec
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\UserAccountSettingsWindow.baml
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\Window1.g.cs
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\Window1.baml
+C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\obj\Debug\PersonalFinanceProjectFinal.csprojAssemblyReference.cache

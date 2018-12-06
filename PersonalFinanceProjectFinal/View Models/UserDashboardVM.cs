@@ -122,8 +122,53 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        public ICommand FinanceReportCommand
+        {
+            get
+            {
+                if (_financeReportCommand == null)
+                {
+                    _financeReportCommand = new DelegateCommand(FinanceReportClicked);
+                }
+                return _financeReportCommand;
+            }
+        }
+        DelegateCommand _financeReportCommand;
+        private void FinanceReportClicked(object obj)
+        {
+            var temp = currentUser;
+            child = new Window1(temp);
+            child.Owner = dashboard;
+
+            dashboard.IsEnabled = false;
+            dashboard.Visibility = Visibility.Hidden;
+
+            child.Show();
+        }
 
 
+        public ICommand SettingButtonCommand
+        {
+            get
+            {
+                if (_settingButtonCommand == null)
+                {
+                    _settingButtonCommand = new DelegateCommand(SettingButtonClicked);
+                }
+                return _settingButtonCommand;
+            }
+        }
+        DelegateCommand _settingButtonCommand;
+        private void SettingButtonClicked(object obj)
+        {
+            child = new UserAccountSettingsWindow(currentUser);
+            child.Owner = dashboard;
+
+            dashboard.IsEnabled = false;
+            dashboard.Visibility = Visibility.Hidden;
+
+            child.Show();
+        }
 
 
         private void UpdateChart()

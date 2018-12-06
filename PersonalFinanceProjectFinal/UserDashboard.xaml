@@ -10,9 +10,8 @@
         ResizeMode="NoResize"
         Title="UserDashboard" Height="600" Width="900"
         IsEnabledChanged="Window_IsEnabledChanged"
-        Closed="Window_Closed"
         WindowStartupLocation="CenterScreen">
-    <Grid Background="{Binding currentUser.Color3}">
+    <Grid Background="{Binding currentUser.Color3, UpdateSourceTrigger=PropertyChanged, Mode=Default}">
 
         <!--GRID ROW DEFINTIONS-->
         <Grid.RowDefinitions>
@@ -43,7 +42,7 @@
                    Grid.RowSpan="6" Grid.ColumnSpan="4"
                    x:Name="rectYellow">
             <Rectangle.Fill>
-                <SolidColorBrush Color="{Binding currentUser.Color4}"/>
+                <SolidColorBrush Color="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </Rectangle.Fill>
         </Rectangle>
 
@@ -53,7 +52,7 @@
                    Grid.RowSpan="6" Grid.ColumnSpan="4"
                    x:Name="rectBlue">
             <Rectangle.Fill>
-                <SolidColorBrush Color="{Binding currentUser.Color1}"/>
+                <SolidColorBrush Color="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
             </Rectangle.Fill>
         </Rectangle>
 
@@ -67,7 +66,7 @@
                Grid.ColumnSpan="4"
                HorizontalAlignment="Center" VerticalAlignment="Bottom"
                FontSize="35"
-               Foreground="{Binding currentUser.Color4}"
+               Foreground="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                Margin="0,0,0,10"/>
         <!--END LABEL DEFINTIONS-->
 
@@ -79,9 +78,10 @@
                 Grid.Row="4" Grid.RowSpan="2"
                 Height="50" Width="200"
                 Margin="0,30,100,0"
-                Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
+                Background="{Binding currentUser.Color3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                Foreground="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 Command="{Binding AddRecordsCommand}"/>
 
         <Button x:Name="btnEditRecords" 
@@ -90,9 +90,10 @@
                 Grid.Row="4" Grid.RowSpan="2"
                 Height="50" Width="200"
                 Margin="0,30,0,0"
-                Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
+                Background="{Binding currentUser.Color3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                Foreground="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 Command="{Binding EditRecordsCommand}"/>
 
         <Button x:Name="btnReport" 
@@ -101,9 +102,11 @@
                 Grid.Row="4" Grid.RowSpan="2"
                 Height="50" Width="200"
                 Margin="100,30,0,0"
-                Background="{Binding currentUser.Color3}" Foreground="{Binding currentUser.Color1}"
+                Background="{Binding currentUser.Color3, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                Foreground="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 FontSize="18"
-                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"/>
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Command="{Binding FinanceReportCommand}"/>
 
         <Button x:Name="btnLogout" 
                 Content="Logout"
@@ -111,8 +114,9 @@
                 Height="30" Width="50"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,30,0"
-                Background="{Binding currentUser.Color1}" Foreground="{Binding currentUser.Color4}"
-                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                Background="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                Foreground="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 Command="{Binding LogoutCommand}"/>
 
         <Button x:Name="btnSetting" 
@@ -121,17 +125,19 @@
                 Height="30" Width="50"
                 VerticalAlignment="Center" HorizontalAlignment="Right"
                 Margin="0,0,30,0"
-                Background="{Binding currentUser.Color1}" Foreground="{Binding currentUser.Color4}"
-                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
-                Click="btnSetting_Click"/>
+                Background="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                Foreground="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                Command="{Binding SettingButtonCommand}"/>
 
         <Button x:Name="btnHelp"
                 Content="Help"
                 Height="30" Width="50"
                 VerticalAlignment="Center" HorizontalAlignment="Left"
                 Margin="30,0,0,0"
-                Background="{Binding currentUser.Color1}" Foreground="{Binding currentUser.Color4}"
-                BorderThickness="2" BorderBrush="{Binding currentUser.Color4}"
+                Background="{Binding currentUser.Color1, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                Foreground="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                BorderThickness="2" BorderBrush="{Binding currentUser.Color4, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                 Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
 

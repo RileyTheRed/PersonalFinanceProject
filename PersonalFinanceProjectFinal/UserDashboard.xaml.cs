@@ -41,14 +41,6 @@ namespace PersonalFinanceProjectFinal
             //RunIntroductionSequence();
         }
 
-        private void btnLogout_Click(object sender, RoutedEventArgs e)
-        {
-            Owner.Visibility = Visibility.Visible;
-            Owner.IsEnabled = true;
-            
-            Close();
-        }
-
         public void UpdateChart()
         {
             List<double> monthlyExpenseSoFar = new List<double>();
@@ -132,16 +124,6 @@ namespace PersonalFinanceProjectFinal
         {
             UpdateChart();
             ucDashData.UpdateDashboardUserData();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Owner.Visibility = Visibility.Visible;
-            Owner.IsEnabled = true;
-
-            Database.UpdateDatabase(currentUser);
-
-            Close();
         }
 
         #region IntroductionBlurFunctions
@@ -258,17 +240,6 @@ namespace PersonalFinanceProjectFinal
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             RunIntroductionSequence();
-        }
-
-        private void btnSetting_Click(object sender, RoutedEventArgs e)
-        {
-            UserAccountSettingsWindow userSettings = new UserAccountSettingsWindow();
-            userSettings.Owner = this;
-            userSettings.Visibility = Visibility.Visible;
-            userSettings.IsEnabled = true;
-
-            this.Visibility = Visibility.Hidden;
-            IsEnabled = false;
         }
     }
 }

@@ -1,5 +1,11 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using PersonalFinanceProjectFinal.Models;
+using PersonalFinanceProjectFinal.Utilities;
+using PersonalFinanceProjectFinal.View_Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +25,13 @@ namespace PersonalFinanceProjectFinal
     /// </summary>
     public partial class Window1 : Window
     {
-        public Window1()
+
+
+        public Window1(User current)
         {
             InitializeComponent();
+            DataContext = new FinanceReportWindowVM(current, this);
         }
-
 
 
     }
