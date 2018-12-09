@@ -1,7 +1,5 @@
 ﻿using PersonalFinanceProjectFinal.Models;
-using PersonalFinanceProjectFinal.Utilities;
 using PersonalFinanceProjectFinal.View_Models;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;

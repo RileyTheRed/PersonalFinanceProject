@@ -12,6 +12,9 @@ namespace PersonalFinanceProjectFinal.View_Models
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
+
+        #region Properties
+        // the current months expense categories and amounts
         private SeriesCollection _currentSeries;
         public SeriesCollection CurrentSeries
         {
@@ -36,6 +39,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+        // the previous months expense categories and amounts
         private SeriesCollection _previousOneSeries;
         public SeriesCollection PreviousOneSeries
         {
@@ -60,6 +64,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+        // the previous - 1 months expense categories and amounts
         private SeriesCollection _previousTwoSeries;
         public SeriesCollection PreviousTwoSeries
         {
@@ -84,6 +89,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+        // the previous - 2 months expense categories and amounts
         private SeriesCollection _previousThreeSeries;
         public SeriesCollection PreviousThreeSeries
         {
@@ -108,6 +114,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+        // the overall average of expense categories and amounts
         private SeriesCollection _averageSeries;
         public SeriesCollection AverageSeries
         {
@@ -131,7 +138,6 @@ namespace PersonalFinanceProjectFinal.View_Models
                 PropertyChanged(this, new PropertyChangedEventArgs("AverageSeries"));
             }
         }
-
 
         private Visibility _hasCurrent;
         public Visibility HasCurrent
@@ -231,6 +237,11 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+        private Window1 parent { get; set; }
+        public User cur { get; set; }
+        #endregion
+
+
         private void GetSeries(User current)
         {
 
@@ -310,9 +321,12 @@ namespace PersonalFinanceProjectFinal.View_Models
 
         }
 
-        private Window1 parent { get; set; }
-        public User cur { get; set; }
-
+        
+        /// <summary>
+        /// Constructor for the FinanceReportWindowVM
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="window"></param>
         public FinanceReportWindowVM(User current, Window1 window)
         {
             parent = window;
@@ -321,6 +335,7 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        #region Commands
         public ICommand ReturnDashboardCommand
         {
             get
@@ -340,5 +355,6 @@ namespace PersonalFinanceProjectFinal.View_Models
 
             parent.Close();
         }
+        #endregion
     }
 }

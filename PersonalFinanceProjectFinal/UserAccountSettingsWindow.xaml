@@ -94,19 +94,19 @@
                       VerticalContentAlignment="Center"
                       SelectedItem="{Binding SelectedCurrency, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <ComboBoxItem>
-                    USD
+                    US
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    EUR
+                    SE
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    JPY
+                    JP
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    GBP
+                    SA
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    CAD
+                    SG
                 </ComboBoxItem>
             </ComboBox>
 

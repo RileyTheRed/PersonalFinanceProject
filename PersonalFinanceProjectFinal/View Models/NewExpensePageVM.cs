@@ -1,4 +1,14 @@
-﻿using PersonalFinanceProjectFinal.Models;
+﻿/**
+ * NewExpensePageVM.cs
+ * 
+ * Author: Riley Wells
+ * 
+ * Updates:
+ *      12/8/18 - Small formatting modifications (spacing) and a few more lines of 
+ *                documentation.
+ **/
+
+using PersonalFinanceProjectFinal.Models;
 using PersonalFinanceProjectFinal.Pages;
 using PersonalFinanceProjectFinal.Utilities;
 using System;
@@ -35,6 +45,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
         private string _category;
         public string Category
         {
@@ -45,6 +56,7 @@ namespace PersonalFinanceProjectFinal.View_Models
                 PropertyChanged(this, new PropertyChangedEventArgs("Category"));
             }
         }
+
 
         private DateTime? _date;
         public DateTime? Date
@@ -57,6 +69,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
         private string _description;
         public string Description
         {
@@ -67,6 +80,7 @@ namespace PersonalFinanceProjectFinal.View_Models
                 PropertyChanged(this, new PropertyChangedEventArgs("Description"));
             }
         }
+
 
         private List<string> _catList;
         public List<string> CatList
@@ -84,6 +98,11 @@ namespace PersonalFinanceProjectFinal.View_Models
         #endregion
 
 
+        /// <summary>
+        /// Constructor for the NewExpensePageVM
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="pg"></param>
         public NewExpensePageVM(ref User current, NewExpensePage pg)
         {
             currentUser = current;
@@ -110,10 +129,16 @@ namespace PersonalFinanceProjectFinal.View_Models
         DelegateCommand _submitCommand;
         private void SubmitClicked(object obj)
         {
+
+            // have they entered a valid date?
             if (Date != null)
             {
+
+                //are all other inputs valid?
                 if (!Sanitizer.InvalidNewExpense(Amount, Date.Value) && !Category.Equals(DefaultCatMessage))
                 {
+
+                    // sanitize desciption of all non alpha-numeric characters
                     string sanitizedDescription = Sanitizer.GetSanitizedDescription(Description);
                     if (sanitizedDescription.Length > 100)
                     {
@@ -148,7 +173,6 @@ namespace PersonalFinanceProjectFinal.View_Models
             Category = DefaultCatMessage;
             Description = "";
         }
-
 
 
     }

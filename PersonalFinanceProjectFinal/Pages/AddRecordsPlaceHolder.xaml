@@ -8,17 +8,17 @@
       d:DesignHeight="428" d:DesignWidth="900"
       Title="AddRecordsPlaceHolder">
 
-    <Grid Background="#b5b5b7"
+    <Grid Background="{Binding Color3}"
           Margin="140,0,140,0">
 
         <Rectangle Width="570" Height="380">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#252839"/>
+                <SolidColorBrush Color="{Binding Color1}"/>
             </Rectangle.Fill>
         </Rectangle>
 
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontSize="24" Foreground="#f2b632"
+                   FontSize="24" Foreground="{Binding Color4}"
                    Width="400" TextAlignment="Center" TextWrapping="WrapWithOverflow">
             Please select an option above to enter new records. 
         </TextBlock>

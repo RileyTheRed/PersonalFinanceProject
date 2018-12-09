@@ -12,7 +12,6 @@ namespace PersonalFinanceProjectFinal
 
         SearchResultRecord selectedRecord;
         User currentUser;
-        //string[] colorscheme;
 
 
         /// <summary>

@@ -1,4 +1,13 @@
-﻿using PersonalFinanceProjectFinal.Models;
+﻿/**
+ * NewIncomePageVM.cs
+ * 
+ * Author: Riley Wells
+ * 
+ * Updates:
+ *      12/8/18 - Added some documentation.
+ * */
+
+using PersonalFinanceProjectFinal.Models;
 using PersonalFinanceProjectFinal.Pages;
 using PersonalFinanceProjectFinal.Utilities;
 using System;
@@ -84,6 +93,11 @@ namespace PersonalFinanceProjectFinal.View_Models
         #endregion
 
 
+        /// <summary>
+        /// Constructor for the NewIncomePageVM
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="pg"></param>
         public NewIncomePageVM(ref User current, NewIncomePage pg)
         {
             currentUser = current;
@@ -96,6 +110,13 @@ namespace PersonalFinanceProjectFinal.View_Models
 
 
         #region Commands
+        /// <summary>
+        /// Defintions for the SubmitCommand ICommand, related _submitCommand DelegateCommand, and
+        /// SubmitClicked function.
+        /// 
+        /// SubmitClicked sanitizes and validates all user inputs before creating a new income record
+        /// and appending it to the users NewIncomeRecord list.
+        /// </summary>
         public ICommand SubmitCommand
         {
             get
@@ -110,10 +131,16 @@ namespace PersonalFinanceProjectFinal.View_Models
         DelegateCommand _submitCommand;
         private void SubmitClicked(object obj)
         {
+
+            // has a date been picked?
             if (Date != null)
             {
+
+                // are the inputs valid?
                 if (!Sanitizer.InvalidNewExpense(Amount, Date.Value) && !Category.Equals(DefaultCatMessage))
                 {
+
+                    // strip the desscription of all non alpha-numeric characters
                     string sanitizedDescription = Sanitizer.GetSanitizedDescription(Description);
                     if (sanitizedDescription.Length > 100)
                     {
@@ -141,6 +168,9 @@ namespace PersonalFinanceProjectFinal.View_Models
         #endregion
 
 
+        /// <summary>
+        /// Clears all user input from all 4 of the input fields
+        /// </summary>
         private void ClearInput()
         {
             Amount = "";
@@ -148,8 +178,6 @@ namespace PersonalFinanceProjectFinal.View_Models
             Category = DefaultCatMessage;
             Description = "";
         }
-
-
 
     }
 }

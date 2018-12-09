@@ -22,7 +22,7 @@ namespace PersonalFinanceProjectFinal
         {
             InitializeComponent();
             currentUser = referencedUser;
-            frmDashboard.Content = new AddRecordsPlaceHolder();
+            //frmDashboard.Content = new AddRecordsPlaceHolder(referencedUser);
 
         }
 

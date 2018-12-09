@@ -49,8 +49,11 @@ namespace PersonalFinanceProjectFinal
         {
             InitializeComponent();
 
+            //this.Language = XmlLanguage.GetLanguage(user.CurrencyType.Replace(" ",""));
             currentUser = user;
             DataContext = currentUser;
+
+            
 
             cmbCategory.Items.Add(CategoryDefaultMessage);
 

@@ -13,9 +13,10 @@ namespace PersonalFinanceProjectFinal.View_Models
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        
+
+        #region Proprties
         public User user { get; set; }
-        private Page _displayedPage = new AddRecordsPlaceHolder();
+        private Page _displayedPage;
         public Page DisplayedPage
         {
             get { return _displayedPage; }
@@ -31,16 +32,24 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
         public AddRecordsWindow window;
+        #endregion
 
 
+        /// <summary>
+        /// Constructor for the AddRecordsWindowVM
+        /// </summary>
+        /// <param name="current"></param>
+        /// <param name="win"></param>
         public AddRecordsWindowVM(User current, AddRecordsWindow win)
         {
             //parentVM = rent;
             user = current;
             window = win;
+            DisplayedPage = new AddRecordsPlaceHolder(current);
         }
 
 
+        #region Commands
         public ICommand NewExpenseCommand
         {
             get
@@ -102,7 +111,7 @@ namespace PersonalFinanceProjectFinal.View_Models
 
             window.Close();
         }
-
+        #endregion
 
     }
 }

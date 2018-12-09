@@ -109,6 +109,7 @@
     <Compile Include="View Models\FinanceReportWindowVM.cs" />
     <Compile Include="View Models\NewIncomePageVM.cs" />
     <Compile Include="View Models\NewExpensePageVM.cs" />
+    <Compile Include="View Models\SearchRecordsWindowVM.cs" />
     <Compile Include="View Models\UserAccountSettingsWindowVM.cs" />
     <Compile Include="View Models\UserDashboardVM.cs" />
     <Compile Include="Window1.xaml.cs">

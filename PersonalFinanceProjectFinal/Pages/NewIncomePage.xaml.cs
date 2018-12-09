@@ -1,6 +1,4 @@
 ﻿using PersonalFinanceProjectFinal.Models;
-using PersonalFinanceProjectFinal.Utilities;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using PersonalFinanceProjectFinal.View_Models;

@@ -1,11 +1,18 @@
-﻿using LiveCharts;
+﻿/**
+ * UserDashboardVM.cs
+ * 
+ * This is the View Model for the UserDashboard window.
+ * 
+ * Author: Riley Wells
+ * */
+
+
+using LiveCharts;
 using PersonalFinanceProjectFinal.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -17,11 +24,18 @@ namespace PersonalFinanceProjectFinal.View_Models
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
 
+        #region Properties
         public UserDashboard dashboard { get; set; }
         public User currentUser { get; set; }
         public Window child { get; set; }
+        #endregion
 
 
+        /// <summary>
+        /// Constructor for UserDashboardVM takes in a UserDashboard
+        /// </summary>
+        /// <param name="dash"></param>
+        /// <param name="current"></param>
         public UserDashboardVM(UserDashboard dash, User current)
         {
             dashboard = dash;
@@ -30,6 +44,14 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        #region Commands
+        /// <summary>
+        /// Defintion of the LogoutCommand ICommand, related _logoutCommand DelegateCommand,
+        /// and LogoutClicked function.
+        /// 
+        /// LogoutClicked function updates all the new or edited information for the user
+        /// into the database.
+        /// </summary>
         public ICommand LogoutCommand
         {
             get
@@ -45,7 +67,8 @@ namespace PersonalFinanceProjectFinal.View_Models
         DelegateCommand _logoutCommand; 
         private void LogoutClicked(object obj)
         {
-            Database.UpdateDatabase(currentUser);
+            //update the database
+            Database.UpdateDatabase(currentUser); 
 
             dashboard.Owner.Visibility = System.Windows.Visibility.Visible;
             dashboard.Owner.IsEnabled = true;
@@ -53,6 +76,14 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        /// <summary>
+        /// Defintion of the AddRecordsCommand ICommand, related _addRecordsCommand 
+        /// DelegateCommand, and AddRecordsClicked function.
+        /// 
+        /// AddRecordsClicked spawns a new AddRecordsWindow, sets its datacontext to 
+        /// its related View Model, and sets the Owner of the window to the UserDashboard
+        /// window.
+        /// </summary>
         public ICommand AddRecordsCommand
         {
             get
@@ -79,6 +110,13 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        /// <summary>
+        /// Defintion of the EditRecordsCommand ICommand, related _editRecordsCommand
+        /// DelegateCommand, and EditRecordsClicked function.
+        /// 
+        /// EditRecordsClicked spawns a new SearchRecordsWindow and sets its owner to the
+        /// UserDashboard.
+        /// </summary>
         public ICommand EditRecordsCommand
         {
             get
@@ -103,6 +141,12 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        /// <summary>
+        /// Defintion of the UpdateDashboardDataCommand ICommand, related _updateDashbaordDataCommand
+        /// DelegateCommand, and UpdateDashboardData function.
+        /// 
+        /// The UpdateDashboardData function calls the ucDashData control's UpdateDashboardUserData function.
+        /// </summary>
         public ICommand UpdateDashboardDataCommand
         {
             get
@@ -122,6 +166,13 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        /// <summary>
+        /// Defintion of the FinanceReportCommand ICommand, related _financeReportCommand
+        /// DelegateCommand, and FinanceReportClicked function.
+        /// 
+        /// FinanceReportClicked spawns a new Window1 (FinanceReportWindow) and sets its
+        /// owner to the UserDashboard window.
+        /// </summary>
         public ICommand FinanceReportCommand
         {
             get
@@ -147,6 +198,13 @@ namespace PersonalFinanceProjectFinal.View_Models
         }
 
 
+        /// <summary>
+        /// Defintion of the SettingButtonCommand ICommand, related _settingButtonCommand
+        /// DelegateCommand, and SettingButtonClicked function.
+        /// 
+        /// SettingButtonClicked spawns a new UserAccountSettingsWindow and sets its owner
+        /// to the UserDashboard window.
+        /// </summary>
         public ICommand SettingButtonCommand
         {
             get
@@ -169,16 +227,31 @@ namespace PersonalFinanceProjectFinal.View_Models
 
             child.Show();
         }
+        #endregion
 
 
+        /// <summary>
+        /// UpdateChart() when called just recalculates the users total expenses/income for
+        /// the current month and updates the values displayed by the pie chart.
+        /// 
+        /// This is called whenever the UsserDashboard window focus changes, leaving to a new
+        /// window or coming back to the dashboard. Changes made to records or records added
+        /// are immediately reflected in chart data.
+        /// </summary>
         private void UpdateChart()
         {
+
+            // lists needed to hold total monthly income/expense b/c ChartValues constructor takes IEnumerable
             List<double> monthlyExpenseSoFar = new List<double>();
             List<double> monthlyIncomeSoFar = new List<double>();
 
             var tempExpense = 0.0;
             var tempIncome = 0.0;
 
+
+            /// for earch of the existing user expense records, as long as its month and year are the 
+            /// current month and year, AND that the record hash does not exist in the users modified 
+            /// expense records, add the record amount to tempExpense.
             foreach (ExistingExpense item in currentUser.ExistingUserExpenses)
             {
                 if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
@@ -188,6 +261,10 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
 
+
+            /// for each of the existing user income records, as long as its month and year are the 
+            /// current month and year, AND that the record hash does not exist in the users modified
+            /// income records, add the record amount to tempIncome.
             foreach (ExistingIncome item in currentUser.ExistingUserIncome)
             {
                 if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
@@ -197,6 +274,10 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
 
+
+            /// for each of the new user income records, as long as its month and year are the
+            /// current month and year, AND that the record hash does not exist in the users modifed
+            /// income records, add the record amount to tempIncome.
             foreach (NewIncome item in currentUser.NewUserIncome)
             {
                 if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
@@ -206,6 +287,10 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
 
+
+            /// for each of the new user expense records, as long as its month and year are the 
+            /// current month and year, AND that the records hash does not exist in the users modified
+            /// expense records, add the record amount to tempExpense
             foreach (NewExpense item in currentUser.NewUserExpenses)
             {
                 if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year
@@ -215,6 +300,10 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
 
+
+            /// for all modified expense records, as long as the record's month and year are the 
+            /// same as the current month and year, AND the record has NOT been marked for deletion,
+            /// add the record amount to tempExpense
             foreach (SearchResultRecord item in currentUser.ModifiedExpenseRecords)
             {
                 if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year && !item.Status.Equals("--"))
@@ -223,6 +312,10 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
 
+
+            /// for all modified income records, as long as the record's month and year are the 
+            /// same as the current month and year, AND the record has not been marked for deletion,
+            /// add the record amount to tempIncome
             foreach (SearchResultRecord item in currentUser.ModifiedIncomeRecords)
             {
                 if (item.Date.Month == DateTime.Now.Month && item.Date.Year == DateTime.Now.Year && !item.Status.Equals("--"))
@@ -231,13 +324,18 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
 
+
+            // add the amounts to the lists
             monthlyExpenseSoFar.Add(tempExpense);
             monthlyIncomeSoFar.Add(tempIncome);
 
+
+            // if there have been no income or expense records for the month, hide the chart
             if (monthlyExpenseSoFar[0] == 0.0 && monthlyIncomeSoFar[0] == 0.0)
             {
                 dashboard.pieChart.Visibility = Visibility.Hidden;
             }
+            // otherwise, set visitibility if needed and add chart values
             else
             {
                 if (dashboard.pieChart.Visibility == Visibility.Hidden)
