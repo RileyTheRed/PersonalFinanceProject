@@ -1,6 +1,5 @@
 ﻿using PersonalFinanceProjectFinal.Models;
-using PersonalFinanceProjectFinal.Utilities;
-using System;
+using PersonalFinanceProjectFinal.View_Models;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -15,65 +14,14 @@ namespace PersonalFinanceProjectFinal.Pages
 
         User currentUser;
 
-
-        private static string DefaultCatMessage = "Please select a category...";
-
-
         public NewExpensePage(ref User currUser)
         {
             InitializeComponent();
             currentUser = currUser;
 
-            dteDate.DisplayDateEnd = DateTime.Today;
-
-            foreach(string item in Utilities.Categories.GetExpenseCategories())
-            {
-                cmbCategory.Items.Add(item);
-            }
+            DataContext = new NewExpensePageVM(ref currentUser, this);
             
         }
-
-
-        private void btnSubmitExpense_Click(object sender, RoutedEventArgs e)
-        {
-            if (dteDate.SelectedDate.HasValue)
-            {
-                if (!Sanitizer.InvalidNewExpense(txtAmount.Text, dteDate.SelectedDate.Value) && !cmbCategory.Text.Equals(DefaultCatMessage))
-                {
-                    string sanitizedDescription = Sanitizer.GetSanitizedDescription(txtDescription.Text);
-                    if (sanitizedDescription.Length > 100)
-                    {
-                        currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, Double.Parse(string.Format("{0:N2}", Double.Parse(txtAmount.Text))),
-                            dteDate.SelectedDate.Value, cmbCategory.Text, sanitizedDescription.Substring(0, 100)));
-                    }
-                    else
-                    {
-                        currentUser.NewUserExpenses.Add(new NewExpense(currentUser.UserID, Double.Parse(string.Format("{0:N2}",Double.Parse(txtAmount.Text))),
-                            dteDate.SelectedDate.Value, cmbCategory.Text, sanitizedDescription));
-                    }
-                    MessageBox.Show("Record entered successfully!", "Success");
-                    ClearInput();
-                }
-                else
-                {
-                    MessageBox.Show("Invalid input! Be sure to check all entries.", "Invalid Input");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Invalid input! Be sure to check all entries.", "Invalid Input");
-            }
-        }
-
-
-        private void ClearInput()
-        {
-            txtAmount.Text = "";
-            dteDate.SelectedDate = null;
-            cmbCategory.Text = DefaultCatMessage;
-            txtDescription.Text = "";
-        }
-
 
         public void RunTutorialSequence()
         {

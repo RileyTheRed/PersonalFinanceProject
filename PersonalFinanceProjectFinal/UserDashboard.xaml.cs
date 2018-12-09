@@ -5,6 +5,8 @@ using System.Linq;
 using System.Windows;
 using LiveCharts;
 using System.Windows.Media.Effects;
+using PersonalFinanceProjectFinal.View_Models;
+using PersonalFinanceProjectFinal.Utilities;
 
 namespace PersonalFinanceProjectFinal
 {
@@ -15,13 +17,20 @@ namespace PersonalFinanceProjectFinal
     {
 
         User currentUser;
-        Window childWindow;
+        //Window childWindow;
 
         public UserDashboard(string uname)
         {
+
             InitializeComponent();
             currentUser = Database.GetUserData(uname);
+            UserDashboardVM vm = new UserDashboardVM(this, currentUser);
+            
             lblGreeting.Content = $"Welcome back, {currentUser.FirstName}";
+
+            DataContext = vm;
+
+            var temp = ExtractUserDashboardData.GetExpenseReport(currentUser);
             
             pieChart.DataContext = this;
             UpdateChart();
@@ -32,27 +41,7 @@ namespace PersonalFinanceProjectFinal
             //RunIntroductionSequence();
         }
 
-        private void btnAddRecords_Click(object sender, RoutedEventArgs e)
-        {
-            childWindow = new AddRecordsWindow(ref currentUser);
-            childWindow.Owner = this;
-
-            childWindow.Visibility = Visibility.Visible;
-            childWindow.IsEnabled = true;
-
-            Visibility = Visibility.Hidden;
-            IsEnabled = false;
-        }
-
-        private void btnLogout_Click(object sender, RoutedEventArgs e)
-        {
-            Owner.Visibility = Visibility.Visible;
-            Owner.IsEnabled = true;
-            
-            Close();
-        }
-
-        private void UpdateChart()
+        public void UpdateChart()
         {
             List<double> monthlyExpenseSoFar = new List<double>();
             List<double> monthlyIncomeSoFar = new List<double>();
@@ -131,33 +120,10 @@ namespace PersonalFinanceProjectFinal
 
         }
 
-        private void btnEditRecords_Click(object sender, RoutedEventArgs e)
-        {
-            childWindow = new SearchRecordsWindow(ref currentUser);
-            childWindow.Owner = this;
-
-            childWindow.Visibility = Visibility.Visible;
-            childWindow.IsEnabled = true;
-
-            Visibility = Visibility.Hidden;
-            IsEnabled = false;
-        }
-
         private void Window_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             UpdateChart();
             ucDashData.UpdateDashboardUserData();
-            //RunIntroductionSequence();
-        }
-
-        private void Window_Closed(object sender, EventArgs e)
-        {
-            Owner.Visibility = Visibility.Visible;
-            Owner.IsEnabled = true;
-
-            Database.UpdateDatabase(currentUser);
-
-            Close();
         }
 
         #region IntroductionBlurFunctions

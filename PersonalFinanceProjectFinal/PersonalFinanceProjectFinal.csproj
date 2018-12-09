@@ -93,6 +93,9 @@
     <Compile Include="SearchRecordsWindow.xaml.cs">
       <DependentUpon>SearchRecordsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserAccountSettingsWindow.xaml.cs">
+      <DependentUpon>UserAccountSettingsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserDashboard.xaml.cs">
       <DependentUpon>UserDashboard.xaml</DependentUpon>
     </Compile>
@@ -101,6 +104,17 @@
     <Compile Include="Utilities\Sanitizer.cs" />
     <Compile Include="Utilities\SearchResults.cs" />
     <Compile Include="Utilities\Security.cs" />
+    <Compile Include="View Models\AddRecordsWindowVM.cs" />
+    <Compile Include="View Models\DelegateCommand.cs" />
+    <Compile Include="View Models\FinanceReportWindowVM.cs" />
+    <Compile Include="View Models\NewIncomePageVM.cs" />
+    <Compile Include="View Models\NewExpensePageVM.cs" />
+    <Compile Include="View Models\SearchRecordsWindowVM.cs" />
+    <Compile Include="View Models\UserAccountSettingsWindowVM.cs" />
+    <Compile Include="View Models\UserDashboardVM.cs" />
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Page Include="AddRecordsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,7 +159,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserAccountSettingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

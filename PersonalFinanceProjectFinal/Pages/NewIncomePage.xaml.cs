@@ -1,8 +1,7 @@
 ﻿using PersonalFinanceProjectFinal.Models;
-using PersonalFinanceProjectFinal.Utilities;
-using System;
 using System.Windows;
 using System.Windows.Controls;
+using PersonalFinanceProjectFinal.View_Models;
 
 namespace PersonalFinanceProjectFinal.Pages
 {
@@ -13,7 +12,6 @@ namespace PersonalFinanceProjectFinal.Pages
     {
 
         User currentUser;
-        private static string DefaultCatMessage = "Please select a category...";
 
 
         /// <summary>
@@ -25,63 +23,10 @@ namespace PersonalFinanceProjectFinal.Pages
             InitializeComponent();
             currentUser = currUser;
 
-            dteDate.DisplayDateEnd = DateTime.Today;
-
-            foreach (string item in Utilities.Categories.GetIncomeCategories())
-            {
-                cmbCategory.Items.Add(item);
-            }
+            DataContext = new NewIncomePageVM(ref currentUser, this);
         }
 
 
-        /// <summary>
-        /// Button logic for submitting new Income records
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnSubmitIncome_Click(object sender, RoutedEventArgs e)
-        {
-            if (dteDate.SelectedDate.HasValue) // make sure the user selected a date
-            {
-                // check and make sure the inputs are valid
-                if (!Sanitizer.InvalidNewExpense(txtAmount.Text, dteDate.SelectedDate.Value) && !cmbCategory.Text.Equals(DefaultCatMessage))
-                {
-                    string sanitizedDescription = Sanitizer.GetSanitizedDescription(txtDescription.Text);
-                    if (sanitizedDescription.Length > 100) // description over 100, enter the substring
-                    {
-                        currentUser.NewUserIncome.Add(new NewIncome(currentUser.UserID, Double.Parse(string.Format("{0:N2}", Double.Parse(txtAmount.Text))),
-                            dteDate.SelectedDate.Value, cmbCategory.Text, sanitizedDescription.Substring(0, 100)));
-                    }
-                    else
-                    {
-                        currentUser.NewUserIncome.Add(new NewIncome(currentUser.UserID, Double.Parse(string.Format("{0:N2}", Double.Parse(txtAmount.Text))),
-                            dteDate.SelectedDate.Value, cmbCategory.Text, sanitizedDescription));
-                    }
-                    MessageBox.Show("Record entered successfully!", "Success");
-                    ClearInput();
-                }
-                else // some invalid input
-                {
-                    MessageBox.Show("Invalid input! Be sure to check all entries.", "Invalid Input");
-                }
-            }
-            else // some invalid input
-            {
-                MessageBox.Show("Invalid input! Be sure to check all entries.", "Invalid Input");
-            }
-        }
-
-
-        /// <summary>
-        /// Helper function that clears all the input from the page
-        /// </summary>
-        private void ClearInput()
-        {
-            txtAmount.Text = "";
-            dteDate.SelectedDate = null;
-            cmbCategory.Text = DefaultCatMessage;
-            txtDescription.Text = "";
-        }
 
         private void txtAmount_LostFocus(object sender, RoutedEventArgs e)
         {

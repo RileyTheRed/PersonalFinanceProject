@@ -18,9 +18,11 @@ namespace PersonalFinanceProjectFinal
     public partial class SearchRecordsWindow : Window, INotifyPropertyChanged
     {
 
+
         #region PropertiesAndOtherThings
         private static string CategoryDefaultMessage = "Please select a category...";
         private User currentUser;
+        private string[] colors = new string[4];
         private string typeOfRecordSearched = "";
         private bool validAmountRanges = true;
         private bool validDateRanges = true;
@@ -47,7 +49,11 @@ namespace PersonalFinanceProjectFinal
         {
             InitializeComponent();
 
+            //this.Language = XmlLanguage.GetLanguage(user.CurrencyType.Replace(" ",""));
             currentUser = user;
+            DataContext = currentUser;
+
+            
 
             cmbCategory.Items.Add(CategoryDefaultMessage);
 
@@ -280,7 +286,11 @@ namespace PersonalFinanceProjectFinal
             if (lstSearchResults.SelectedItem != null)
             {
                 selectedRecord = lstSearchResults.SelectedItem as SearchResultRecord;
-                RecordViewWindow editWindow = new RecordViewWindow(ref selectedRecord, typeOfRecordSearched);
+                colors[0] = currentUser.Color1;
+                colors[1] = currentUser.Color2;
+                colors[2] = currentUser.Color3;
+                colors[3] = currentUser.Color4;
+                RecordViewWindow editWindow = new RecordViewWindow(ref selectedRecord, typeOfRecordSearched, currentUser);
 
                 editWindow.Owner = this;
                 IsEnabled = false;

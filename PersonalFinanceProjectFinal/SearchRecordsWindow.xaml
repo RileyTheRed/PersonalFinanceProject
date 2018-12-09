@@ -10,7 +10,7 @@
         IsEnabledChanged="Window_IsEnabledChanged"
         Closed="Window_Closed">
 
-    <Grid Background="#677077">
+    <Grid Background="{Binding Color1}">
 
         <!--ROW DEFINTIONS-->
         <Grid.RowDefinitions>
@@ -40,38 +40,38 @@
                    Width="900" Height="580"
                    x:Name="rectBackground">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#677077"/>
+                <SolidColorBrush Color="{Binding Color1}"/>
             </Rectangle.Fill>
         </Rectangle>
-        
-        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="4"
+
+        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="5"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Width="410" Height="440"
-                   Margin="0,20,75,0"
+                   Width="420" Height="450"
+                   Margin="0,0,75,90"
                    x:Name="rectLeftYellow">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#f2b632"/>
+                <SolidColorBrush Color="{Binding Color4}"/>
             </Rectangle.Fill>
         </Rectangle>
 
         <Rectangle Grid.Column="2" 
-                   Grid.ColumnSpan="3" Grid.RowSpan="4"
+                   Grid.ColumnSpan="3" Grid.RowSpan="5"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Width="410" Height="440"
-                   Margin="75,20,0,0"
+                   Width="410" Height="450"
+                   Margin="75,5,10,95"
                    x:Name="rectRightYellow">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#f2b632"/>
+                <SolidColorBrush Color="{Binding Color4}"/>
             </Rectangle.Fill>
         </Rectangle>
 
-        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="4"
+        <Rectangle Grid.ColumnSpan="3" Grid.RowSpan="5"
                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Width="400" Height="430"
-                   Margin="0,20,75,0"
+                   Width="410" Height="440"
+                   Margin="0,0,75,90"
                    x:Name="rectLeftGray">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#b5b5b7"/>
+                <SolidColorBrush Color="{Binding Color3}"/>
             </Rectangle.Fill>
         </Rectangle>
         <!--END RECTANGLE DEFINTIONS-->
@@ -84,7 +84,8 @@
                 Width="300" Height="40"
                 Content="Return to Dashboard"
                 FontSize="25" FontWeight="SemiBold"
-                Background="#252839" Foreground="#f2b632"
+                BorderBrush="{Binding Color4}" BorderThickness="2"
+                Background="{Binding Color2}" Foreground="{Binding Color4}"
                 Click="btnReturnDashboard_Click"/>
 
         <Button x:Name="btnSearch"
@@ -93,7 +94,8 @@
                 Width="200" Height="25"
                 Content="Search Records"
                 FontSize="15" FontWeight="SemiBold"
-                Background="#252839" Foreground="#f2b632"
+                BorderBrush="{Binding Color4}" BorderThickness="2"
+                Background="{Binding Color2}" Foreground="{Binding Color4}"
                 Margin="80,0,0,0"
                 Click="btnSearch_Click"/>
 
@@ -103,8 +105,8 @@
                 Height="40" Width="100"
                 Content="Help" 
                 FontSize="18" FontWeight="SemiBold"
-                Background="#f2b632" Foreground="#252839"
-                BorderThickness="2" BorderBrush="#252839"
+                Background="{Binding Color2}" Foreground="{Binding Color4}"
+                BorderThickness="2" BorderBrush="{Binding Color4}"
                 Margin="26,37,53,37.5"
                 Click="btnHelp_Click"/>
         <!--END BUTTON DEFINTIONS-->
@@ -113,7 +115,7 @@
         <!--LABEL DEFINTIONS-->
         <Label Grid.ColumnSpan="3"
                VerticalAlignment="Center" HorizontalAlignment="Center"
-               FontSize="15" FontWeight="SemiBold" Foreground="#252839"
+               FontSize="15" FontWeight="SemiBold" Foreground="{Binding currentUser.Color2}"
                Margin="0,0,80,0"
                x:Name="lblDescription">
             <TextBlock TextDecorations="Underline">
@@ -224,10 +226,10 @@
         <!--LISTBOX DEFINTIONS-->
         <ListView x:Name="lstSearchResults"
                  Grid.Column="2" Grid.ColumnSpan="3"
-                 Grid.RowSpan="4"
+                 Grid.RowSpan="5"
                  HorizontalAlignment="Center" VerticalAlignment="Center"
-                 Width="400" Height="430"
-                 Margin="75,20,0,0"
+                 Width="410" Height="440"
+                 Margin="101.2,21,35.633,110.7"
                  MouseDoubleClick="lstSearchResults_MouseDoubleClick">
             <ListView.View>
                 <GridView>

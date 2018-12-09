@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Costanza\source\repos\PersonalFinanceProjectFinal\PersonalFinanceProject\PersonalFinanceProjectFinal\App.xaml
-10-76288917
+12947420071
 
-311785731637
+411968379749
 182137461108
-AddRecordsWindow.xaml;CustomUserControls\DashboardUserData.xaml;MainWindow.xaml;Pages\AddRecordsPlaceHolder.xaml;Pages\NewExpensePage.xaml;Pages\NewIncomePage.xaml;RecordViewWindow.xaml;RegistrationWindow.xaml;SearchRecordsWindow.xaml;UserDashboard.xaml;
+AddRecordsWindow.xaml;CustomUserControls\DashboardUserData.xaml;MainWindow.xaml;Pages\AddRecordsPlaceHolder.xaml;Pages\NewExpensePage.xaml;Pages\NewIncomePage.xaml;RecordViewWindow.xaml;RegistrationWindow.xaml;SearchRecordsWindow.xaml;UserAccountSettingsWindow.xaml;UserDashboard.xaml;Window1.xaml;
 
 True
 

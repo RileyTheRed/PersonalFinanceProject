@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         Title="RecordViewWindow" Height="450" Width="500"
         Closed="Window_Closed">
-    <Grid Background="#252839">
+    <Grid Background="{Binding Color1}">
 
         
         <!--COLUM DEFINTIONS-->
@@ -36,33 +36,33 @@
                    HorizontalAlignment="Center" VerticalAlignment="Center"
                    Width="475" Height="400">
             <Rectangle.Fill>
-                <SolidColorBrush Color="#b5b5b7"/>
+                <SolidColorBrush Color="{Binding Color3}"/>
             </Rectangle.Fill>
         </Rectangle>
 
         
         <!--LABEL DEFINTIONS-->
-        <Label Grid.Column="1" Background="#252839"
-               Foreground="#b5b5b7" FontWeight="SemiBold"
-               BorderThickness="1.5" BorderBrush="#f2b632"
+        <Label Grid.Column="1" Background="{Binding Color2}"
+               Foreground="{Binding Color4}" FontWeight="SemiBold"
+               BorderThickness="1.5" BorderBrush="{Binding Color4}"
                Content="Amount" HorizontalContentAlignment="Center"
                VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <Label Grid.Column="1" Grid.Row="1" Background="#252839"
-               Foreground="#b5b5b7" FontWeight="SemiBold"
-               BorderThickness="1.5" BorderBrush="#f2b632"
+        <Label Grid.Column="1" Grid.Row="1" Background="{Binding Color2}"
+               Foreground="{Binding Color4}" FontWeight="SemiBold"
+               BorderThickness="1.5" BorderBrush="{Binding Color4}"
                Content="Date" HorizontalContentAlignment="Center"
                VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <Label Grid.Column="1" Grid.Row="2" Background="#252839"
-               Foreground="#b5b5b7" FontWeight="SemiBold"
-               BorderThickness="1.5" BorderBrush="#f2b632"
+        <Label Grid.Column="1" Grid.Row="2" Background="{Binding Color2}"
+               Foreground="{Binding Color4}" FontWeight="SemiBold"
+               BorderThickness="1.5" BorderBrush="{Binding Color4}"
                Content="Category" HorizontalContentAlignment="Center"
                VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-        <Label Grid.Column="1" Grid.Row="3" Background="#252839"
-               Foreground="#b5b5b7" FontWeight="SemiBold"
-               BorderThickness="1.5" BorderBrush="#f2b632"
+        <Label Grid.Column="1" Grid.Row="3" Background="{Binding Color2}"
+               Foreground="{Binding Color4}" FontWeight="SemiBold"
+               BorderThickness="1.5" BorderBrush="{Binding Color4}"
                Content="Description" HorizontalContentAlignment="Center"
                VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <!--END LABEL DEFINTIONS-->
@@ -109,35 +109,35 @@
         <!--BUTTON DEFINTIONS-->
         <Button x:Name="btnCancel" Content="Cancel"
                 FontSize="20" FontWeight="SemiBold"
-                Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"
+                Foreground="{Binding Color4}"
+                BorderThickness="2" BorderBrush="{Binding Color4}"
                 VerticalContentAlignment="Center"
                 Grid.Row="4" Grid.Column="0"
                 HorizontalAlignment="Right" VerticalAlignment="Center"
                 Width="120" Height="30"
-                Background="#252839"
+                Background="{Binding Color2}"
                 Click="btnCancel_Click"/>
 
         <Button x:Name="btnDelete" Content="Delete"
                 FontSize="20" FontWeight="SemiBold"
-                Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"
+                Foreground="{Binding Color4}"
+                BorderThickness="2" BorderBrush="{Binding Color4}"
                 VerticalContentAlignment="Center"
                 Grid.Row="4" Grid.Column="1"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Width="120" Height="30"
-                Background="#252839"
+                Background="{Binding Color2}"
                 Click="btnDelete_Click"/>
 
         <Button x:Name="btnSubmit" Content="Submit"
                 FontSize="20" FontWeight="SemiBold"
-                Foreground="#f2b632"
-                BorderThickness="2" BorderBrush="#f2b632"
+                Foreground="{Binding Color4}"
+                BorderThickness="2" BorderBrush="{Binding Color4}"
                 VerticalContentAlignment="Center"
                 Grid.Row="4" Grid.Column="2"
                 HorizontalAlignment="Center" VerticalAlignment="Center"
                 Width="120" Height="30"
-                Background="#252839"
+                Background="{Binding Color2}"
                 Click="btnSubmit_Click"/>
 
 

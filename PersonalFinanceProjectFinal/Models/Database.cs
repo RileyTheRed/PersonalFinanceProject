@@ -173,11 +173,13 @@ namespace PersonalFinanceProjectFinal.Models
             List<ExistingIncome> income = new List<ExistingIncome>();
             string tempID = "";
             string tempName = "";
+            string[] colors = new string[4];
+            string currencyType = "";
 
             GetConnection();
 
             // get the user id and first name
-            using (SqlCommand cmd = new SqlCommand($"SELECT userID, userFirstName FROM UserTable WHERE userName = '{username}'", con))
+            using (SqlCommand cmd = new SqlCommand($"SELECT userID, userFirstName, userColor1, userColor2, userColor3, userColor4, userCurrencyType FROM UserTable WHERE userName = '{username}'", con))
             {
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -185,6 +187,11 @@ namespace PersonalFinanceProjectFinal.Models
                     {
                         tempID = reader.GetValue(0).ToString();
                         tempName = reader.GetValue(1).ToString();
+                        colors[0] = reader.GetValue(2).ToString();
+                        colors[1] = reader.GetValue(3).ToString();
+                        colors[2] = reader.GetValue(4).ToString();
+                        colors[3] = reader.GetValue(5).ToString();
+                        currencyType = reader.GetValue(6).ToString();
                     }
                 }
             }
@@ -215,7 +222,7 @@ namespace PersonalFinanceProjectFinal.Models
                 }
             }
 
-            return new User(tempID, tempName, expenses, income);
+            return new User(tempID, tempName, expenses, income, colors, currencyType);
 
         }
 
@@ -395,6 +402,22 @@ namespace PersonalFinanceProjectFinal.Models
                 }
             }
             #endregion
+
+
+            using (SqlCommand cmd = new SqlCommand())
+            {
+                cmd.Connection = con;
+                cmd.CommandText = "UPDATE UserTable SET userColor1 = @amt, userColor2 = @dte, userColor3 = @cat, userColor4 = @desc, userCurrencyType = @type " +
+                    "WHERE userID = @id";
+                cmd.Parameters.AddWithValue("@amt", user.Color1);
+                cmd.Parameters.AddWithValue("@dte", user.Color2);
+                cmd.Parameters.AddWithValue("@cat", user.Color3);
+                cmd.Parameters.AddWithValue("@desc", user.Color4);
+                cmd.Parameters.AddWithValue("@type", user.CurrencyType);
+                cmd.Parameters.AddWithValue("@id", user.UserID);
+
+                cmd.ExecuteNonQuery();
+            }
 
             CloseConneciton();
 
