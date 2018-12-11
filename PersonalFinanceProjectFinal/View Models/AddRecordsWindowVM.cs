@@ -1,4 +1,15 @@
-﻿using System.ComponentModel;
+﻿/**
+ * AddRecordsWindowVM.cs
+ * 
+ * Author: Riley Wells
+ * 
+ * Updates:
+ *      12/9/18 - Added more documentation, removed unnecesary couple with View in the NewExpenseClicked
+ *                and NewIncomeClicked functions.
+ *                
+ * */
+
+using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Input;
 using PersonalFinanceProjectFinal.Models;
@@ -16,6 +27,14 @@ namespace PersonalFinanceProjectFinal.View_Models
 
         #region Proprties
         public User user { get; set; }
+
+
+        /// <summary>
+        /// Property used to set the frame content of the AddRecordsWindow.
+        /// 
+        /// If the assigned value is the same type as the current frame content,
+        /// do nothing. Otherwise, set the DisplayedPage to the new value.
+        /// </summary>
         private Page _displayedPage;
         public Page DisplayedPage
         {
@@ -31,6 +50,8 @@ namespace PersonalFinanceProjectFinal.View_Models
                 }
             }
         }
+
+
         public AddRecordsWindow window;
         #endregion
 
@@ -50,6 +71,13 @@ namespace PersonalFinanceProjectFinal.View_Models
 
 
         #region Commands
+        /// <summary>
+        /// Defintion of the NewExpenseCommand ICommand, related _newExpenseCommand
+        /// DelegateCommand, and the NewExpenseClicked function.
+        /// 
+        /// NewExpenseClicked sets the DisplayedPage property to a NewExpensePage and
+        /// passes the User information to it.
+        /// </summary>
         public ICommand NewExpenseCommand
         {
             get
@@ -66,12 +94,16 @@ namespace PersonalFinanceProjectFinal.View_Models
         {
             var temp = user;
             DisplayedPage = new NewExpensePage(ref temp);
-            window.frmDashboard.Content = DisplayedPage;
-            //parentVM.dashboard.Visibility = System.Windows.Visibility.Hidden;
-            //parentVM.dashboard.IsEnabled = false;
         }
 
 
+        /// <summary>
+        /// Defintion of the NewIncomeCommand ICommand, related _newIncomeCommand DelegateCommand,
+        /// and the NewIncomeClicked function.
+        /// 
+        /// NewIncomeClicked sets DisplayedPage property to a NewIncomePage, and passes
+        /// the user information to it.
+        /// </summary>
         public ICommand NewIncomeCommand
         {
             get
@@ -88,10 +120,16 @@ namespace PersonalFinanceProjectFinal.View_Models
         {
             var temp = user;
             DisplayedPage = new NewIncomePage(ref temp);
-            window.frmDashboard.Content = DisplayedPage;
         }
 
 
+        /// <summary>
+        /// Defintion of the ReturnToDashboardCommand ICommand, related _returnToDashboardCommand
+        /// DelegateCommand, and the ReturnToDashboardClicked function.
+        /// 
+        /// ReturnToDashboardClicked sets the parent's owner window to be visible and enabled,
+        /// and closes the parent window.
+        /// </summary>
         public ICommand ReturnToDashboardCommand
         {
             get

@@ -1,4 +1,13 @@
-﻿using LiveCharts;
+﻿/**
+ * FinanceReportWindowVM.cs
+ * 
+ * Author: Riley Wells
+ * 
+ * Updates:
+ *      12/9/18 - Further documentation
+ **/
+
+using LiveCharts;
 using LiveCharts.Wpf;
 using PersonalFinanceProjectFinal.Models;
 using PersonalFinanceProjectFinal.Utilities;
@@ -39,6 +48,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
         // the previous months expense categories and amounts
         private SeriesCollection _previousOneSeries;
         public SeriesCollection PreviousOneSeries
@@ -63,6 +73,7 @@ namespace PersonalFinanceProjectFinal.View_Models
                 PropertyChanged(this, new PropertyChangedEventArgs("PreviousOneSeries"));
             }
         }
+
 
         // the previous - 1 months expense categories and amounts
         private SeriesCollection _previousTwoSeries;
@@ -89,6 +100,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
         // the previous - 2 months expense categories and amounts
         private SeriesCollection _previousThreeSeries;
         public SeriesCollection PreviousThreeSeries
@@ -113,6 +125,7 @@ namespace PersonalFinanceProjectFinal.View_Models
                 PropertyChanged(this, new PropertyChangedEventArgs("PreviousThreeSeries"));
             }
         }
+
 
         // the overall average of expense categories and amounts
         private SeriesCollection _averageSeries;
@@ -139,6 +152,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // is set to hidden if there are no expense records for the current month 
         private Visibility _hasCurrent;
         public Visibility HasCurrent
         {
@@ -150,6 +165,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // is set to hidden if there are no expense records for the previous month
         private Visibility _hasPreviousOne;
         public Visibility HasPreviousOne
         {
@@ -161,6 +178,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // is set to hidden if there are no expense records for the previous - 1 month
         private Visibility _hasPreviousTwo;
         public Visibility HasPreviousTwo
         {
@@ -172,6 +191,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // is set to hidden if there are no expense records for the previous - 2 month
         private Visibility _hasPreviousThree;
         public Visibility HasPreviousThree
         {
@@ -183,6 +204,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // is set to hidden if there are no expense records at all for the user
         private Visibility _hasAverage;
         public Visibility HasAverage
         {
@@ -194,6 +217,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // used to display the users overall expense-to-income ratio
         private double _average;
         public double Average
         {
@@ -209,6 +234,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+        
+        // depending on the value of Average, a certain message is displayed below the finance "speedometer"
         private string _message;
         public string Message
         {
@@ -237,17 +264,26 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
         }
 
+
+        // parent window and user
         private Window1 parent { get; set; }
         public User cur { get; set; }
         #endregion
 
 
+        /// <summary>
+        /// GetSeries extracts the users expense data and inserts the values to 
+        /// their respective SeriesCollection.
+        /// </summary>
+        /// <param name="current"></param>
         private void GetSeries(User current)
         {
 
+            // extract all expense data for the user
             var temp = ExtractUserDashboardData.GetExpenseReport(current);
 
-            //CurrentSeries = new SeriesCollection();
+
+            // get the totals for each expense category  - current month
             var tempSeries = new SeriesCollection();
             for (int i = 0; i < temp.Item1.Item2.Count; i++)
             {
@@ -262,6 +298,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             CurrentSeries = tempSeries;
 
 
+            // get the totals for each expense category - previous month
             tempSeries = new SeriesCollection();
             for (int i = 0; i < temp.Item2.Item2.Count; i++)
             {
@@ -276,6 +313,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             PreviousOneSeries = tempSeries;
 
 
+            // get the totals for each expense category - (previous - 1) month
             tempSeries = new SeriesCollection();
             for (int i = 0; i < temp.Item3.Item2.Count; i++)
             {
@@ -290,6 +328,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             PreviousTwoSeries = tempSeries;
 
 
+            // get the totals for each expense category - (previous - 2) month
             tempSeries = new SeriesCollection();
             for (int i = 0; i < temp.Item4.Item2.Count; i++)
             {
@@ -304,6 +343,7 @@ namespace PersonalFinanceProjectFinal.View_Models
             PreviousThreeSeries = tempSeries;
 
 
+            // get the overall average for each expense category
             tempSeries = new SeriesCollection();
             for (int i = 0; i < temp.Item5.Count; i++)
             {
@@ -317,6 +357,8 @@ namespace PersonalFinanceProjectFinal.View_Models
             }
             AverageSeries = tempSeries;
 
+
+            // set the average expense-to-income ratio
             Average = (temp.Item6 / temp.Item7);
 
         }
@@ -336,6 +378,13 @@ namespace PersonalFinanceProjectFinal.View_Models
 
 
         #region Commands
+        /// <summary>
+        /// Defintion of ReturnDashboardCommand ICommand, related _returnDashboardCommand
+        /// DelegateCommand, and ReturnDashboardClicked function.
+        /// 
+        /// ReturnDashboardClicked sets the parent's owner's visibility and enables the window,
+        /// then closes the parent window.
+        /// </summary>
         public ICommand ReturnDashboardCommand
         {
             get

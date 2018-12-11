@@ -2,6 +2,9 @@
  * UserAccountSettingsWindowVM.css
  * 
  * Author: Riley Wells
+ * 
+ * Updates:
+ *      12/8/18 - Added more documentation
  * */
 
 using PersonalFinanceProjectFinal.Models;
