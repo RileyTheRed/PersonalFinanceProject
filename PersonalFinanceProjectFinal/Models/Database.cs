@@ -10,8 +10,8 @@ namespace PersonalFinanceProjectFinal.Models
 
         #region ConnectionStuff
         // static variables for the connection string and connection
-        private static readonly string connectionString = "Data Source=DESKTOP-UGSKI06;" +
-            "Initial Catalog=FinanceDatabase;Integrated Security=True;Pooling=False";
+        private static readonly string connectionString = "Data Source=DESKTOP-7HE0TS5\\SQLEXPRESS;" +
+            "Initial Catalog=FinanceRecords;Integrated Security=True;Pooling=False";
         private static SqlConnection con;
 
 
@@ -33,7 +33,6 @@ namespace PersonalFinanceProjectFinal.Models
             con.Close();
         }
         #endregion
-
 
         #region ValidationFunctions
         /// <summary>
