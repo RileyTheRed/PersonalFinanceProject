@@ -121,10 +121,22 @@ namespace PersonalFinanceProjectFinal.Models
             ModifiedExpenseRecords = new List<SearchResultRecord>();
             ModifiedIncomeRecords = new List<SearchResultRecord>();
 
-            Color1 = colors[0];
-            Color2 = colors[1];
-            Color3 = colors[2];
-            Color4 = colors[3];
+
+            // if there are no stored color preferences for the user, (their first time signing on) then load their color choices with the default scheme
+            if (colors[0].Equals(""))
+            {
+                Color1 = "#252839";
+                Color2 = "#677077";
+                Color3 = "#b5b5b7";
+                Color4 = "#f2b632";
+            }
+            else
+            {
+                Color1 = colors[0];
+                Color2 = colors[1];
+                Color3 = colors[2];
+                Color4 = colors[3];
+            }
 
             CurrencyType = type;
         }
