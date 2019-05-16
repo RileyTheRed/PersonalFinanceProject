@@ -75,6 +75,8 @@
     </Compile>
     <Compile Include="Models\ExistingExpense.cs" />
     <Compile Include="Models\ExistingIncome.cs" />
+    <Compile Include="Models\ExpenseRecord.cs" />
+    <Compile Include="Models\IncomeRecord.cs" />
     <Compile Include="Models\Record.cs" />
     <Compile Include="Models\SearchResultRecord.cs" />
     <Compile Include="Models\User.cs" />
@@ -101,6 +103,7 @@
     </Compile>
     <Compile Include="Utilities\Categories.cs" />
     <Compile Include="Utilities\ExtractUserDashboardData.cs" />
+    <Compile Include="Utilities\ResultsUtility.cs" />
     <Compile Include="Utilities\Sanitizer.cs" />
     <Compile Include="Utilities\SearchResults.cs" />
     <Compile Include="Utilities\Security.cs" />
