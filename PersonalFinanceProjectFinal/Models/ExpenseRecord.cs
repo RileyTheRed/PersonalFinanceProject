@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersonalFinanceProjectFinal.Models
 {
-    class ExpenseRecord : Record
+    public class ExpenseRecord : Record
     {
 
         #region Properties

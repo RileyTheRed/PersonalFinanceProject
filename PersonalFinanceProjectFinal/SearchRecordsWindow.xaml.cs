@@ -1,6 +1,7 @@
 ﻿using PersonalFinanceProjectFinal.Models;
 using PersonalFinanceProjectFinal.Utilities;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -37,6 +38,41 @@ namespace PersonalFinanceProjectFinal
                 PropertyChanged(this, new PropertyChangedEventArgs("Results"));
             }
         }
+
+
+
+        // need two options for selected records
+        private IncomeRecord selectedIncomeRecord;
+        private ExpenseRecord selectedExpenseRecord;
+
+
+        // have to have one observe collection for incomerecords
+        private ObservableCollection<IncomeRecord> _incomeResults;
+        public ObservableCollection<IncomeRecord> IncomeResults
+        {
+            get { return _incomeResults; }
+            set
+            {
+                _incomeResults = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("IncomeResults"));
+            }
+        }
+
+
+        // have to have one observe collection for expense records
+        private ObservableCollection<ExpenseRecord> _expenseResults;
+        public ObservableCollection<ExpenseRecord> ExpenseResults
+        {
+            get { return _expenseResults; }
+            set
+            {
+                _expenseResults = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("ExpenseResults"));
+            }
+        }
+
+
+
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { }; // do I even need this?
         #endregion
@@ -81,6 +117,7 @@ namespace PersonalFinanceProjectFinal
 
             Close();
         }
+
 
 
         #region FocusCalls
@@ -225,23 +262,19 @@ namespace PersonalFinanceProjectFinal
             {
                 if (typeOfRecordSearched.Equals("e"))
                 {
-                    UpdateModifiedExpenseList();
+                    UpdateExpenseList();
                 }
                 else if (typeOfRecordSearched.Equals("i"))
                 {
-                    UpdateModifiedIncomeList();
+                    UpdateIncomeList();
                 }
 
                 if ((bool)radioExpense.IsChecked)
                 {
-                    var results = SearchResults.GetExpenseSearchResults(currentUser.ExistingUserExpenses,
-                        currentUser.NewUserExpenses, currentUser.ModifiedExpenseRecords, cmbCategory, txtMin, txtMax, dteStart, dteEnd);
-                    Results =
-                        new ObservableCollection<SearchResultRecord>(
-                            SearchResultRecord.GetExpenseResults(
-                                results.Item1, results.Item2, results.Item3).OrderByDescending(x => x.Date).ToList());
+                    List<ExpenseRecord> results = ResultsUtility.GetExpenseSearchResults(currentUser.UserExpenseRecords, cmbCategory, txtMin, txtMax, dteStart, dteEnd);
+                    ExpenseResults = ResultsUtility.GetExpenseResults(results);
 
-                    lstSearchResults.ItemsSource = Results;
+                    lstSearchResults.ItemsSource = ExpenseResults;
                     if (Results.Count == 0)
                     {
                         MessageBox.Show("No results found!", "No Results", MessageBoxButton.OK);
@@ -250,14 +283,10 @@ namespace PersonalFinanceProjectFinal
                 }
                 else if ((bool)radioIncome.IsChecked)
                 {
-                    var results = SearchResults.GetIncomeSearchResults(currentUser.ExistingUserIncome,
-                        currentUser.NewUserIncome, currentUser.ModifiedIncomeRecords, cmbCategory, txtMin, txtMax, dteStart, dteEnd);
-                    Results =
-                        new ObservableCollection<SearchResultRecord>(
-                            SearchResultRecord.GetIncomeResults(
-                                results.Item1, results.Item2, results.Item3).OrderByDescending(x => x.Date).ToList());
+                    List<IncomeRecord> results = ResultsUtility.GetIncomeSearchResults(currentUser.UserIncomeRecords, cmbCategory, txtMin, txtMax, dteStart, dteEnd);
+                    IncomeResults = ResultsUtility.GetIncomeResults(results);
 
-                    lstSearchResults.ItemsSource = Results;
+                    lstSearchResults.ItemsSource = IncomeResults;
                     if (Results.Count == 0)
                     {
                         MessageBox.Show("No results found!", "No Results", MessageBoxButton.OK);
@@ -372,6 +401,43 @@ namespace PersonalFinanceProjectFinal
                 }
             }
         }
+
+
+
+
+
+        #region NewUpdateListFunctions
+
+        private void UpdateExpenseList()
+        {
+            foreach(ExpenseRecord item in lstSearchResults.Items)
+            {
+                if (item.Modified == 1)
+                {
+                    int index = currentUser.UserExpenseRecords.FindIndex(x => x.Hash.Equals(item.Hash));
+                    currentUser.UserExpenseRecords[index] = item;
+                }
+            }
+        }
+
+
+        private void UpdateIncomeList()
+        {
+            foreach (IncomeRecord item in lstSearchResults.Items)
+            {
+                if (item.Modified == 1)
+                {
+                    int index = currentUser.UserIncomeRecords.FindIndex(x => x.Hash.Equals(item.Hash));
+                    currentUser.UserIncomeRecords[index] = item;
+                }
+            }
+        }
+
+        #endregion
+
+
+
+
 
         private void Window_Closed(object sender, EventArgs e)
         {

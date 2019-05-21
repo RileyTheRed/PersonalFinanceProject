@@ -22,6 +22,22 @@ namespace PersonalFinanceProjectFinal.Models
         public List<SearchResultRecord> ModifiedExpenseRecords { get; set; }
         public List<SearchResultRecord> ModifiedIncomeRecords { get; set; }
 
+
+
+        /// <summary>
+        /// Below are the properties of the user object that is overriding the above different
+        /// properties.
+        /// 
+        /// Instead of a list of existing, new, and modified records, there will be one list for
+        /// income records and one for expense records.
+        /// 
+        /// The new models, ExpenseRecord and IncomeRecord, both contain all information about
+        /// whether the record is new, existing, or modified.
+        /// </summary>
+        public List<ExpenseRecord> UserExpenseRecords { get; set; }
+        public List<IncomeRecord> UserIncomeRecords { get; set; }
+
+
         private string _color1;
         public string Color1
         {
@@ -120,6 +136,11 @@ namespace PersonalFinanceProjectFinal.Models
 
             ModifiedExpenseRecords = new List<SearchResultRecord>();
             ModifiedIncomeRecords = new List<SearchResultRecord>();
+
+
+            // TODO - The lists being passed to the parameter need to be changed and they need to be ExpenseRecords and IncomeRecords.
+            UserExpenseRecords = new List<ExpenseRecord>();
+            UserIncomeRecords = new List<IncomeRecord>();
 
 
             // if there are no stored color preferences for the user, (their first time signing on) then load their color choices with the default scheme

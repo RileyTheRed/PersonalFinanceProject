@@ -19,7 +19,7 @@ namespace PersonalFinanceProjectFinal.Utilities
             {
                 tempRecords.Add(item);
             }
-            tempRecords.OrderBy(e => e.Date);
+            tempRecords.OrderByDescending(e => e.Date);
             return tempRecords;
         }
 
@@ -31,7 +31,7 @@ namespace PersonalFinanceProjectFinal.Utilities
             {
                 tempRecords.Add(item);
             }
-            tempRecords.OrderBy(e => e.Date);
+            tempRecords.OrderByDescending(e => e.Date);
             return tempRecords;
         }
 
@@ -169,15 +169,15 @@ namespace PersonalFinanceProjectFinal.Utilities
         /// <param name="lowDateRange"></param>
         /// <param name="highDateRange"></param>
         /// <returns></returns>
-        public static List<ExpenseRecord> GetIncomeSearchResults(List<ExpenseRecord> incomeRecords,
+        public static List<IncomeRecord> GetIncomeSearchResults(List<IncomeRecord> incomeRecords,
             ComboBox combo, TextBox lowAmountRange, TextBox highAmountRange, DatePicker lowDateRange,
             DatePicker highDateRange)
         {
 
-            List<ExpenseRecord> tempResultsWithOrWithoutCombo;
-            List<ExpenseRecord> tempResultsWithAmountRange;
-            List<ExpenseRecord> tempResultsWithDateRange;
-            List<ExpenseRecord> tempIntermediateResults;
+            List<IncomeRecord> tempResultsWithOrWithoutCombo;
+            List<IncomeRecord> tempResultsWithAmountRange;
+            List<IncomeRecord> tempResultsWithDateRange;
+            List<IncomeRecord> tempIntermediateResults;
 
 
             if (combo.Text.Equals("Please select a category..."))

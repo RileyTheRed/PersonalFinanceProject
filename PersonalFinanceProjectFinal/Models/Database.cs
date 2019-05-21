@@ -8,6 +8,14 @@ namespace PersonalFinanceProjectFinal.Models
     public class Database
     {
 
+
+        // TODO - All the following functions that deal with updating the database records, and instantiating 
+        // a user needs to be updated to use the new ExpenseRecord and IncomeRecord objects. The GetUserData function
+        // wont be that difficult, but the UpdateDatabase function will be a bit of a pain. Remember, ExpenseRecord and IncomeRecord
+        // are the combination of all the three different types of record objects. Much cleaner.
+
+
+
         #region ConnectionStuff
         // static variables for the connection string and connection
         private static readonly string connectionString = "Data Source=DESKTOP-7HE0TS5\\SQLEXPRESS;" +
